@@ -1,4 +1,4 @@
-package com.example.integration4.model;
+package be.kdg.team9.integration4.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,7 +1,7 @@
-package com.example.integration4.service;
+package be.kdg.team9.integration4.service;
 
-import com.example.integration4.model.Survey;
-import com.example.integration4.repositories.SurveyJpaRepo;
+import be.kdg.team9.integration4.model.Survey;
+import be.kdg.team9.integration4.repositories.SurveyJpaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

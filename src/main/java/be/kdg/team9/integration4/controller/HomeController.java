@@ -1,6 +1,6 @@
-package com.example.integration4.controller;
+package be.kdg.team9.integration4.controller;
 
-import com.example.integration4.service.SurveyService;
+import be.kdg.team9.integration4.service.SurveyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

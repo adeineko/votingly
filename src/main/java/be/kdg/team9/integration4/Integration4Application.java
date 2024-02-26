@@ -1,4 +1,4 @@
-package com.example.integration4;
+package be.kdg.team9.integration4;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
