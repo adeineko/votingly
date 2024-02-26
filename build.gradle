@@ -49,15 +49,16 @@ dependencies {
     // implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'javax.persistence:javax.persistence-api:2.2'
     implementation 'javax.validation:validation-api:2.0.1.Final'
-    compileOnly 'org.projectlombok:lombok'
+    // compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
+    // annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.springframework.integration:spring-integration-test'
     // testImplementation 'org.springframework.security:spring-security-test'
+    // testImplementation 'com.h2database:h2'
 }
 
 dependencyManagement {

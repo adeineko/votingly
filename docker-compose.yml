@@ -1,7 +1,8 @@
 version: '3.8'
 
 services:
-  db:
+  int4t9-db:
+    container_name: int4t9-db
     image: postgres:16.1-alpine
     restart: unless-stopped
     ports:

@@ -1,26 +1,28 @@
 package be.kdg.team9.integration4.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+// import javax.validation.constraints.NotEmpty;
 
 @Entity
-public class Survey {
+// @Table()
+public class Form {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String name;
 
     // Constructors, getters, and setters
-    public Survey() {
+    public Form() {
     }
 
-    public Survey(String name) {
+    public Form(String name) {
         this.name = name;
     }
 
@@ -44,7 +46,7 @@ public class Survey {
     // toString method for debugging and logging
     @Override
     public String toString() {
-        return "Survey{" +
+        return "Form{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
