@@ -1,3 +1,0 @@
--- insert into form values('The Tartar Steppe');
--- insert into form values('Poem Strip');
--- insert into form values('Restless Nights: Selected Stories of Dino Buzzati');
