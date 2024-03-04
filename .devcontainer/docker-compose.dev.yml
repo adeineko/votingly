@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
+  # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  # Dev Container
+  int4t9:
+    container_name: int4t9
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile.dev
+    # restart: always
+    volumes:
+      - .:/workspace:cached
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    # network_mode: service:db
+
+  # phpMyAdmin database manager
+  int4t9-adminer:
+    container_name: int4t9-adminer
+    image: dockette/adminer:full
+    restart: always
+    expose:
+      - "8282"
+    ports:
+      - "8282:80"
+

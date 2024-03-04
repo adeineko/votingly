@@ -1,0 +1,72 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/java
+{
+	"name": "int4t9",
+    "dockerComposeFile": [
+        "../docker-compose.yml",
+        "./docker-compose.dev.yml"
+    ],
+	"service": "int4t9",
+    "shutdownAction": "stopCompose",
+	"workspaceFolder": "/workspace",
+	// "initializeCommand": "echo Initialize....",
+	// "overrideCommand": true
+
+	// https://containers.dev/features
+	"features": {
+		"ghcr.io/devcontainers/features/java:1": {
+			"version": "none",
+			"installMaven": "false",
+			"mavenVersion": "latest",
+			"installGradle": "true",
+			"gradleVersion": "latest"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"ppa": true,
+			"version": "os-provided"
+		},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+	},
+
+	// "mounts": [
+	// 	"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,readonly,type=bind",
+	// 	"source=vscode-extensions,target=/root/.vscode-server-insiders/extensions,type=volume"
+	// ],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [ 
+	// 	8080
+	// ],
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				// "ms-azuretools.vscode-docker", // Docker - https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker
+				// "mongodb.mongodb-vscode",
+				"cweijan.vscode-postgresql-client2",
+				"vmware.vscode-spring-boot",
+				"vscjava.vscode-spring-initializr",
+				"vscjava.vscode-spring-boot-dashboard",
+				"redhat.java",
+				"vscjava.vscode-java-debug",
+				"vscjava.vscode-java-test",
+				// "vscjava.vscode-maven",
+				"vscjava.vscode-gradle",
+				"vscjava.vscode-java-dependency",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"redhat.fabric8-analytics",
+				"bierner.markdown-preview-github-styles"
+				// "ms-kubernetes-tools.vscode-kubernetes-tools", // Kubernetes - Develop, deploy and debug Kubernetes applications https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools
+				// "ipedrazas.kubernetes-snippets", // Kubernetes Support - Code snippets for kubernetes https://marketplace.visualstudio.com/items?itemName=ipedrazas.kubernetes-snippets
+				// "lunuan.kubernetes-templates" // Name: Kubernetes Templates https://marketplace.visualstudio.com/items?itemName=lunuan.kubernetes-templates
+			]
+		}
+	},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "bash /workspace/.devcontainer/postCreateCommand.sh"
+}
