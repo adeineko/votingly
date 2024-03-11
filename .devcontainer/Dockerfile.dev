@@ -1,0 +1,4 @@
+FROM mcr.microsoft.com/devcontainers/java:1-17-bookworm
+
+# RUN apt-get update && \
+#     apt-get upgrade -y
