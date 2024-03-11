@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="/js/survey.js"></script>
+    <title th:text="${survey.formName}"></title>
+</head>
+<body>
+<div class="container">
+    <input type="hidden" id="formId" th:value="${survey.id}">
+    <h1 th:text="${survey.formName}"></h1>
+    <div class="container">
+        <select id="surveySelect"></select>
+        <div id="questions"></div>
+    </div>
+</div>
+<p>survey</p>
+</body>
+</html>

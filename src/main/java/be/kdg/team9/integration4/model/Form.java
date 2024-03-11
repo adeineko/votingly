@@ -1,54 +1,67 @@
 package be.kdg.team9.integration4.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-// import javax.validation.constraints.NotEmpty;
+import be.kdg.team9.integration4.model.question.Question;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
-// @Table()
+@Table(name = "form")
 public class Form {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "form_name", nullable = false)
+    private String formName;
+
+    @Column(name = "form_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    FormType formType;
+
+    @OneToMany(mappedBy = "form")
+    private List<Question> questions;
 
     // Constructors, getters, and setters
     public Form() {
     }
 
-    public Form(String name) {
-        this.name = name;
+    public Form(long id, String formName, FormType formType) {
+        this.id = id;
+        this.formName = formName;
+        this.formType = formType;
     }
 
-    // Getter and Setter methods
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFormName() {
+        return formName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFormName(String formName) {
+        this.formName = formName;
     }
 
-    // toString method for debugging and logging
-    @Override
-    public String toString() {
-        return "Form{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public FormType getFormType() {
+        return formType;
+    }
+
+    public void setFormType(FormType formType) {
+        this.formType = formType;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }
