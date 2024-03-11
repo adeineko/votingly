@@ -41,7 +41,6 @@ public class FormsController {
         if (optionalForm.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         Form form = optionalForm.get();
 
         List<QuestionDto> questionDtos = form.getQuestions()

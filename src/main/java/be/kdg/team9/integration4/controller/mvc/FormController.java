@@ -28,7 +28,7 @@ public class FormController {
     @GetMapping("/{id}/questions")
     public String getSurvey(@PathVariable("id") long id, Model model) {
         model.addAttribute("survey", formService.getForm(id));
-        model.addAttribute("survey", questionService.getAllQuestions());
+        model.addAttribute("question", formService.getQuestionOfForm(id));
         return "survey";
     }
 }

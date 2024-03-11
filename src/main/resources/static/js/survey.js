@@ -1,6 +1,8 @@
 const surveyIdInput = document.getElementById("surveyId");
+const questionsContainer = document.getElementById("questionsContainer");
 
-async function fetchQuestions(surveyId) {
+async function fetchQuestions() {
+    console.log("fetching...")
     const response = await fetch(`/api/forms/${surveyIdInput.value}/questions`,
         {
             method: 'GET',
@@ -10,14 +12,17 @@ async function fetchQuestions(surveyId) {
         });
     if (response.status === 200) {
         console.log("fetched successfully");
-        const data = await response.json();
-        data.forEach(question => {
-            question.innerText = question.questionName;
-        });
-
+        const questions = await response.json();
+        questionsContainer.innerHTML = '';
+        for (const question of questions) {
+            questionsContainer.innerHTML += `
+            <div>${question.questionName}</div>
+            `;
+        }
     }
 }
-window.addEventListener('load', () => fetchQuestions(surveyIdInput.value));
+
+window.addEventListener('load', () => fetchQuestions());
 
 function displayQuestions(questions) {
     $("#questions").empty();
