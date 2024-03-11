@@ -1,9 +1,11 @@
 package be.kdg.team9.integration4.model.question;
 
 import be.kdg.team9.integration4.model.QuestionType;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
+@DiscriminatorValue("OPEN")
 public class OpenQuestion extends Question {
 
     public OpenQuestion() {
