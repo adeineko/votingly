@@ -14,6 +14,9 @@ public class QuestionDto {
 
     long formId;
 
+    public QuestionDto() {
+    }
+
     public QuestionDto(long id, String questionName, QuestionType questionType, long formId) {
         this.id = id;
         this.questionName = questionName;

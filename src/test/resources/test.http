@@ -2,4 +2,4 @@
 GET http://localhost:8080/api/forms
 
 ### Get questions
-GET http://localhost:8080/api/surveys/1/questions
+GET http://localhost:8080/api/forms/1/questions

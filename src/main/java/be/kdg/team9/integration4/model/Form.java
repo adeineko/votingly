@@ -2,6 +2,7 @@ package be.kdg.team9.integration4.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ public class Form {
     FormType formType;
 
     @OneToMany(mappedBy = "form")
-    private Set<Question> questionSet;
+    private List<Question> questions;
 
     // Constructors, getters, and setters
     public Form() {
@@ -48,19 +49,19 @@ public class Form {
         this.formName = formName;
     }
 
-    public Set<Question> getQuestionSet() {
-        return questionSet;
-    }
-
-    public void setQuestionSet(Set<Question> questionSet) {
-        this.questionSet = questionSet;
-    }
-
     public FormType getFormType() {
         return formType;
     }
 
     public void setFormType(FormType formType) {
         this.formType = formType;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }

@@ -3,6 +3,7 @@ package be.kdg.team9.integration4.controller.api;
 import be.kdg.team9.integration4.controller.api.dto.FormDto;
 import be.kdg.team9.integration4.controller.api.dto.QuestionDto;
 import be.kdg.team9.integration4.model.Form;
+import be.kdg.team9.integration4.model.Question;
 import be.kdg.team9.integration4.service.FormService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,15 @@ public class FormsController {
 
 
     @GetMapping("/{id}/questions")
-    List<QuestionDto> getQuestionsOfForm(@PathVariable("id") long formId) {
-        return formService.getQuestionsOfForm(formId)
+    ResponseEntity<List<QuestionDto>> getQuestionsOfForm(@PathVariable("id") long formId) {
+        var form = formService.getQuestionOfForm(formId);
+        if (form == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(form.getQuestions()
                 .stream()
-                .map(questionDto -> modelMapper.map(questionDto, QuestionDto.class))
-                .toList();
+                .map(Question::getForm)
+                .map(dev -> modelMapper.map(dev, QuestionDto.class))
+                .toList());
     }
 }

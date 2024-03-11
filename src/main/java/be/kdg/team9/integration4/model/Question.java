@@ -52,4 +52,12 @@ public class Question {
     public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
+    }
 }

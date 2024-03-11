@@ -16,7 +16,7 @@ async function getSurveys() {
             listItem.innerText = form.formName;
             console.log(form.formName)
             listItem.addEventListener('click', () => {
-                window.location.href = `/surveys/${form.id}`;
+                window.location.href = `/surveys/${form.id}/questions`;
             });
             listElement.appendChild(listItem);
         });
