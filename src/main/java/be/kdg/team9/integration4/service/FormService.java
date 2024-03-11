@@ -1,8 +1,6 @@
 package be.kdg.team9.integration4.service;
 
-import be.kdg.team9.integration4.controller.api.dto.QuestionDto;
 import be.kdg.team9.integration4.model.Form;
-import be.kdg.team9.integration4.model.Question;
 import be.kdg.team9.integration4.repositories.FormRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

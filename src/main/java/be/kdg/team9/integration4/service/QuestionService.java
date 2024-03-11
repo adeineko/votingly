@@ -1,6 +1,6 @@
 package be.kdg.team9.integration4.service;
 
-import be.kdg.team9.integration4.model.Question;
+import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.repositories.QuestionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

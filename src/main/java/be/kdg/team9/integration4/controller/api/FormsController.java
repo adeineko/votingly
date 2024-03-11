@@ -2,8 +2,7 @@ package be.kdg.team9.integration4.controller.api;
 
 import be.kdg.team9.integration4.controller.api.dto.FormDto;
 import be.kdg.team9.integration4.controller.api.dto.QuestionDto;
-import be.kdg.team9.integration4.model.Form;
-import be.kdg.team9.integration4.model.Question;
+import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.service.FormService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

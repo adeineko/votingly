@@ -1,9 +1,9 @@
 package be.kdg.team9.integration4.model;
 
+import be.kdg.team9.integration4.model.question.Question;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "form")
