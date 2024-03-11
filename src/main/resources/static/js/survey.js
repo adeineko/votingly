@@ -9,6 +9,7 @@ async function fetchQuestions(surveyId) {
             }
         });
     if (response.status === 200) {
+        console.log("fetched successfully");
         const data = await response.json();
         data.forEach(question => {
             question.innerText = question.questionName;
@@ -40,16 +41,16 @@ function displayQuestions(questions) {
 }
 
 function createMultipleChoiceQuestion(question) {
-    const element = $('<div class="question"><h2>' + question.text + '</h2><ul></ul></div>');
-    return element;
+    //logic
+    return $('<div class="question"><h2>' + question.text + '</h2><ul></ul></div>');
 }
 
 function createOpenEndedQuestion(question) {
-    const element = $('<div class="question"><h2>' + question.text + '</h2><textarea rows="5"></textarea></div>');
-    return element;
+    //logic
+    return $('<div class="question"><h2>' + question.text + '</h2><textarea rows="5"></textarea></div>');
 }
 
 function createRangeQuestion(question) {
-    const element = $('<div class="question"><h2>' + question.text + '</h2><input type="range" min="0" max="100"></div>');
-    return element;
+    //logic
+    return $('<div class="question"><h2>' + question.text + '</h2><input type="range" min="0" max="100"></div>');
 }
