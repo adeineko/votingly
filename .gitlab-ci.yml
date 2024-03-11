@@ -10,8 +10,10 @@ build-job:
 
 test-job:
   stage: test
+  script:
     - echo "testing"
 
 deploy-job:
   stage: deploy
+  script:
     - echo  "Deploy"
