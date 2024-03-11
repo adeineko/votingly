@@ -9,11 +9,10 @@ import java.util.Optional;
 public interface FormRepository extends JpaRepository<Form, Integer> {
     Form findById(long formId);
 
-    @Query("""
+    @Query("""   
             select form from Form form
-            left join fetch form.questions questions
-            left join fetch questions.form
-            where form.id = :formId
-            """)
+            left join fetch form.questions question
+            where question.form.id = :formId
+             """)
     Optional<Form> getQuestionOfForm(long formId);
 }
