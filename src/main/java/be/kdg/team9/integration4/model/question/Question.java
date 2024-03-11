@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "question")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "question_type", discriminatorType = DiscriminatorType.STRING)
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +16,7 @@ public class Question {
     @Column(name = "question_name", nullable = false)
     private String questionName;
 
-    @Column(name = "question_type", nullable = false)
+    @Column(name = "question_type", nullable = false, insertable=false, updatable=false)
     @Enumerated(EnumType.STRING)
     QuestionType questionType;
 
