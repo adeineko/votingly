@@ -1,6 +1,8 @@
 const surveyIdInput = document.getElementById("surveyId");
+const questionsContainer = document.getElementById("questionsContainer");
+const questionAnswersContainer = document.getElementById("questionAnswersContainer");
 
-async function fetchQuestions(surveyId) {
+async function fetchQuestions() {
     const response = await fetch(`/api/forms/${surveyIdInput.value}/questions`,
         {
             method: 'GET',
@@ -9,48 +11,61 @@ async function fetchQuestions(surveyId) {
             }
         });
     if (response.status === 200) {
-        console.log("fetched successfully");
-        const data = await response.json();
-        data.forEach(question => {
-            question.innerText = question.questionName;
-        });
-
+        const questions = await response.json();
+        questionsContainer.innerHTML = '';
+        for (const question of questions) {
+            console.log(question.questionType);
+            questionsContainer.innerHTML += `
+            <label for="field">${question.questionName}</label>
+            `;
+        }
+        displayQuestions(questions);
     }
 }
-window.addEventListener('load', () => fetchQuestions(surveyIdInput.value));
+
+window.addEventListener('load', () => fetchQuestions());
 
 function displayQuestions(questions) {
-    $("#questions").empty();
     questions.forEach(question => {
         let questionElement;
-        switch (question.type) {
-            case "multiple_choice":
-                questionElement = createMultipleChoiceQuestion(question);
+        switch (question.questionType) {
+            case "MULTIPLE_CHOICE":
+                questionElement = createMultipleChoiceQuestion();
+                console.log(questionElement);
                 break;
-            case "open":
-                questionElement = createOpenEndedQuestion(question);
+            case "OPEN":
+                questionElement = createOpenQuestion();
+                console.log(questionElement);
                 break;
-            case "range":
-                questionElement = createRangeQuestion(question);
+            case "RANGE":
+                questionElement = createRangeQuestion();
+                console.log(questionElement);
                 break;
             default:
-                questionElement = $('<div>Unsupported question type: ' + question.type + '</div>');
+                questionElement = document.createElement('div');
+                questionElement.textContent = 'Unsupported question type: ' + question.type;
         }
-        $("#questions").append(questionElement);
+        questionsContainer.appendChild(questionElement);
     });
 }
 
-function createMultipleChoiceQuestion(question) {
-    //logic
-    return $('<div class="question"><h2>' + question.text + '</h2><ul></ul></div>');
+function createOpenQuestion() {
+    const questionDiv = document.createElement('div');
+    questionDiv.innerHTML += `
+        <input type="text"  id="field">
+    `;
+    return questionDiv;
 }
 
-function createOpenEndedQuestion(question) {
-    //logic
-    return $('<div class="question"><h2>' + question.text + '</h2><textarea rows="5"></textarea></div>');
+function createMultipleChoiceQuestion() {
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('question');
+    return questionDiv;
+
 }
 
-function createRangeQuestion(question) {
-    //logic
-    return $('<div class="question"><h2>' + question.text + '</h2><input type="range" min="0" max="100"></div>');
+function createRangeQuestion() {
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('question');
+    return questionDiv;
 }
