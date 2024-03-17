@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import be.kdg.team9.integration4.model.survey.Survey;
+import be.kdg.team9.integration4.model.Survey;
 
 // @RunWith(SpringRunner.class)
 @SpringBootTest

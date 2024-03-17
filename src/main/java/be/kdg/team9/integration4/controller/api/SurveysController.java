@@ -2,7 +2,7 @@ package be.kdg.team9.integration4.controller.api;
 
 import be.kdg.team9.integration4.controller.api.dto.SurveyDto;
 import be.kdg.team9.integration4.controller.api.dto.QuestionDto;
-import be.kdg.team9.integration4.model.survey.Survey;
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.service.SurveyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

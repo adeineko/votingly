@@ -1,6 +1,5 @@
-package be.kdg.team9.integration4.model.question;
+package be.kdg.team9.integration4.model;
 
-import be.kdg.team9.integration4.model.QuestionType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 

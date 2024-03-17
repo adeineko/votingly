@@ -1,6 +1,6 @@
 package be.kdg.team9.integration4.service;
 
-import be.kdg.team9.integration4.model.survey.Survey;
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.repositories.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
