@@ -23,14 +23,14 @@ public class Survey {
     @OneToMany(mappedBy = "survey")
     private List<Question> questions;
 
-    private Date startDate;
-    private Date endDate;
-    private boolean isPublished;
-    private boolean isDefault;
-    private boolean isAllowedOnlyOnce;
-    private long userId;
-    private int timeSpent;
-    private Date submitDate;
+//    private Date startDate;
+//    private Date endDate;
+//    private boolean isPublished;
+//    private boolean isDefault;
+//    private boolean isAllowedOnlyOnce;
+//    private long userId;
+//    private int timeSpent;
+//    private Date submitDate;
 
 
     // Constructors, getters, and setters

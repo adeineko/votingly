@@ -10,6 +10,7 @@ public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long optionId;
+
     private String optionText;
 
     public Option() {

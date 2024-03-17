@@ -11,8 +11,8 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerId;
 
-    @Column
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", nullable = false)
     private Question questions;
 
     public Answer() {
