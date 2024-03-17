@@ -7,6 +7,8 @@
     <title th:text="${survey.surveyName}"></title>
 </head>
 <body>
+<header th:replace="~{header :: header}"></header>
+
 <div class="container">
     <input type="hidden" id="surveyId" th:value="${survey.surveyId}">
     <h1 th:text="${survey.surveyName}"></h1>
