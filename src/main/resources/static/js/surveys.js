@@ -1,7 +1,7 @@
 const listElement = document.getElementById('surveys-list');
 
 async function getSurveys() {
-    const response = await fetch('/api/forms',
+    const response = await fetch('/api/surveys',
         {
             method: 'GET',
             headers: {
@@ -11,14 +11,14 @@ async function getSurveys() {
 
     if (response.status === 200) {
         const data = await response.json();
-        data.forEach(form => {
-            const listItem = document.createElement('li');
-            listItem.innerText = form.formName;
-            console.log(form.formName)
-            listItem.addEventListener('click', () => {
-                window.location.href = `/surveys/${form.id}/questions`;
+        data.forEach(survey => {
+            const surveyItem = document.createElement('li');
+            surveyItem.innerText = survey.surveyName;
+            console.log(survey.surveyName)
+            surveyItem.addEventListener('click', () => {
+                window.location.href = `/surveys/${survey.surveyId}/questions`;
             });
-            listElement.appendChild(listItem);
+            listElement.appendChild(surveyItem);
         });
 
     }

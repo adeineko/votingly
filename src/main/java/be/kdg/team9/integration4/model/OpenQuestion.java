@@ -1,6 +1,5 @@
-package be.kdg.team9.integration4.model.question;
+package be.kdg.team9.integration4.model;
 
-import be.kdg.team9.integration4.model.QuestionType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
@@ -13,6 +12,5 @@ public class OpenQuestion extends Question {
 
     public OpenQuestion(long id, String questionName, QuestionType questionType) {
         super(id, questionName, questionType);
-//        this.questionType = QuestionType.OPEN;
     }
 }

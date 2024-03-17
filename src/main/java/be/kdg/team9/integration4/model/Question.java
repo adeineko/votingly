@@ -1,8 +1,10 @@
-package be.kdg.team9.integration4.model.question;
+package be.kdg.team9.integration4.model;
 
-import be.kdg.team9.integration4.model.Form;
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.QuestionType;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "question")
@@ -16,13 +18,16 @@ public class Question {
     @Column(name = "question_name", nullable = false)
     private String questionName;
 
-    @Column(name = "question_type", nullable = false, insertable=false, updatable=false)
+    @Column(name = "question_type", nullable = false, insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     QuestionType questionType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "form_id", nullable = false)
-    private Form form;
+    @JoinColumn(name = "survey_id", nullable = false)
+    private Survey survey;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
+    private List<Answer> answers;
 
     public Question() {
     }
@@ -57,11 +62,11 @@ public class Question {
         this.questionType = questionType;
     }
 
-    public Form getForm() {
-        return form;
+    public Survey getForm() {
+        return survey;
     }
 
-    public void setForm(Form form) {
-        this.form = form;
+    public void setForm(Survey survey) {
+        this.survey = survey;
     }
 }
