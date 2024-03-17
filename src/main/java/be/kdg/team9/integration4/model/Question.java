@@ -26,7 +26,7 @@ public class Question {
     @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "questions")
     private List<Answer> answers;
 
     public Question() {
