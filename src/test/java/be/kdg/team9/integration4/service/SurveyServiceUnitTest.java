@@ -8,19 +8,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import be.kdg.team9.integration4.model.Form;
+import be.kdg.team9.integration4.model.survey.Survey;
 
 // @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FormServiceUnitTest {
+public class SurveyServiceUnitTest {
     @Autowired
-    private FormService formService;
+    private SurveyService surveyService;
     
     @Test
     public void whenApplicationStarts_thenHibernateCreatesInitialRecords() {
-        List<Form> forms = formService.getAllForms();
+        List<Survey> surveys = surveyService.getAllForms();
     
-        assertEquals(forms.size(), 3);
+        assertEquals(surveys.size(), 3);
     }
     
 }

@@ -1,5 +1,8 @@
 ### Get available surveys
-GET http://localhost:8080/api/forms
+GET http://localhost:8080/api/surveys
 
 ### Get questions
-GET http://localhost:8080/api/forms/1/questions
+GET http://localhost:8080/api/surveys/1/questions
+
+### Get questions MVC
+GET http://localhost:8080/surveys/1/questions

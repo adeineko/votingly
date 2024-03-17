@@ -1,6 +1,6 @@
 package be.kdg.team9.integration4.model.question;
 
-import be.kdg.team9.integration4.model.Form;
+import be.kdg.team9.integration4.model.survey.Survey;
 import be.kdg.team9.integration4.model.QuestionType;
 import jakarta.persistence.*;
 
@@ -21,8 +21,8 @@ public class Question {
     QuestionType questionType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "form_id", nullable = false)
-    private Form form;
+    @JoinColumn(name = "survey_id", nullable = false)
+    private Survey survey;
 
     public Question() {
     }
@@ -57,11 +57,11 @@ public class Question {
         this.questionType = questionType;
     }
 
-    public Form getForm() {
-        return form;
+    public Survey getForm() {
+        return survey;
     }
 
-    public void setForm(Form form) {
-        this.form = form;
+    public void setForm(Survey survey) {
+        this.survey = survey;
     }
 }

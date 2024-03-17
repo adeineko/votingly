@@ -12,16 +12,16 @@ public class QuestionDto {
 
     QuestionType questionType;
 
-    long formId;
+    long surveyId;
 
     public QuestionDto() {
     }
 
-    public QuestionDto(long id, String questionName, QuestionType questionType, long formId) {
+    public QuestionDto(long id, String questionName, QuestionType questionType, long surveyId) {
         this.id = id;
         this.questionName = questionName;
         this.questionType = questionType;
-        this.formId = formId;
+        this.surveyId = surveyId;
     }
 
     public long getId() {
@@ -48,11 +48,11 @@ public class QuestionDto {
         this.questionType = questionType;
     }
 
-    public long getFormId() {
-        return formId;
+    public long getSurveyId() {
+        return surveyId;
     }
 
-    public void setFormId(long formId) {
-        this.formId = formId;
+    public void setSurveyId(long surveyId) {
+        this.surveyId = surveyId;
     }
 }

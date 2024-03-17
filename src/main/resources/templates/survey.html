@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="/js/survey.js" defer></script>
-    <title th:text="${survey.formName}"></title>
+    <title th:text="${survey.surveyName}"></title>
 </head>
 <body>
 <div class="container">
-    <input type="hidden" id="surveyId" th:value="${survey.id}">
-    <h1 th:text="${survey.formName}"></h1>
+    <input type="hidden" id="surveyId" th:value="${survey.surveyId}">
+    <h1 th:text="${survey.surveyName}"></h1>
     <div class="container" id="questionsContainer">
         <label for="field">Question Text</label>
         <div id="field">Answer</div>

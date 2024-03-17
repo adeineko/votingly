@@ -3,7 +3,7 @@ const questionsContainer = document.getElementById("questionsContainer");
 const questionAnswersContainer = document.getElementById("questionAnswersContainer");
 
 async function fetchQuestions() {
-    const response = await fetch(`/api/forms/${surveyIdInput.value}/questions`,
+    const response = await fetch(`/api/surveys/${surveyIdInput.value}/questions`,
         {
             method: 'GET',
             headers: {

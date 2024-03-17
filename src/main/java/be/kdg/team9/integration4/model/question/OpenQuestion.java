@@ -13,6 +13,5 @@ public class OpenQuestion extends Question {
 
     public OpenQuestion(long id, String questionName, QuestionType questionType) {
         super(id, questionName, questionType);
-//        this.questionType = QuestionType.OPEN;
     }
 }
