@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Syne&display=swap');
+
+.container-xl {
+    background: red;
+}
+.navbar-brand .heart-icon {
+    color: black;
+}
+.h1 {
+    font-family: 'Syne', sans-serif !important;
+}
