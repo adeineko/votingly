@@ -5,17 +5,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="/js/survey.js" defer></script>
     <title th:text="${survey.surveyName}"></title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Syne&display=swap" rel="stylesheet"/>
 </head>
 <body>
-<header th:replace="~{header :: header}"></header>
+<div class="container-fluid">
+    <div th:replace="navbar.html"></div>
 
-<div class="container">
     <input type="hidden" id="surveyId" th:value="${survey.surveyId}">
-    <h1 th:text="${survey.surveyName}"></h1>
+
+    <p class="h1 text-center" style="font-family: 'Syne', sans-serif" th:text="${survey.surveyName}"></p>
+
     <div class="container" id="questionsContainer">
-        <label for="field">Question Text</label>
+        <label for="field" style="font-family: 'Work sans', sans-serif">Question Text</label>
         <div id="field">Answer</div>
     </div>
+
 </div>
 </body>
 </html>
