@@ -1,5 +1,6 @@
 package be.kdg.team9.integration4.repositories;
 
+import be.kdg.team9.integration4.model.Answer;
 import be.kdg.team9.integration4.model.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +14,5 @@ public interface QuestionsRepository extends JpaRepository<Question, Long> {
     List<Question> findAllQuestions();
 
     Question findById(long id);
+
 }

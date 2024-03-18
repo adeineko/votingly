@@ -1,16 +1,18 @@
 package be.kdg.team9.integration4.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.DiscriminatorValue;
 
 @Entity
+@DiscriminatorValue("OPEN")
 public class OpenAnswer extends Answer {
     private String answer;
 
     public OpenAnswer() {
     }
 
-    public OpenAnswer(long answerId, Question question, String answer) {
-        super(answerId, question);
+    public OpenAnswer(long surveyId, long userId, Question question, String answer) {
+        super(surveyId, userId, question);
         this.answer = answer;
     }
 

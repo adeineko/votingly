@@ -7,11 +7,13 @@ GET http://localhost:8080/api/surveys/1/questions
 ### Get questions MVC
 GET http://localhost:8080/surveys/1/questions
 
-###API: save answer
-POST http://localhost:8080/api/answers
+###API: save answer for question
+POST http://localhost:8080/api/answers/open/1
 Accept: application/json
 Content-Type: application/json
 
 {
+  "userId": 1,
+  "surveyId": 1,
   "answer": "This is an answer"
 }
