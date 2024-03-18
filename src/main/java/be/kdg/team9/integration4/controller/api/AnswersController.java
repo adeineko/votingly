@@ -18,10 +18,10 @@ public class AnswersController {
         this.answerService = answerService;
     }
 
-//    @PostMapping
-//    private ResponseEntity<Answer> saveAnswerForQuestion(@RequestParam("answerId") answerId,
-//                                                         @RequestBody Answer answer) {
-//        Answer savedAnswer = answerService.save(answer);
-//        return ResponseEntity.ok(savedAnswer);
-//    }
+    @PostMapping
+    private ResponseEntity<Answer> saveAnswerForQuestion(@RequestParam("answerId") answerId,
+                                                         @RequestBody Answer answer) {
+        Answer savedAnswer = answerService.save(answer);
+        return ResponseEntity.ok(savedAnswer);
+    }
 }
