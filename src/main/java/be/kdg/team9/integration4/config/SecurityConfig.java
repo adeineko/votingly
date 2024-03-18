@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
+                                .defaultSuccessUrl("/surveys", true)
                                 .permitAll())
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling.authenticationEntryPoint(
