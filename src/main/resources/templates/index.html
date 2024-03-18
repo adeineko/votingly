@@ -15,32 +15,7 @@
 
 <body>
 <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand"><i class="bi bi-heart heart-icon"></i></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-flex align-items-center justify-content-center" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/surveys">Take part</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <header th:replace="~{header :: header}"></header>
     <div class="container-xl bg-primary rounded d-flex align-items-end justify-content-start py-5">
         <div class="row">
             <p class="h1 text-white" style="font-family: 'Syne', sans-serif">Votingly</p>
@@ -50,7 +25,6 @@
                 forms.</p>
         </div>
     </div>
-
 </div>
 </body>
 </html>

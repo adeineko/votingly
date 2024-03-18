@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    <title>Sign in</title>
+</head>
+<body>
+
+<header th:replace="~{header :: header(page = 'login')}"></header>
+
+<main class="container">
+    <h1>Sign in</h1>
+    <form th:action="@{/login}" method="post">
+        <div class="pb-3">
+            <label for="username" class="form-label">Username</label>
+            <input name="username" id="username" class="form-control" type="text">
+        </div>
+        <div class="pb-3">
+            <label for="password" class="form-label">Password</label>
+            <input name="password" id="password" class="form-control" type="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+</main>
+
+</body>
+</html>
