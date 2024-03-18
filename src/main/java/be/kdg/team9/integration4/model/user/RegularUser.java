@@ -5,18 +5,15 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity(name = "application_user")
+@Entity
+@DiscriminatorValue("REGULAR")
 public class RegularUser extends User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
     @Transient
     private List<Survey> surveySubmitted;
 
     public RegularUser(long id, String firstName, String lastName, String email, String password, List<Survey> surveySubmitted) {
-        super(firstName, lastName, email, password);
-        this.id = id;
+        super(id, firstName, lastName, email, password);
         this.surveySubmitted = surveySubmitted;
     }
 
@@ -29,13 +26,5 @@ public class RegularUser extends User {
 
     public void setSurveySubmitted(List<Survey> surveySubmitted) {
         this.surveySubmitted = surveySubmitted;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId() {
-        return id;
     }
 }

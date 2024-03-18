@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<header th:replace="~{header :: header(page = 'login')}"></header>
+<header th:replace="~{header :: header}"></header>
 
 <main class="container">
     <h1>Sign in</h1>
@@ -23,7 +23,9 @@
             <label for="password" class="form-label">Password</label>
             <input name="password" id="password" class="form-control" type="password">
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
+        <div>
+            <button id="signinButton" type="submit" class="btn btn-primary">Sign in</button>
+        </div>
     </form>
 </main>
 
