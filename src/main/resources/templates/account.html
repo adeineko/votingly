@@ -13,28 +13,23 @@
 <!--    <script src="/js/account.js"></script>-->
 </head>
 <body>
-<h2>sfdghjkl</h2>
 
 <div class="row">
 
     <input id="accountId" type="hidden" th:value="${one_user.id}">
 
-    <p th:text="${one_user.getFirstName()}"></p>
     <div class="col-9">
-<!--        <label for="descriptionTextArea" class="form-label">Description</label>-->
-<!--        <textarea class="form-control" id="descriptionTextArea" rows="3" th:text="${one_issue.description}"></textarea>-->
         <h4>Full Name</h4>
         <p id="firstName" th:text="${one_user.firstName}"></p>
         <p id="lastName" th:text="${one_user.lastName}"></p>
-    </div>
-
-    <div class="col-3">
+        <h4>Email</h4>
         <p id="email" th:text="${one_user.email}"></p>
     </div>
+
 </div>
 <div class="row mt-3">
     <div>
-        <button id="updateButton" type="button" class="btn btn-primary">Go Back</button>
+<!--        <button id="updateButton" type="button" class="btn btn-primary">Go Back</button>-->
     </div>
 </div>
 

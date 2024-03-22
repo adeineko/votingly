@@ -23,7 +23,7 @@ public class AccountController {
         return "account";
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")  // Updated mapping to include the full path
     public ModelAndView getOneUser(@PathVariable long id) {
         var oneUser = userService.getUserById(id);
         var mav = new ModelAndView();
@@ -37,3 +37,4 @@ public class AccountController {
         return mav;
     }
 }
+
