@@ -5,7 +5,10 @@ import be.kdg.team9.integration4.model.OpenAnswer;
 import be.kdg.team9.integration4.model.Question;
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.repositories.AnswerRepository;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceContextType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AnswerService {
@@ -15,8 +18,8 @@ public class AnswerService {
         this.answerRepository = answerRepository;
     }
 
-    // public OpenAnswer save(long answerId,long surveyId, long questionId, long userId, String answer) {
-    //     var answerEntity = new OpenAnswer(answerId, surveyId, questionId, userId, answer);
-    //     return (OpenAnswer) answerRepository.save(answerEntity);
-    // }
+    public OpenAnswer save(long surveyId, long userId, Question questionId, String answer) {
+        var answerEntity = new OpenAnswer(surveyId, userId, questionId, answer);
+        return (OpenAnswer) answerRepository.save(answerEntity);
+    }
 }

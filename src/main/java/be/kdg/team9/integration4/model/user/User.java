@@ -1,18 +1,37 @@
 package be.kdg.team9.integration4.model.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
-@MappedSuperclass
+@Entity
+@Table(name = "user_table")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
-    @Column(nullable = false)
+
+    @Column(name = "email", nullable = false)
     private String email;
-    @Column(nullable = false)
+
+    @Column(name = "password", nullable = false)
     private String password;
 
     public User() {
+    }
+
+    public User(long id, String firstName, String lastName, String email, String password) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
     }
 
     public User(String firstName, String lastName, String email, String password) {
@@ -21,6 +40,7 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
     public String getFirstName() {
         return firstName;
     }
@@ -51,5 +71,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
     }
 }

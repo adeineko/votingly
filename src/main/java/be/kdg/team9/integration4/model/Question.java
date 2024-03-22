@@ -26,7 +26,7 @@ public class Question {
     @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
+    @OneToMany(mappedBy = "question")
     private List<Answer> answers;
 
     public Question() {
@@ -68,5 +68,21 @@ public class Question {
 
     public void setForm(Survey survey) {
         this.survey = survey;
+    }
+
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }

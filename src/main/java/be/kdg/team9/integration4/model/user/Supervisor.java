@@ -1,6 +1,14 @@
 package be.kdg.team9.integration4.model.user;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("SUPERVISOR")
 public class Supervisor extends User{
+
+    @Column(name = "notes_taken")
     private String notesTaken;
     private long orgId;
 
