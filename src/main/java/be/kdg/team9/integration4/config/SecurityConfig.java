@@ -19,24 +19,24 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // @formatter:off
         http.authorizeHttpRequests(
-            auths -> auths
-                    .requestMatchers(regexMatcher("^/(surveys|surveys\\/?./questions)"))
-                        .permitAll()
-                    .requestMatchers(
-                            antMatcher(HttpMethod.GET, "/js/**"),
-                            antMatcher(HttpMethod.GET, "/css/**"),
-                            antMatcher(HttpMethod.GET, "/images/**"),
-                            antMatcher(HttpMethod.GET, "/webjars/**"),
-                            regexMatcher(HttpMethod.GET, "\\.ico$"))
-                        .permitAll()
-                    .requestMatchers(
-                            antMatcher(HttpMethod.GET, "/api/**"))
-                        .permitAll()
-                    .requestMatchers(antMatcher(HttpMethod.GET, "/"))
-                        .permitAll()
-                    .anyRequest()
-                        .authenticated()
-            )
+                        auths -> auths
+                                .requestMatchers(regexMatcher("^/(surveys|surveys\\/?./questions)"))
+                                .permitAll()
+                                .requestMatchers(
+                                        antMatcher(HttpMethod.GET, "/js/**"),
+                                        antMatcher(HttpMethod.GET, "/css/**"),
+                                        antMatcher(HttpMethod.GET, "/images/**"),
+                                        antMatcher(HttpMethod.GET, "/webjars/**"),
+                                        regexMatcher(HttpMethod.GET, "\\.ico$"))
+                                .permitAll()
+                                .requestMatchers(
+                                        antMatcher(HttpMethod.GET, "/api/**"))
+                                .permitAll()
+                                .requestMatchers(antMatcher(HttpMethod.GET, "/"))
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated()
+                )
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
@@ -60,4 +60,3 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
-
