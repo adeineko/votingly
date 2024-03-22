@@ -11,3 +11,9 @@
 .h1 {
     font-family: 'Syne', sans-serif !important;
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+    transform: scaleX(-1);
+}
