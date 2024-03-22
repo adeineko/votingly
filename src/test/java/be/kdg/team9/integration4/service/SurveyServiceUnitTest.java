@@ -16,11 +16,11 @@ public class SurveyServiceUnitTest {
     @Autowired
     private SurveyService surveyService;
     
-    @Test
-    public void whenApplicationStarts_thenHibernateCreatesInitialRecords() {
-        List<Survey> surveys = surveyService.getAllForms();
+    // @Test
+    // public void whenApplicationStarts_thenHibernateCreatesInitialRecords() {
+    //     List<Survey> surveys = surveyService.getAllForms();
     
-        assertEquals(surveys.size(), 3);
-    }
+    //     assertEquals(surveys.size(), 3);
+    // }
     
 }

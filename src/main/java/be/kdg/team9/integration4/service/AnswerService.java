@@ -15,8 +15,8 @@ public class AnswerService {
         this.answerRepository = answerRepository;
     }
 
-    public OpenAnswer save(long answerId,long surveyId, long questionId, long userId, String answer) {
-        var answerEntity = new OpenAnswer(answerId, surveyId, questionId, userId, answer);
-        return (OpenAnswer) answerRepository.save(answerEntity);
-    }
+    // public OpenAnswer save(long answerId,long surveyId, long questionId, long userId, String answer) {
+    //     var answerEntity = new OpenAnswer(answerId, surveyId, questionId, userId, answer);
+    //     return (OpenAnswer) answerRepository.save(answerEntity);
+    // }
 }

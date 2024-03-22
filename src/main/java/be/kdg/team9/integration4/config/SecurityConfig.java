@@ -26,6 +26,7 @@ public class SecurityConfig {
                             antMatcher(HttpMethod.GET, "/js/**"),
                             antMatcher(HttpMethod.GET, "/css/**"),
                             antMatcher(HttpMethod.GET, "/webjars/**"),
+                            antMatcher(HttpMethod.GET, "/images/**"),
                             regexMatcher(HttpMethod.GET, "\\.ico$"))
                         .permitAll()
                     .requestMatchers(
