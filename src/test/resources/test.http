@@ -17,3 +17,7 @@ Content-Type: application/json
   "surveyId": 1,
   "answer": "This is an answer"
 }
+
+### Get account page
+GET http://localhost:8080/account/1
+Cookie: JSESSIONID=2FBFDE3520E1639BE82B35D6A99A94D5

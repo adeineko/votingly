@@ -1,7 +1,6 @@
 package be.kdg.team9.integration4.security;
 
-import be.kdg.team9.integration4.service.RegularUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import be.kdg.team9.integration4.service.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,9 +12,9 @@ import java.util.ArrayList;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private final RegularUserService userService;
+    private final UserService userService;
 
-    public CustomUserDetailsService(RegularUserService userService) {
+    public CustomUserDetailsService(UserService userService) {
         this.userService = userService;
     }
 
