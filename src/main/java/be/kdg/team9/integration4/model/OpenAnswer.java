@@ -11,6 +11,10 @@ public class OpenAnswer extends Answer {
     public OpenAnswer() {
     }
 
+    public OpenAnswer(String answer) {
+        this.answer = answer;
+    }
+
     public OpenAnswer(long surveyId, long userId, Question question, String answer) {
         super(surveyId, userId, question);
         this.answer = answer;

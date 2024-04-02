@@ -13,7 +13,5 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "userId": 1,
-  "surveyId": 1,
   "answer": "This is an answer"
 }

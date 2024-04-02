@@ -7,5 +7,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
-    Answer save(Answer answer);
+
 }
