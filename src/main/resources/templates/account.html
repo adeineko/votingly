@@ -7,11 +7,32 @@
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Syne&display=swap" rel="stylesheet"/>
+    <script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
     <link href="/css/style.css" />
+<!--    <script src="/js/account.js"></script>-->
 </head>
 <body>
-<div th:replace="navbar.html"></div>
-<h1>TRTYUIOPkjhgffghjk</h1>
+
+<div class="row">
+
+    <input id="accountId" type="hidden" th:value="${one_user.id}">
+
+    <div class="col-9">
+        <h4>Full Name</h4>
+        <p id="firstName" th:text="${one_user.firstName}"></p>
+        <p id="lastName" th:text="${one_user.lastName}"></p>
+        <h4>Email</h4>
+        <p id="email" th:text="${one_user.email}"></p>
+    </div>
+
+</div>
+<div class="row mt-3">
+    <div>
+<!--        <button id="updateButton" type="button" class="btn btn-primary">Go Back</button>-->
+    </div>
+</div>
 
 </body>
 </html>
+
