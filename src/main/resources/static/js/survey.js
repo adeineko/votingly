@@ -1,6 +1,9 @@
-const surveyIdInput = document.getElementById("surveyId");
 const questionsContainer = document.getElementById("questionsContainer");
-const questionAnswersContainer = document.getElementById("questionAnswersContainer");
+const nameContainer = document.getElementById("nameContainer");
+const surveyIdInput = document.getElementById("surveyId");
+const surveyNameInput = document.getElementById("surveyName");
+
+nameContainer.innerHTML = surveyNameInput.value;
 
 async function fetchQuestions() {
     const response = await fetch(`/api/surveys/${surveyIdInput.value}/questions`,
@@ -23,49 +26,64 @@ async function fetchQuestions() {
     }
 }
 
-window.addEventListener('load', () => fetchQuestions());
-
 function displayQuestions(questions) {
+    questionsContainer.innerHTML = '';
     questions.forEach(question => {
         let questionElement;
         switch (question.questionType) {
             case "MULTIPLE_CHOICE":
-                questionElement = createMultipleChoiceQuestion();
-                console.log(questionElement);
+                questionElement = createMultipleChoiceQuestion(question);
                 break;
             case "OPEN":
-                questionElement = createOpenQuestion();
-                console.log(questionElement);
+                questionElement = createOpenQuestion(question);
                 break;
             case "RANGE":
-                questionElement = createRangeQuestion();
-                console.log(questionElement);
+                questionElement = createRangeQuestion(question);
                 break;
             default:
                 questionElement = document.createElement('div');
-                questionElement.textContent = 'Unsupported question type: ' + question.type;
+                questionElement.textContent = 'Unsupported question type: ' + question.questionType;
         }
         questionsContainer.appendChild(questionElement);
     });
 }
 
-function createOpenQuestion() {
+function createOpenQuestion(question) {
     const questionDiv = document.createElement('div');
-    questionDiv.innerHTML += `
-        <input type="text"  id="field">
+    questionDiv.classList.add('col-lg-10');
+    questionDiv.innerHTML = `
+        <div class="card-body">
+            <h5 class="card-title">${question.questionName}</h5>
+            <input type="text" class="form-control">           
+        </div>
     `;
     return questionDiv;
 }
 
-function createMultipleChoiceQuestion() {
+function createMultipleChoiceQuestion(question) {
     const questionDiv = document.createElement('div');
-    questionDiv.classList.add('question');
+    questionDiv.classList.add('col-lg-10');
+    questionDiv.innerHTML = `
+        <div class="card-body">
+            <label>${question.questionName}</label>
+            <select>
+                ${question.options.map(option => `<option value="${option}">${option}</option>`).join('')}
+            </select>
+        </div>
+    `;
     return questionDiv;
-
 }
 
-function createRangeQuestion() {
+function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
-    questionDiv.classList.add('question');
+    questionDiv.classList.add('col-lg-10');
+    questionDiv.innerHTML = `
+        <div class="card-body">
+            <label>${question.questionName}</label>
+            <input type="range" min="${question.min}" max="${question.max}" step="${question.step}">
+        </div>
+    `;
     return questionDiv;
 }
+
+window.addEventListener('load', fetchQuestions);
