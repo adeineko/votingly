@@ -1,5 +1,6 @@
 package be.kdg.team9.integration4.service;
 
+import be.kdg.team9.integration4.controller.api.dto.NewOpenAnswer;
 import be.kdg.team9.integration4.model.Answer;
 import be.kdg.team9.integration4.model.OpenAnswer;
 import be.kdg.team9.integration4.model.Question;
@@ -18,8 +19,8 @@ public class AnswerService {
         this.answerRepository = answerRepository;
     }
 
-    public OpenAnswer save(String answer) {
-        var answerEntity = new OpenAnswer(answer);
-        return answerRepository.save(answerEntity);
+    public OpenAnswer save(OpenAnswer answer) {
+        // var answerEntity = new OpenAnswer(answer);
+        return answerRepository.save(answer);
     }
 }
