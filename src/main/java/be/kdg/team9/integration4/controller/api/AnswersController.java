@@ -5,18 +5,11 @@ import be.kdg.team9.integration4.controller.api.dto.NewOpenAnswer;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 
-import be.kdg.team9.integration4.model.Answer;
-import be.kdg.team9.integration4.model.OpenAnswer;
-import be.kdg.team9.integration4.model.Question;
-import be.kdg.team9.integration4.model.QuestionType;
 import be.kdg.team9.integration4.service.AnswerService;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.PersistenceContextType;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,17 +26,22 @@ public class AnswersController {
                 this.logger = logger;
         }
 
-        @PostMapping("/open/{questionId}")
-        public ResponseEntity<AnswerDto> saveAnswerForQuestion(
-                        @RequestBody @Valid NewOpenAnswer newOpenAnswer,
-                        @PathVariable long questionId) {
-                logger.info("Received POST request to save answer for question with id: " + questionId);
-                OpenAnswer answer = modelMapper.map(newOpenAnswer, OpenAnswer.class);
-                var newAnswer = answerService.save(answer);
-                return new ResponseEntity<>(
-                                modelMapper.map(newAnswer, AnswerDto.class),
-                                HttpStatus.CREATED);
-        }
+    @PostMapping("/open/{questionId}")
+    public ResponseEntity<AnswerDto> saveAnswerForQuestion(
+            @RequestBody @Valid NewOpenAnswer newOpenAnswer,
+            @PathVariable long questionId) {
+        logger.info("Received POST request to save answer for question with id: " + questionId);
+//        var newAnswer = answerService.save(
+//                newOpenAnswer.getAnswer()
+//        );
+        AnswerDto newAnswer = answerService.save(newOpenAnswer);
+
+        return new ResponseEntity<>(
+                modelMapper.map(newAnswer, AnswerDto.class),
+                HttpStatus.CREATED
+        );
+
+    }
 }
 // openAnswer.setQuestion(questionId);
 //

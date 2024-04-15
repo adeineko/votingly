@@ -34,6 +34,4 @@ public class NewOpenAnswer {
     public void setSurveyId(long surveyId) {
         this.surveyId = surveyId;
     }
-
-    
 }
