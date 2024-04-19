@@ -19,4 +19,8 @@ public class QuestionService {
     public List<Question> getAllQuestions() {
         return questionsRepository.findAllQuestions();
     }
+
+    public Question getQuestion(long id){
+        return questionsRepository.findById(id).orElse(null);
+    }
 }

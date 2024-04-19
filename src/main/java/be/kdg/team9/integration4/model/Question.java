@@ -33,7 +33,7 @@ public class Question {
     }
 
     public Question(long id, String questionName, QuestionType questionType) {
-//        this.id = id;
+        this.id = id;
         this.questionName = questionName;
         this.questionType = questionType;
     }

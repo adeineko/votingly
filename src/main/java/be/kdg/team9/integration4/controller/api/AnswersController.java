@@ -22,7 +22,7 @@ public class AnswersController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("/open/{questionId}")
+    @PostMapping("/open")
     public ResponseEntity<AnswerDto> saveAnswerForQuestion(@RequestBody
                                                            @Valid NewOpenAnswer openAnswerDto) {
         var createdAnswer = answerService.save(openAnswerDto.getSurveyId(),

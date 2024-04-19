@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SurveyService {
@@ -27,5 +28,9 @@ public class SurveyService {
 
     public Survey getQuestionOfSurvey(long surveyId) {
         return surveyRepository.getQuestionOfSurvey(surveyId).orElse(null);
+    }
+
+    public List<Long> getQuestionsOfSurvey(long id) {
+        return surveyRepository.getQuestionIdsBySurveyId(id);
     }
 }

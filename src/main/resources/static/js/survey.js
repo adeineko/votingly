@@ -54,7 +54,8 @@ function createOpenQuestion(question) {
     questionDiv.innerHTML = `
         <div class="card-body">
             <h5 class="card-title">${question.questionName}</h5>
-            <input type="text" class="form-control">           
+            <input type="text" class="form-control" id="openQuestionInput"">   
+<!--             <input type="hidden" id="questionId" th:value="${questionId}">-->
         </div>
     `;
     return questionDiv;
@@ -87,3 +88,38 @@ function createRangeQuestion(question) {
 }
 
 window.addEventListener('load', fetchQuestions);
+
+const submitAnswerButton = document.getElementById("submitAnswerButton");
+const questionId = document.getElementById("questionId");
+
+async function saveAnswer() {
+    const openQuestionInput = document.getElementById("openQuestionInput");
+    const response = await fetch(
+        `/api/answers/open`, {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+                {
+                    answer: openQuestionInput.value,
+                    questionId: {
+                        id: questionId.value
+                    },
+                    surveyId: surveyIdInput.value,
+                    userId: 1
+                }
+            )
+        }
+    );
+    if (response.status === 201) {
+        const answer = await response.json();
+        console.log("Successfully saved answer")
+        console.log(answer)
+    } else {
+        alert("Something went wrong!");
+    }
+}
+
+submitAnswerButton?.addEventListener("click", saveAnswer);
