@@ -23,20 +23,29 @@ public class AnswersController {
     }
 
     @PostMapping("/open/{questionId}")
-    public ResponseEntity<AnswerDto> saveAnswerForQuestion(
-            @RequestBody @Valid NewOpenAnswer newOpenAnswer,
-            @PathVariable long questionId) {
-
-//        var newAnswer = answerService.save(
-//                newOpenAnswer.getAnswer()
+//    public ResponseEntity<AnswerDto> saveAnswerForQuestion(
+//            @RequestBody @Valid NewOpenAnswer newOpenAnswer,
+//            @PathVariable long questionId) {
+//        AnswerDto newAnswer = answerService.save(newOpenAnswer);
+//
+//        return new ResponseEntity<>(
+//                modelMapper.map(newAnswer, AnswerDto.class),
+//                HttpStatus.CREATED
 //        );
-        AnswerDto newAnswer = answerService.save(newOpenAnswer);
 
+//    }
+    public ResponseEntity<AnswerDto> saveAnswerForQuestion(@RequestBody
+                                                           @Valid NewOpenAnswer openAnswerDto,
+                                                           @PathVariable long questionId) {
+        var createdAnswer = answerService.save(openAnswerDto.getSurveyId(),
+                openAnswerDto.getUserId(),
+                openAnswerDto.getQuestionId(),
+                openAnswerDto.getAnswer()
+        );
         return new ResponseEntity<>(
-                modelMapper.map(newAnswer, AnswerDto.class),
+                modelMapper.map(createdAnswer, AnswerDto.class),
                 HttpStatus.CREATED
         );
-
     }
 }
 //            openAnswer.setQuestion(questionId);

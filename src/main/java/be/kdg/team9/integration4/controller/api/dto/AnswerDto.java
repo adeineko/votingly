@@ -1,23 +1,22 @@
 package be.kdg.team9.integration4.controller.api.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import be.kdg.team9.integration4.model.Question;
 
 public class AnswerDto {
     private long answerId;
     private long surveyId;
     private long userId;
+    private Question questionId;
     private String answer;
 
     public AnswerDto() {
     }
 
-    public AnswerDto(long answerId, long surveyId, long userId, String answer) {
+    public AnswerDto(long answerId, long surveyId, long userId, Question questionId, String answer) {
         this.answerId = answerId;
         this.surveyId = surveyId;
         this.userId = userId;
+        this.questionId = questionId;
         this.answer = answer;
     }
 
@@ -43,6 +42,14 @@ public class AnswerDto {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public Question getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Question questionId) {
+        this.questionId = questionId;
     }
 
     public String getAnswer() {

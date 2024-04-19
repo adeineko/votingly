@@ -23,14 +23,10 @@ public class AnswerService {
         this.modelMapper = modelMapper;
     }
 
-    public AnswerDto save(NewOpenAnswer newOpenAnswer) {
-//        var answerEntity = new NewOpenAnswer();
-//        return answerRepository.save(answerEntity);
-        OpenAnswer openAnswer = modelMapper.map(newOpenAnswer, OpenAnswer.class);
-        // Here you can set other properties of openAnswer, like questionId
-//        openAnswer.setQuestion(questionId);
+    @Transactional
+    public Answer save(long surveyId, long userId, Question question, String answer) {
+        var answerEntity = new OpenAnswer(surveyId, userId, question, answer);
 
-        OpenAnswer savedAnswerEntity = answerRepository.save(openAnswer);
-        return modelMapper.map(savedAnswerEntity, AnswerDto.class);
+        return answerRepository.save(answerEntity);
     }
 }
