@@ -34,3 +34,10 @@ spring:
     password: 'Student1234'
     username: 'postgres'
     url: 'jdbc:postgresql://int4t9-db:5432/int4t9'
+
+logging:
+  level:
+    root: WARN
+  be:
+    kdg:
+      team9: TRACE

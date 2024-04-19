@@ -13,6 +13,7 @@ services:
     # restart: always
     volumes:
       - .:/workspace:cached
+      - /home/ross/.ssh:/home/vscode/.ssh
     environment:
       - SPRING_PROFILES_ACTIVE=devcontainer
     # Overrides default command so things don't shut down after the process ends.
