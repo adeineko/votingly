@@ -121,6 +121,7 @@ function createRangeQuestion(question) {
 const submitAnswerButton = document.getElementById("submitAnswerButton");
 const questionId = document.getElementById("questionId");
 
+//TODO: fix questionId (for now it saves same questionId  for all questions)
 async function saveAnswer() {
     const openQuestionInput = document.getElementById("openQuestionInput");
     // const currentQuestion = questions[currentQuestionIndex];
