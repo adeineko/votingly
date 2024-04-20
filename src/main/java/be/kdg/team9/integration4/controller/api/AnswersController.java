@@ -31,6 +31,9 @@ public class AnswersController {
             @RequestBody @Valid NewOpenAnswer newOpenAnswer,
             @PathVariable long questionId) {
         logger.info("Received POST request to save answer for question with id: " + questionId);
+        logger.info("Answer: " + newOpenAnswer.getAnswer());
+        logger.info("SurveyId: " + newOpenAnswer.getSurveyId());
+        logger.info("UserId: " + newOpenAnswer.getUserId());
 //        var newAnswer = answerService.save(
 //                newOpenAnswer.getAnswer()
 //        );

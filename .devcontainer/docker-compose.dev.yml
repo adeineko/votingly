@@ -20,6 +20,10 @@ services:
     command: sleep infinity
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
     # network_mode: service:db
+    expose:
+      - "8082"
+    ports:
+      - "8082:8080"
 
   # phpMyAdmin database manager
   int4t9-adminer:

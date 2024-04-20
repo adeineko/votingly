@@ -3,23 +3,27 @@ package be.kdg.team9.integration4.controller.api.dto;
 import be.kdg.team9.integration4.model.Question;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class NewOpenAnswer {
+    private long answerId;
     @NotBlank
     private String answer;
-    @NotBlank
+    @NotNull
     private long surveyId;
-    // private long userId;
+    @NotNull
+    private long userId;
 
     public NewOpenAnswer() {
     }
 
-    public NewOpenAnswer(@NotBlank String answer, @NotBlank long surveyId) {
-        this.answer = answer;
-        this.surveyId = surveyId;
-    }
-
-    public String getAnswer() {
+    public NewOpenAnswer(@NotBlank String answer, @NotNull long surveyId, @NotNull long userId) {
+		this.answer = answer;
+		this.surveyId = surveyId;
+		this.userId = userId;
+	}
+    
+	public String getAnswer() {
         return answer;
     }
 
@@ -34,4 +38,12 @@ public class NewOpenAnswer {
     public void setSurveyId(long surveyId) {
         this.surveyId = surveyId;
     }
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 }

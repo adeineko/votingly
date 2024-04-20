@@ -35,7 +35,7 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [ 
-		8080
+		"8082:8080"
 	],
 
 	// Configure tool-specific properties.

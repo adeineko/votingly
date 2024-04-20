@@ -38,6 +38,7 @@ spring:
 logging:
   level:
     root: WARN
-  be:
-    kdg:
-      team9: TRACE
+    be:
+      kdg:
+        team9: 
+          integration4: DEBUG

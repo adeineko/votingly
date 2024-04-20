@@ -14,7 +14,8 @@ Content-Type: application/json
 
 {
   "answer": "This is an answer",
-  "surveyId": 2
+  "surveyId": 2,
+  "userId": 1
 }
 
 ### Get account page
