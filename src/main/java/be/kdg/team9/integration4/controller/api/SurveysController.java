@@ -37,7 +37,7 @@ public class SurveysController {
     ResponseEntity<List<QuestionDto>> getQuestionsOfForm(@PathVariable("id") long surveyId) {
         Optional<Survey> optionalSurvey = Optional.ofNullable(surveyService.getQuestionOfSurvey(surveyId));
         if (optionalSurvey.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         Survey survey = optionalSurvey.get();
 
