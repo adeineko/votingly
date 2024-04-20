@@ -20,6 +20,7 @@
 
     <div class="container">
         <div class="row" id="questionsContainer">
+            <input type="hidden" id="questionId" th:each="questionId : ${questionIds}" th:value="${questionId}">
         </div>
     </div>
 

@@ -9,21 +9,22 @@ public class NewOpenAnswer {
     private long answerId;
     @NotBlank
     private String answer;
-    @NotNull
+
     private long surveyId;
-    @NotNull
     private long userId;
+    private Question questionId;
 
     public NewOpenAnswer() {
     }
 
-    public NewOpenAnswer(@NotBlank String answer, @NotNull long surveyId, @NotNull long userId) {
-		this.answer = answer;
-		this.surveyId = surveyId;
-		this.userId = userId;
-	}
-    
-	public String getAnswer() {
+    public NewOpenAnswer(String answer, long surveyId, long userId, Question questionId) {
+        this.answer = answer;
+        this.surveyId = surveyId;
+        this.userId = userId;
+        this.questionId = questionId;
+    }
+
+    public String getAnswer() {
         return answer;
     }
 
@@ -39,11 +40,19 @@ public class NewOpenAnswer {
         this.surveyId = surveyId;
     }
 
-	public long getUserId() {
-		return userId;
-	}
+    public long getUserId() {
+        return userId;
+    }
 
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public Question getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Question questionId) {
+        this.questionId = questionId;
+    }
 }
