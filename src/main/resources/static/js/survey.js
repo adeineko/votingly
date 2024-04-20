@@ -24,25 +24,6 @@ async function fetchFirstQuestion() {
     }
 }
 
-// async function fetchQuestions() {
-//     const response = await fetch(`/api/surveys/${surveyIdInput.value}/questions`,
-//         {
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         });
-//     if (response.status === 200) {
-//         questions = await response.json();
-//         questionsContainer.innerHTML = '';
-//         for (const question of questions) {
-//             questionsContainer.innerHTML += `
-//             <label for="field">${question.questionName}</label>
-//             `;
-//         }
-//         displayQuestions(questions);
-//     }
-// }
 async function fetchNextQuestion() {
     currentQuestionIndex++;
     // Fetch the next question from the server
@@ -54,29 +35,6 @@ async function fetchNextQuestion() {
         window.location.href = `/thank-you-page`;
     }
 }
-
-
-// function displayQuestions(questions) {
-//     questionsContainer.innerHTML = '';
-//     questions.forEach(question => {
-//         let questionElement;
-//         switch (question.questionType) {
-//             case "MULTIPLE_CHOICE":
-//                 questionElement = createMultipleChoiceQuestion(question);
-//                 break;
-//             case "OPEN":
-//                 questionElement = createOpenQuestion(question);
-//                 break;
-//             case "RANGE":
-//                 questionElement = createRangeQuestion(question);
-//                 break;
-//             default:
-//                 questionElement = document.createElement('div');
-//                 questionElement.textContent = 'Unsupported question type: ' + question.questionType;
-//         }
-//         questionsContainer.appendChild(questionElement);
-//     });
-// }
 
 function createOpenQuestion(question) {
     const questionDiv = document.createElement('div');
@@ -116,7 +74,6 @@ function createRangeQuestion(question) {
     return questionDiv;
 }
 
-// window.addEventListener('load', fetchQuestions);
 
 const submitAnswerButton = document.getElementById("submitAnswerButton");
 const questionId = document.getElementById("questionId");
@@ -181,46 +138,6 @@ submitAnswerButton?.addEventListener("click", async () => {
     // Fetch the next question
     await fetchNextQuestion();
 });
+
 // Initial fetch of the first question when the page loads
 window.addEventListener('load', fetchFirstQuestion);
-
-// async function saveAnswer() {
-//     const openQuestionInput = document.getElementById("openQuestionInput");
-//     const response = await fetch(
-//         `/api/answers/open`, {
-//             method: 'POST',
-//             headers: {
-//                 "Accept": "application/json",
-//                 "Content-Type": "application/json"
-//             },
-//             body: JSON.stringify(
-//                 {
-//                     answer: openQuestionInput.value,
-//                     questionId: {
-//                         id: questionId.value
-//                     },
-//                     surveyId: surveyIdInput.value,
-//                     userId: 1
-//                 }
-//             )
-//         }
-//     );
-//     if (response.status === 201) {
-//         const answer = await response.json();
-//         console.log("Successfully saved answer")
-//         console.log(answer)
-//         questions = questions.filter(question => question.id === questionId.value);
-//
-//         // Display the remaining questions
-//         displayQuestions(questions);
-//         console.log(questions.length)
-//         // Check if there are no more questions
-//         if (questions.length === 0) {
-//             window.location.href = `/thank-you-page`;
-//         }
-//     } else {
-//         alert("Something went wrong!");
-//     }
-// }
-//
-// submitAnswerButton?.addEventListener("click", saveAnswer);
