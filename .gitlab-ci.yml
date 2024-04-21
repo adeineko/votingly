@@ -1,3 +1,6 @@
+# image:
+#   name: hashicorp/terraform:light
+
 stages:
   - build
   - test

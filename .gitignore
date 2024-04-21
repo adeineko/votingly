@@ -36,3 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 # .devcontainer/
+.local/
+.env.local
+deploy/.creds/
