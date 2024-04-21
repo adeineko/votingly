@@ -14,5 +14,19 @@ services:
       - POSTGRES_PASSWORD=Student1234
       - POSTGRES_DB=int4t9
 
+  int4t9-test-db:
+    container_name: int4t9-test-db
+    image: postgres:16.1-alpine
+    restart: unless-stopped
+    ports:
+      - 5331:5432
+    volumes:
+      - pgdata_test:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Student1234
+      - POSTGRES_DB=int4t9
+
 volumes:
   pgdata:
+  pgdata_test:
