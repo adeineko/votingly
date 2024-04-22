@@ -39,3 +39,5 @@ out/
 .local/
 .env.local
 deploy/.creds/
+deploy/.terraform*
+deploy/terraform.*

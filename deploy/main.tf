@@ -11,9 +11,12 @@ resource "google_compute_subnetwork" "app_test_subnet" {
   region        = "europe-west1"
 }
 
-resource "google_compute_firewall" "app_test_firewall" {
-  name    = "app-test-firewall"
+resource "google_compute_firewall" "app_test_firewall_web" {
+  name    = "app-test-firewall-web"
   network = google_compute_network.app_network.self_link
+  log_config {
+    metadata = "INCLUDE_ALL_METADATA"
+  }
 
   source_ranges = ["0.0.0.0/0"]
   direction     = "INGRESS"
@@ -24,14 +27,28 @@ resource "google_compute_firewall" "app_test_firewall" {
     ports    = ["80", "443"]
   }
 
-  allow {
-    protocol = "udp"
-    ports    = ["80", "443"]
-  }
+  # allow {
+  #   protocol = "udp"
+  #   ports    = ["80", "443"]
+  # }
+
+  # allow {
+  #   protocol = "sctp"
+  #   ports    = ["80", "443"]
+  # }
+}
+
+resource "google_compute_firewall" "app_test_firewall_ssh" {
+  name    = "app-test-firewall-ssh"
+  network = google_compute_network.app_network.self_link
+
+  source_ranges = ["35.235.240.0/20"]
+  direction     = "INGRESS"
+  source_tags   = ["ssh"]
 
   allow {
-    protocol = "sctp"
-    ports    = ["80", "443"]
+    protocol = "tcp"
+    ports    = ["22"]
   }
 }
 
@@ -42,13 +59,13 @@ resource "google_compute_instance" "app_test_vm" {
   // REQUIRED: You can assume your test users will mainly be located in Belgium. GCloud region europe-west1
   zone = "europe-west1-b"
 
-  tags = ["int4t9", "test", "web"]
+  tags = ["web"]
   # allow_stopping_for_update = true
 
   // REQUIRED: Server image: some kind of Linux
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-11"
+      image = "cos-cloud/cos-stable"
     }
   }
 
@@ -71,7 +88,9 @@ resource "google_compute_instance" "app_test_vm" {
   #   foo = "bar"
   # }
 
+  # Runs on every boot
   # metadata_startup_script = "echo hi > /test.txt"
+  metadata_startup_script = "docker run -dit --name my-apache-app -p 80:80 httpd:2.4"
 
   # service_account {
   #   # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
