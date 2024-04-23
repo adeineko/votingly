@@ -38,6 +38,6 @@ out/
 # .devcontainer/
 .local/
 .env.local
-deploy/.creds/
-deploy/.terraform*
-deploy/terraform.*
+deploy/*.creds/
+deploy/*.terraform*
+deploy/*terraform.*
