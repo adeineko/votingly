@@ -26,7 +26,9 @@
 			"version": "os-provided"
 		},
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
-		"ghcr.io/devcontainers/features/terraform:1": {}
+		"ghcr.io/devcontainers/features/terraform:1": {},
+		"ghcr.io/dhoeric/features/google-cloud-cli:1": {},
+		"ghcr.io/joshuanianji/devcontainer-features/gcloud-cli-persistence:1": {}
 	},
 
 	// "mounts": [
@@ -64,7 +66,8 @@
 				"Gruntfuggly.todo-tree",
 				"redhat.vscode-xml",
 				"redhat.vscode-yaml",
-				"matheusq94.TFS"
+				"matheusq94.TFS",
+				"GoogleCloudTools.cloudcode"
 			]
 		}
 	},

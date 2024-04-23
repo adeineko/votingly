@@ -15,3 +15,7 @@
 ### Build and run instructions (cmd)
 
 !! TODO !!
+
+Terraform Usage and info:
+
+https://gitlab.com/kdg-ti/integration-4/2023-2024/team-9/int4t9/-/wikis/home/Infrastructure-as-Code-(Iac)-Terraform-to-Google-Cloud
