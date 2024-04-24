@@ -5,9 +5,11 @@
 .container-xl {
     background: red;
 }
+
 .navbar-brand .heart-icon {
     color: black;
 }
+
 .h1 {
     font-family: 'Syne', sans-serif !important;
 }
@@ -17,3 +19,4 @@ img {
     height: auto;
     transform: scaleX(-1);
 }
+
