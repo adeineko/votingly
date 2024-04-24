@@ -1,9 +1,9 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.2'
+    id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'org.hibernate.orm' version '6.4.1.Final'
-    id 'org.graalvm.buildtools.native' version '0.9.28'
+    id 'org.graalvm.buildtools.native' version '0.10.1'
 }
 
 group = 'be.kdg.team9'
@@ -11,7 +11,20 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     sourceCompatibility = '17'
+    version = '17.0.10'
 }
+
+// application {
+//   // Define the main class for the application.
+// //   mainClass = 'be.kdg.team9.integration4.Integration4Application'
+//   mainClass.set("be.kdg.team9.integration4.Integration4Application")
+// }
+
+// jar {
+//     manifest {
+//         attributes 'Main-Class': application.mainClass
+//     }
+// }
 
 configurations {
     compileOnly {
@@ -39,7 +52,7 @@ dependencies {
 //    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.webjars:bootstrap:5.3.2'
+    // runtimeOnly 'org.webjars:bootstrap:5.3.2'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -57,5 +70,11 @@ hibernate {
     enhancement {
         enableAssociationManagement = true
     }
+}
+
+bootBuildImage {
+    imageName = 'registry.gitlab.com/kdg-ti/integration-4/2023-2024/team-9/int4t9/' + rootProject.name.toLowerCase() + ':' + version.toLowerCase()
+    cleanCache = true
+    publish = true
 }
 

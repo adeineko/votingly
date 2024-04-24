@@ -56,7 +56,6 @@
 				"vscjava.vscode-java-dependency",
 				"VisualStudioExptTeam.vscodeintellicode",
 				"redhat.fabric8-analytics",
-				"bierner.markdown-preview-github-styles",
 				"hashicorp.terraform",
 				"oderwat.indent-rainbow",
 				"yzhang.markdown-all-in-one",
@@ -67,7 +66,10 @@
 				"redhat.vscode-xml",
 				"redhat.vscode-yaml",
 				"matheusq94.TFS",
-				"GoogleCloudTools.cloudcode"
+				"GoogleCloudTools.cloudcode",
+				"naco-siren.gradle-language",
+				"GitHub.copilot",
+				"GitHub.copilot-chat"
 			]
 		}
 	},

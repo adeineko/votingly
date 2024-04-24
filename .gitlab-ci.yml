@@ -7,9 +7,14 @@ stages:
   - deploy
 
 build-job:
+  before_install:
+    # login to registry
+    - docker login registry.gitlab.com
   stage: build
   script:
     - echo "Starting build"
+    - ./gradlew bootBuildImage
+    - docker push registry.gitlab.com/kdg-ti/integration-4/2023-2024/team-9/int4t9
 
 test-job:
   stage: test
