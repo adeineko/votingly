@@ -40,8 +40,9 @@ class SurveysControllerTest {
     @Test
     public void getQuestionsOfSurveyShouldReturnIsOkWIthQuestions() throws Exception {
         mockMvc.perform(
-                        get("/api/surveys/{id}/questions", 2).accept(MediaType.APPLICATION_JSON)
+                        get("/api/surveys/{id}/questions", 1).accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+                .andExpect(jsonPath("$.length()").value(1))
+                .andDo(print());
     }
 }

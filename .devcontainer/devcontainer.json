@@ -25,7 +25,10 @@
 			"ppa": true,
 			"version": "os-provided"
 		},
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/devcontainers/features/terraform:1": {},
+		"ghcr.io/dhoeric/features/google-cloud-cli:1": {},
+		"ghcr.io/joshuanianji/devcontainer-features/gcloud-cli-persistence:1": {}
 	},
 
 	// "mounts": [
@@ -42,8 +45,6 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				// "ms-azuretools.vscode-docker", // Docker - https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker
-				// "mongodb.mongodb-vscode",
 				"cweijan.vscode-postgresql-client2",
 				"vmware.vscode-spring-boot",
 				"vscjava.vscode-spring-initializr",
@@ -51,15 +52,24 @@
 				"redhat.java",
 				"vscjava.vscode-java-debug",
 				"vscjava.vscode-java-test",
-				// "vscjava.vscode-maven",
 				"vscjava.vscode-gradle",
 				"vscjava.vscode-java-dependency",
 				"VisualStudioExptTeam.vscodeintellicode",
 				"redhat.fabric8-analytics",
-				"bierner.markdown-preview-github-styles"
-				// "ms-kubernetes-tools.vscode-kubernetes-tools", // Kubernetes - Develop, deploy and debug Kubernetes applications https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools
-				// "ipedrazas.kubernetes-snippets", // Kubernetes Support - Code snippets for kubernetes https://marketplace.visualstudio.com/items?itemName=ipedrazas.kubernetes-snippets
-				// "lunuan.kubernetes-templates" // Name: Kubernetes Templates https://marketplace.visualstudio.com/items?itemName=lunuan.kubernetes-templates
+				"hashicorp.terraform",
+				"oderwat.indent-rainbow",
+				"yzhang.markdown-all-in-one",
+				"esbenp.prettier-vscode",
+				"chrmarti.regex",
+				"Larrito.status-bar-permission-bits",
+				"Gruntfuggly.todo-tree",
+				"redhat.vscode-xml",
+				"redhat.vscode-yaml",
+				"matheusq94.TFS",
+				"GoogleCloudTools.cloudcode",
+				"naco-siren.gradle-language",
+				"GitHub.copilot",
+				"GitHub.copilot-chat"
 			]
 		}
 	},

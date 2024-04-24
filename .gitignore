@@ -5,6 +5,10 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Environment ###
+.local/
+.env.local
+
 ### STS ###
 .apt_generated
 .classpath
@@ -35,4 +39,14 @@ out/
 
 ### VS Code ###
 .vscode/
-# .devcontainer/
+
+### Deployment ###
+deploy/*.creds/
+deploy/*terraform*
+deploy/*/*terraform*
+
+### Node ###
+node_modules/
+
+### Other ###
+db/
