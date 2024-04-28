@@ -1,9 +1,9 @@
 package be.kdg.team9.integration4.controller.api.dto;
 
 import be.kdg.team9.integration4.model.QuestionType;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+// import jakarta.persistence.Column;
+// import jakarta.persistence.EnumType;
+// import jakarta.persistence.Enumerated;
 
 public class QuestionDto {
     private long id;
