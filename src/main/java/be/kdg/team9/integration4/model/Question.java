@@ -1,7 +1,7 @@
 package be.kdg.team9.integration4.model;
 
-import be.kdg.team9.integration4.model.Survey;
-import be.kdg.team9.integration4.model.QuestionType;
+// import be.kdg.team9.integration4.model.Survey;
+// import be.kdg.team9.integration4.model.QuestionType;
 import jakarta.persistence.*;
 
 import java.util.List;

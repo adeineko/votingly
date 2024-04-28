@@ -2,9 +2,9 @@ package be.kdg.team9.integration4.controller.api.dto;
 
 import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.QuestionType;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+// import jakarta.persistence.Column;
+// import jakarta.persistence.EnumType;
+// import jakarta.persistence.Enumerated;
 
 import java.util.List;
 
