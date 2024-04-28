@@ -17,8 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-// @ActiveProfiles("test")
-@ActiveProfiles("testcontainer")
+ @ActiveProfiles("test")
+//@ActiveProfiles("testcontainer")
 @AutoConfigureMockMvc
 class SurveysControllerTest {
     @Autowired

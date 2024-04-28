@@ -1,7 +1,7 @@
 //package be.kdg.team9.integration4.controller.api;
 //
 //import be.kdg.team9.integration4.controller.api.dto.OptionDto;
-//import be.kdg.team9.integration4.controller.api.dto.QuestionDto;
+//import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
 //import be.kdg.team9.integration4.model.ChoiceQuestion;
 //import be.kdg.team9.integration4.service.OptionService;
 //import org.modelmapper.ModelMapper;

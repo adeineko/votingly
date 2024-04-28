@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * */
 
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping ("/api/account")
 public class AccountsController {
     private final UserService userService;
     private final ModelMapper modelMapper;

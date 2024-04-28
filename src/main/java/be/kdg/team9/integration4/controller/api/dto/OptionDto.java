@@ -1,6 +1,7 @@
 package be.kdg.team9.integration4.controller.api.dto;
 
 import be.kdg.team9.integration4.model.ChoiceQuestion;
+import be.kdg.team9.integration4.model.Option;
 
 public class OptionDto {
 
@@ -18,6 +19,10 @@ public class OptionDto {
         this.optionText = optionText;
         this.question = question;
     }
+
+    public OptionDto(Option option) {
+    }
+
 
     public long getOptionId() {
         return optionId;

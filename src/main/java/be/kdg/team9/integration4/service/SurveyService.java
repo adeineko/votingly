@@ -5,12 +5,9 @@ import be.kdg.team9.integration4.repositories.FindAllQuestionBySurveyId;
 import be.kdg.team9.integration4.repositories.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-<<<<<<< HEAD
-=======
-// import java.util.Optional;
->>>>>>> 78d8a2388986020229825b5881f2695de3e6c3e5
 
 @Service
 public class SurveyService {
@@ -30,12 +27,7 @@ public class SurveyService {
         return surveyRepository.findBySurveyId(surveyId);
     }
 
-    //    @Transactional
-//    public Survey getQuestionOfSurvey(long surveyId) {
-//        return surveyRepository.getQuestionOfSurvey(surveyId).orElse(null);
-//    }
-
-
+    @Transactional
     public List<Long> getQuestionsOfSurvey(long id) {
         return surveyRepository.getQuestionIdsBySurveyId(id);
     }
