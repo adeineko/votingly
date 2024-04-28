@@ -18,22 +18,23 @@ public class AccountController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/page")
     public String getAccountPage() {
         return "account";
     }
 
-    @GetMapping("/{id}")  // Updated mapping to include the full path
-    public ModelAndView getOneUser(@PathVariable long id) {
+    @GetMapping  // Updated mapping to include the full path
+    public ModelAndView getOneUser(@RequestParam("id") long id) {
         var oneUser = userService.getUserById(id);
         var mav = new ModelAndView();
-        mav.setViewName("account");
-        mav.addObject("one_user", new UserDto(
+        mav.setViewName("navbar");
+        mav.addObject("account", new UserDto(
                 oneUser.getId(),
                 oneUser.getFirstName(),
                 oneUser.getLastName(),
                 oneUser.getEmail()
         ));
+        mav.setViewName("account");
         return mav;
     }
 }

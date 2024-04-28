@@ -26,7 +26,7 @@ async function fetchFirstQuestion() {
 
 async function fetchNextQuestion() {
     currentQuestionIndex++;
-    // Fetch the next question from the server
+    // Fetch the next question
     if (currentQuestionIndex < questions.length) {
         // If there are more questions, fetch the next one
         displayQuestion(questions[currentQuestionIndex]);
@@ -52,6 +52,7 @@ function createMultipleChoiceQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
     questionDiv.innerHTML = `
+
         <div class="card-body">
             <label>${question.questionName}</label>
             <select>
@@ -65,11 +66,32 @@ function createMultipleChoiceQuestion(question) {
 function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
+    let optionsHTML = '';
+    for (let i = question.min; i <= question.max; i += question.step) {
+        optionsHTML += `<option value="${i}" label="${i}"></option>`;
+    }
     questionDiv.innerHTML = `
+    <style>
+        datalist {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            writing-mode: horizontal-tb;
+            width: 525px;
+        }
+        
+        input[type="range"] {
+            width: 500px;
+            margin: 0;
+        }
+    </style>
         <div class="card-body">
-            <label>${question.questionName}</label>
-            <input type="range" min="${question.min}" max="${question.max}" step="${question.step}">
+            <label for="range_q">${question.questionName}</label><br/>
+            <input type="range" name="range_q" min="${question.min}" max="${question.max}" list="markers" step="${question.step}"/>
         </div>
+        <datalist id="markers">
+              ${optionsHTML}
+        </datalist>
     `;
     return questionDiv;
 }
@@ -115,7 +137,7 @@ function displayQuestion(question) {
     questionsContainer.innerHTML = '';
     let questionElement;
     switch (question.questionType) {
-        case "MULTIPLE_CHOICE":
+        case "CHOICE":
             questionElement = createMultipleChoiceQuestion(question);
             break;
         case "OPEN":

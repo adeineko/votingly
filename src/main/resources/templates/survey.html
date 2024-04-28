@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div th:replace="navbar.html"></div>
+    <div th:replace="~{navbar::navbar}"></div>
 
     <input type="hidden" id="surveyName" th:value="${survey.surveyName}">
     <input type="hidden" id="surveyId" th:value="${survey.surveyId}">

@@ -27,4 +27,5 @@ Content-Type: application/json
 
 ### Get account page
 GET http://localhost:8080/account/1
-Cookie: JSESSIONID=2FBFDE3520E1639BE82B35D6A99A94D5
+Cookie: JSESSIONID=DBCE5E300402E645B209C5ED1EBCEBB0
+X-Csrf-Token: Y8u8TttsY8XFSrsjCoqlTWpAomezUHGk74sVk_wMTKo3pINvV_qNLegPUaHoLIkXOaeRLl9xj1-BaRCJjLJwp8lqdJMCkuAL

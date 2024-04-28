@@ -10,18 +10,26 @@ public class QuestionDto {
 
     private String questionName;
 
-    QuestionType questionType;
+    private QuestionType questionType;
 
     long surveyId;
+
+    private int min;
+    private int max;
+    private int step;
+
 
     public QuestionDto() {
     }
 
-    public QuestionDto(long id, String questionName, QuestionType questionType, long surveyId) {
+    public QuestionDto(long id, String questionName, QuestionType questionType, long surveyId, int min, int max, int step) {
         this.id = id;
         this.questionName = questionName;
         this.questionType = questionType;
         this.surveyId = surveyId;
+        this.min = min;
+        this.max = max;
+        this.step = step;
     }
 
     public long getId() {
@@ -54,5 +62,29 @@ public class QuestionDto {
 
     public void setSurveyId(long surveyId) {
         this.surveyId = surveyId;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
     }
 }
