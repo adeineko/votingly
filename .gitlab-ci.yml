@@ -6,17 +6,7 @@ stages:
   - test
   - deploy
 
-# build-job:
-#   before_install:
-#     # login to registry
-#     - docker login registry.gitlab.com
-#   stage: build
-#   script:
-#     - echo "Starting build"
-#     - ./gradlew bootBuildImage
-#     - docker push registry.gitlab.com/kdg-ti/integration-4/2023-2024/team-9/int4t9
-
-gradle-build:
+build-job:
   image: gradle:8.7-jdk17-alpine
   stage: build
   script:
@@ -30,7 +20,7 @@ test-job:
   script:
     - echo "testing"
   dependencies:
-    - gradle-build
+    - build-job
 
 deploy-job:
   image: docker:latest
@@ -39,10 +29,12 @@ deploy-job:
         - name: docker:dind
   script:
     - echo  "Deploy"
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
   dependencies:
-    - test-job
-  only:
-    - prod
+    - build-job
+  when: on_success
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"
+
