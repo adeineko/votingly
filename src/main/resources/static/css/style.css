@@ -20,3 +20,87 @@ img {
     transform: scaleX(-1);
 }
 
+.authentication{
+    color: #000000A6;
+}
+
+.container-fluid{
+    padding: 0;
+    margin: 0;
+}
+
+.cont{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    justify-content: center;
+    justify-items: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #f3f3f3;
+
+    border-radius: 5em;
+
+    width: 55em;
+    height: 30em;
+
+    box-shadow: 0 0 20px 26px rgba(0, 0, 0, 0.19)
+}
+
+.goodJob{
+    font-size: 2em;
+    padding: 0.3em;
+    font-weight: lighter;
+}
+
+.name{
+    font-weight: bold;
+}
+
+.text{
+    padding: 1em 10em 1em 10em;
+    text-align: center;
+    color: #76756C;
+    font-size: 1.1em;
+}
+
+.button button{
+    border-radius: 0.7em;
+    border-color: #D6E2F5;
+    background-color: #D6E2F5;
+    padding: 0.4em;
+    margin: 0.3em 0 0 0;
+    font-size: 1.3em;
+}
+
+.gg-check-o {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 5em;
+    height: 5em;
+    border: 2px solid #EE5B3D;
+    background-color: #EE5B3D;
+    border-radius: 100px;
+}
+.gg-check-o::after {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    left: 16px;
+    top: -1px;
+    width: 1.3em;
+    height: 2.5em;
+    border-color: #fff;
+    border-width: 0 8px 7px 0;
+    border-style: solid;
+    border-radius: 45px 10px 10px 10px;
+    transform-origin: bottom left;
+    transform: rotate(45deg)
+}
+

@@ -1,9 +1,9 @@
 package be.kdg.team9.integration4.controller.api.dto;
 
 import be.kdg.team9.integration4.model.Question;
-import jakarta.persistence.*;
+// import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+// import jakarta.validation.constraints.NotNull;
 
 public class NewOpenAnswer {
     private long answerId;
