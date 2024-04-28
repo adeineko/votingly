@@ -1,9 +1,12 @@
 package be.kdg.team9.integration4.controller.api.dto;
 
+import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.QuestionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+
+import java.util.List;
 
 public class QuestionDto {
     private long id;
@@ -18,11 +21,21 @@ public class QuestionDto {
     private int max;
     private int step;
 
+    private boolean isMultiChoice;
+    private List<OptionDto> options;
+
 
     public QuestionDto() {
     }
 
-    public QuestionDto(long id, String questionName, QuestionType questionType, long surveyId, int min, int max, int step) {
+    public QuestionDto(long id,
+                       String questionName,
+                       QuestionType questionType,
+                       long surveyId,
+                       int min, int max,
+                       int step,
+                       boolean isMultiChoice,
+                       List<OptionDto> options) {
         this.id = id;
         this.questionName = questionName;
         this.questionType = questionType;
@@ -30,6 +43,8 @@ public class QuestionDto {
         this.min = min;
         this.max = max;
         this.step = step;
+        this.isMultiChoice = isMultiChoice;
+        this.options = options;
     }
 
     public long getId() {
@@ -86,5 +101,21 @@ public class QuestionDto {
 
     public void setStep(int step) {
         this.step = step;
+    }
+
+    public boolean isMultiChoice() {
+        return isMultiChoice;
+    }
+
+    public void setMultiChoice(boolean multiChoice) {
+        isMultiChoice = multiChoice;
+    }
+
+    public List<OptionDto> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<OptionDto> options) {
+        this.options = options;
     }
 }

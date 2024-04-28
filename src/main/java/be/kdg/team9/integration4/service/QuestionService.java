@@ -20,7 +20,11 @@ public class QuestionService {
         return questionsRepository.findAllQuestions();
     }
 
-    public Question getQuestion(long id){
+    public Question getQuestion(long id) {
         return questionsRepository.findById(id).orElse(null);
+    }
+
+    public List<Question> findAllQuestionById(long id) {
+        return questionsRepository.findAllBySurveyIdFetched(id);
     }
 }

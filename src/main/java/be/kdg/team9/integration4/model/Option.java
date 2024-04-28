@@ -3,7 +3,7 @@ package be.kdg.team9.integration4.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "options")
+@Table(name = "option")
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,16 +12,17 @@ public class Option {
     @Column(name = "option_text")
     private String optionText;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "range_question_id")
-//    private RangeQuestion option;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question", nullable = false)
+    private ChoiceQuestion question;
 
     public Option() {
     }
 
-    public Option(long optionId, String optionText) {
+    public Option(long optionId, String optionText, ChoiceQuestion question) {
         this.optionId = optionId;
         this.optionText = optionText;
+        this.question = question;
     }
 
     public long getOptionId() {
@@ -40,11 +41,11 @@ public class Option {
         this.optionText = optionText;
     }
 
-//    public RangeQuestion getRangeOption() {
-//        return option;
-//    }
-//
-//    public void setRangeOption(RangeQuestion rangeOption) {
-//        this.option = option;
-//    }
+    public ChoiceQuestion getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(ChoiceQuestion question) {
+        this.question = question;
+    }
 }

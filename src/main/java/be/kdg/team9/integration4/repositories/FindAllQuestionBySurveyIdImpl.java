@@ -7,7 +7,7 @@ import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 
-public class CustomizedFindAllQuestionByFlowIdFetchedImpl implements FindAllQuestionBySurveyIdRepo {
+public class FindAllQuestionBySurveyIdImpl implements FindAllQuestionBySurveyId {
     @PersistenceContext
     private EntityManager entityManager;
 
