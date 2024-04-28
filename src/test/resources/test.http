@@ -27,8 +27,13 @@ Content-Type: application/json
 
 ### Get account page
 GET http://localhost:8080/account/1
+<<<<<<< HEAD
 Cookie: JSESSIONID=2FBFDE3520E1639BE82B35D6A99A94D5
 
 ### Get options of question
 GET http://localhost:8080/api/optquest/5
 Content-Type: application/json
+=======
+Cookie: JSESSIONID=DBCE5E300402E645B209C5ED1EBCEBB0
+X-Csrf-Token: Y8u8TttsY8XFSrsjCoqlTWpAomezUHGk74sVk_wMTKo3pINvV_qNLegPUaHoLIkXOaeRLl9xj1-BaRCJjLJwp8lqdJMCkuAL
+>>>>>>> 8398056355746ddd64b487c3fb4080429b45c324

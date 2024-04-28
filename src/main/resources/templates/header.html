@@ -35,9 +35,9 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <span class="navbar-text m-2">Welcome, <span sec:authentication="name"></span>!</span>
-                    </li>
+<!--                    <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--                        <span class="navbar-text m-2">Welcome, <span sec:authentication="name"></span>!</span>-->
+<!--                    </li>-->
 
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <form class="d-flex" th:action="@{/logout}" th:method="POST">
