@@ -1,11 +1,9 @@
-package be.kdg.team9.integration4.controller.api.dto;
+package be.kdg.team9.integration4.controller.api.dto.answer;
 
 import be.kdg.team9.integration4.model.Question;
-// import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-// import jakarta.validation.constraints.NotNull;
 
-public class NewOpenAnswer {
+public class NewOpenAnswerDto {
     private long answerId;
     @NotBlank
     private String answer;
@@ -14,10 +12,10 @@ public class NewOpenAnswer {
     private long userId;
     private Question questionId;
 
-    public NewOpenAnswer() {
+    public NewOpenAnswerDto() {
     }
 
-    public NewOpenAnswer(String answer, long surveyId, long userId, Question questionId) {
+    public NewOpenAnswerDto(String answer, long surveyId, long userId, Question questionId) {
         this.answer = answer;
         this.surveyId = surveyId;
         this.userId = userId;

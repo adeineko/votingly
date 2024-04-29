@@ -1,18 +1,18 @@
-package be.kdg.team9.integration4.controller.api.dto;
+package be.kdg.team9.integration4.controller.api.dto.answer;
 
 import be.kdg.team9.integration4.model.Question;
 
-public class AnswerDto {
+public class OpenAnswerDto {
     private long answerId;
     private long surveyId;
     private long userId;
     private Question questionId;
     private String answer;
 
-    public AnswerDto() {
+    public OpenAnswerDto() {
     }
 
-    public AnswerDto(long answerId, long surveyId, long userId, Question questionId, String answer) {
+    public OpenAnswerDto(long answerId, long surveyId, long userId, Question questionId, String answer) {
         this.answerId = answerId;
         this.surveyId = surveyId;
         this.userId = userId;
