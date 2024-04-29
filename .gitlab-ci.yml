@@ -1,5 +1,5 @@
 image:
-  name: "registry.gitlab.com/gitlab-org/terraform-images/releases/v1.8.0:1.8.0"
+  name: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.5:f61b9582b11027bd80fb52ce44d266dc1d75e2dd"
 
 stages:
   - gen_keys
