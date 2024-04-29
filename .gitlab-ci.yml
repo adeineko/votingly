@@ -49,7 +49,7 @@ cache:
   script:
     - gitlab-terraform validate
 
-.terraform:build:
+terraform:build:
   stage: build
   script:
     - gitlab-terraform plan
@@ -58,7 +58,7 @@ cache:
   artifacts:
     # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
     # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
-    public: false
+    # public: false
     paths:
       - ${TF_ROOT}/plan.cache
     reports:
