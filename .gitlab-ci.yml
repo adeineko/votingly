@@ -23,8 +23,8 @@ workflow:
       when: always
 
 stages:
-  - build
   - test
+  - build
   - deploy
   - destroy
   - cleanup
