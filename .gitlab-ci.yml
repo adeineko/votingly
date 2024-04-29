@@ -20,7 +20,7 @@ cache:
   paths:
     - ${TF_ROOT}/.terraform/
 
-gen_keys:
+.gen_keys:
   image: bash:latest
   stage: gen_keys
   script:
@@ -30,6 +30,7 @@ gen_keys:
     - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
   artifacts:
     name: keys
+    public: false
     expire_in: "1 day"
     paths:
       - deploy/.creds
@@ -45,7 +46,31 @@ gen_keys:
   script:
     - gitlab-terraform validate
 
-terraform-build:
-  stage: tf_plan
+.terraform:build:
+  stage: build
   script:
     - gitlab-terraform plan
+    - gitlab-terraform plan-json
+  resource_group: ${TF_STATE_NAME}
+  artifacts:
+    # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
+    # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
+    public: false
+    paths:
+      - ${TF_ROOT}/plan.cache
+    reports:
+      terraform: ${TF_ROOT}/plan.json
+
+terraform:deploy:
+  stage: deploy
+  script:
+    - gitlab-terraform apply
+  resource_group: ${TF_STATE_NAME}
+  # when: manual
+
+terraform:destroy:
+  stage: cleanup
+  script:
+    - gitlab-terraform destroy
+  resource_group: ${TF_STATE_NAME}
+  when: manual
