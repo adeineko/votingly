@@ -1,0 +1,95 @@
+# image:
+#   name: hashicorp/terraform:light
+services:
+  - postgres:15.5-alpine3.17
+
+variables:
+  POSTGRES_DB: int4t9
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: Student1234
+  POSTGRES_HOST_AUTH_METHOD: trust
+  SPRING_PROFILES_ACTIVE: testci
+
+cache:
+  paths:
+    - ~/.gradle/wrapper
+    - ~/.gradle/caches
+
+workflow:
+  rules:
+    # Run the pipeline only on merge request to prod branch
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event" || $CI_COMMIT_BRANCH != "prod"
+      when: never
+    - when: always
+
+stages:
+  - test
+  - build
+  - dockerize
+  - deploy
+  - destroy
+  - cleanup
+
+test-job:
+  image: gradle:8.7-jdk17-alpine
+  stage: test
+  script:
+    - echo "Running tests.."
+    - echo "$SPRING_PROFILES_ACTIVE"
+    - ./gradlew -PspringProfilesActiveTests=$SPRING_PROFILES_ACTIVE check
+
+gradle-build:
+  image: gradle:8.7-jdk17-alpine
+  # image: eclipse-temurin:17.0.10_7-jdk-alpine
+  stage: build
+  # Run the job only when jobs in earlier stages dont fail
+  when: on_success
+  script:
+    - echo "Building jar file.."
+    - ./gradlew clean bootJar
+  artifacts:
+    paths:
+      - "build/libs/*.jar"
+
+dockerize-job:
+  image: docker:latest
+  stage: dockerize
+  services:
+    - name: docker:dind
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - echo "Building docker image.."
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
+  dependencies:
+    - gradle-build
+  # only: # deprecated
+  #   - prod
+  # rules:
+  #   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    # - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Deploy"
+  when: manual
+  # only: # deprecated
+  #   - prod
+
+destroy-job:
+  stage: destroy
+  script:
+    - echo "Destroy"
+  when: manual
+  # only:
+  #   - prod
+
+cleanup-job:
+  image: gradle:8.7-jdk17-alpine
+  stage: cleanup
+  script:
+    - echo "Cleaning up.."
+    - ./gradlew clean
+  when: always

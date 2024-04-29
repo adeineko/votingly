@@ -1,95 +1,46 @@
-# image:
-#   name: hashicorp/terraform:light
-services:
-  - postgres:15.5-alpine3.17
+stages:
+  - gen_keys
+  - tf_plan
+  - tf_apply
+  - ans_config
+  - tf_destroy
 
 variables:
-  POSTGRES_DB: int4t9
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: Student1234
-  POSTGRES_HOST_AUTH_METHOD: trust
-  SPRING_PROFILES_ACTIVE: testci
+  ENVIRONMENT: "prod"
+  TF_ADDRESS: https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/terraform/state/votingly-tf
 
-cache:
-  paths:
-    - ~/.gradle/wrapper
-    - ~/.gradle/caches
-
-workflow:
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push"
-      when: never
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-
-stages:
-  - test
-  - build
-  - dockerize
-  - deploy
-  - destroy
-  - cleanup
-
-test-job:
-  image: gradle:8.7-jdk17-alpine
-  stage: test
+gen_keys:
+  image: bash:latest
+  stage: gen_keys
   script:
-    - echo "Running tests.."
-    - echo "$SPRING_PROFILES_ACTIVE"
-    - ./gradlew -PspringProfilesActiveTests=$SPRING_PROFILES_ACTIVE check
-
-gradle-build:
-  image: gradle:8.7-jdk17-alpine
-  # image: eclipse-temurin:17.0.10_7-jdk-alpine
-  stage: build
-  # Run the job only when jobs in earlier stages dont fail
-  when: on_success
-  script:
-    - echo "Building jar file.."
-    - ./gradlew clean bootJar
+    - apk update && apk add openssh-client
+    - mkdir deploy/.creds && cd deploy/.creds
+    - base64 -d $SA_GCP > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
+    - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
   artifacts:
+    name: keys
+    expire_in: "1 day"
     paths:
-      - "build/libs/*.jar"
+      - deploy/.creds
 
-dockerize-job:
-  image: docker:latest
-  stage: dockerize
-  services:
-    - name: docker:dind
+.provision:
   script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - echo "Building docker image.."
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
-    - docker push $CI_REGISTRY_IMAGE:latest
-  dependencies:
-    - gradle-build
-  # only: # deprecated
-  #   - prod
-  # rules:
-  #   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    # - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"
+    - >
+        terraform init
+        -backend-config="address=${TF_ADDRESS}"
+        -backend-config="lock_address=${TF_ADDRESS}/lock"
+        -backend-config="unlock_address=${TF_ADDRESS}/lock"
+        -backend-config="username=gitlab-ci-token"
+        -backend-config="password=${CI_JOB_TOKEN}"
+        -backend-config="lock_method=POST"
+        -backend-config="unlock_method=DELETE"
+        -backend-config="retry_wait_min=5"
 
-deploy-job:
-  stage: deploy
+dry_provision:
+  image:
+    name: hashicorp/terraform:light
+  stage: tf_plan
+  extends: .provision
   script:
-    - echo "Deploy"
-  when: manual
-  # only: # deprecated
-  #   - prod
-
-destroy-job:
-  stage: destroy
-  script:
-    - echo "Destroy"
-  when: manual
-  # only:
-  #   - prod
-
-cleanup-job:
-  image: gradle:8.7-jdk17-alpine
-  stage: cleanup
-  script:
-    - echo "Cleaning up.."
-    - ./gradlew clean
-  when: always
+    - terraform validate
+    - terraform plan
