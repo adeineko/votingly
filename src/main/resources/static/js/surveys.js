@@ -1,18 +1,11 @@
-<<<<<<< HEAD
-// import {header, token} from "/util/csrf.js";
-=======
 import { header, token } from "./util/csrf.js";
->>>>>>> bbe500ec1b4f2521c0a170ca7fdb10afad9d074a
 
 async function getSurveys() {
     const response = await fetch('/api/surveys', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-<<<<<<< HEAD
-=======
             [header]: token
->>>>>>> bbe500ec1b4f2521c0a170ca7fdb10afad9d074a
         }
     });
 

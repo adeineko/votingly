@@ -1,14 +1,11 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
-import be.kdg.team9.integration4.controller.api.dto.OptionDto;
-import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.Question;
 import be.kdg.team9.integration4.model.QuestionType;
 // import jakarta.persistence.Column;
 // import jakarta.persistence.EnumType;
 // import jakarta.persistence.Enumerated;
 
-import java.util.List;
 
 public class QuestionDto {
     private long id;

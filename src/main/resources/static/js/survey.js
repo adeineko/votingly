@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-// import {header, token} from "/util/csrf.js";
-=======
 import { header, token } from "./util/csrf.js";
->>>>>>> bbe500ec1b4f2521c0a170ca7fdb10afad9d074a
 
 const questionsContainer = document.getElementById("questionsContainer");
 const nameContainer = document.getElementById("nameContainer");
@@ -21,10 +17,8 @@ async function fetchFirstQuestion() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-<<<<<<< HEAD
-=======
                 [header]: token
->>>>>>> bbe500ec1b4f2521c0a170ca7fdb10afad9d074a
+
             }
         });
     if (response.status === 200) {
@@ -120,11 +114,7 @@ async function saveAnswer() {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-<<<<<<< HEAD
-                // [header]: token
-=======
                 [header]: token
->>>>>>> bbe500ec1b4f2521c0a170ca7fdb10afad9d074a
             },
             body: JSON.stringify(
                 {

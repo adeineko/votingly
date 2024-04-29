@@ -1,11 +1,9 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
-import be.kdg.team9.integration4.controller.api.dto.OptionDto;
 import be.kdg.team9.integration4.model.ChoiceQuestion;
 import be.kdg.team9.integration4.model.QuestionType;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChoiceDto extends QuestionDto {
 

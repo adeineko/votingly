@@ -1,31 +1,33 @@
-package be.kdg.team9.integration4.controller.api.dto;
+package be.kdg.team9.integration4.controller.api.dto.answer;
 
 import be.kdg.team9.integration4.model.Question;
+import jakarta.validation.constraints.NotBlank;
 
-public class AnswerDto {
+public class NewOpenAnswerDto {
     private long answerId;
+    @NotBlank
+    private String answer;
+
     private long surveyId;
     private long userId;
     private Question questionId;
-    private String answer;
 
-    public AnswerDto() {
+    public NewOpenAnswerDto() {
     }
 
-    public AnswerDto(long answerId, long surveyId, long userId, Question questionId, String answer) {
-        this.answerId = answerId;
+    public NewOpenAnswerDto(String answer, long surveyId, long userId, Question questionId) {
+        this.answer = answer;
         this.surveyId = surveyId;
         this.userId = userId;
         this.questionId = questionId;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public long getAnswerId() {
-        return answerId;
-    }
-
-    public void setAnswerId(long answerId) {
-        this.answerId = answerId;
     }
 
     public long getSurveyId() {
@@ -50,13 +52,5 @@ public class AnswerDto {
 
     public void setQuestionId(Question questionId) {
         this.questionId = questionId;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
     }
 }

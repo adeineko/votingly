@@ -12,7 +12,8 @@ GET http://localhost:8080/surveys/1/questions
 POST http://localhost:8080/api/answers/open
 Accept: application/json
 Content-Type: application/json
-Cookie: JSESSIONID=C9A77CCE81736B16343F276E8D14DA5D
+Cookie: JSESSIONID=685BEAC359D214787CB9C262314D9C43
+X-CSRF-TOKEN:YgffvHhQIX7FTT_L9HMfKGaZAoS08Gc9MJ_n0cbJtMOmzpHeUTK5ikFpQhzoLAv7zF4rH1f6L72GkVcQBa2D5KCrh_qU9_Dp
 
 {
   "answer": "This is an answer2",

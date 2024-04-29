@@ -1,7 +1,7 @@
 package be.kdg.team9.integration4.service;
 
-// import be.kdg.team9.integration4.controller.api.dto.AnswerDto;
-// import be.kdg.team9.integration4.controller.api.dto.NewOpenAnswer;
+// import be.kdg.team9.integration4.controller.api.dto.answer.AnswerDto;
+// import be.kdg.team9.integration4.controller.api.dto.answer.NewOpenAnswer;
 
 import be.kdg.team9.integration4.model.Answer;
 import be.kdg.team9.integration4.model.OpenAnswer;

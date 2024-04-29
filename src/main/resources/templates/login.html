@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Login and Signup Form </title>
+    <title> Login</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -15,13 +15,14 @@
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <script src="/js/register.js" type="module"></script>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Syne', sans-serif;
         }
-        .container{
+
+        .container {
             height: 100vh;
             width: 100%;
             display: flex;
@@ -30,42 +31,26 @@
             background-color: #4070f4;
             column-gap: 30px;
         }
-        header{
+
+        header {
             font-size: 28px;
             font-weight: 600;
             color: #232836;
             text-align: center;
         }
-        form{
+
+        form {
             margin-top: 30px;
         }
 
     </style>
+
 
 </head>
 <body>
 
 <!--<header th:replace="~{header :: header}"></header>-->
 
-<<<<<<< HEAD
-<main class="container">
-    <h1>Sign in</h1>
-    <form th:action="@{/login}" method="post">
-        <div class="pb-3">
-            <label for="username" class="form-label">Username</label>
-            <input name="username" id="username" class="form-control" type="text">
-        </div>
-        <div class="pb-3">
-            <label for="password" class="form-label">Password</label>
-            <input name="password" id="password" class="form-control" type="password">
-        </div>
-        <div>
-            <button id="signinButton" type="submit" class="btn btn-primary">Sign in</button>
-<!--            <a class="linkReg">Do not have an account? <a th:href="@{/registration}">Register!</a></a>-->
-        </div>
-    </form>
-</main>
-=======
 <section class="container forms">
     <div class="form login">
         <div class="form-content">
@@ -74,7 +59,6 @@
                 <div class="field input-field">
                     <input type="text" placeholder="User Name" name="username" id="username" class="input">
                 </div>
->>>>>>> bbe500ec1b4f2521c0a170ca7fdb10afad9d074a
 
                 <div class="field input-field">
                     <input type="password" placeholder="Password" class="password" name="password" id="password">
