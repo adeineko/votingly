@@ -30,9 +30,11 @@ stages:
   - cleanup
 
 test-job:
+  image: gradle:8.7-jdk17-alpine
   stage: test
   script:
     - echo "Running tests.."
+    - echo "$SPRING_PROFILES_ACTIVE"
     - ./gradlew -PspringProfilesActiveTests=$SPRING_PROFILES_ACTIVE check
 
 gradle-build:
@@ -60,8 +62,8 @@ dockerize-job:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
   dependencies:
     - gradle-build
-  only: # deprecated
-    - prod
+  # only: # deprecated
+  #   - prod
   # rules:
   #   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     # - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"
@@ -71,18 +73,19 @@ deploy-job:
   script:
     - echo "Deploy"
   when: manual
-  only: # deprecated
-    - prod
+  # only: # deprecated
+  #   - prod
 
 destroy-job:
   stage: destroy
   script:
     - echo "Destroy"
   when: manual
-  only:
-    - prod
+  # only:
+  #   - prod
 
 cleanup-job:
+  image: gradle:8.7-jdk17-alpine
   stage: cleanup
   script:
     - echo "Cleaning up.."
