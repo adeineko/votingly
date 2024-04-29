@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css?family=Syne&display=swap" rel="stylesheet"/>
     <link href='https://unpkg.com/css.gg@2.0.0/icons/css/check-o.css' rel='stylesheet'>
     <link rel="stylesheet" href="/css/style.css">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <style>
         body{
             background-color: #0C6EFD;
