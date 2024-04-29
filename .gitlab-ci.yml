@@ -4,7 +4,10 @@ image:
 stages:
   - gen_keys
   - validate
-  - tf_plan
+  - build
+  - deploy
+  - cleanup
+  # - tf_plan
   # - tf_apply
   # - ans_config
   # - tf_destroy
