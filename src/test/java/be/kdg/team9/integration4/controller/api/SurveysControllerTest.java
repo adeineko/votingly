@@ -44,7 +44,7 @@ class SurveysControllerTest {
         mockMvc.perform(
                         get("/api/surveys/{id}/questions", 3).accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$.length()").value(2))
                 .andDo(print());
     }
 }
