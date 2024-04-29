@@ -8,7 +8,6 @@ import be.kdg.team9.integration4.model.ChoiceQuestion;
 import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.Question;
 import be.kdg.team9.integration4.model.RangeQuestion;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 

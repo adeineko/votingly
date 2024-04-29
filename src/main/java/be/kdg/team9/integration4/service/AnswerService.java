@@ -2,6 +2,7 @@ package be.kdg.team9.integration4.service;
 
 // import be.kdg.team9.integration4.controller.api.dto.AnswerDto;
 // import be.kdg.team9.integration4.controller.api.dto.NewOpenAnswer;
+
 import be.kdg.team9.integration4.model.Answer;
 import be.kdg.team9.integration4.model.OpenAnswer;
 import be.kdg.team9.integration4.model.Question;
@@ -16,11 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    private final ModelMapper modelMapper;
 
-    public AnswerService(AnswerRepository answerRepository, ModelMapper modelMapper) {
+    public AnswerService(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Transactional

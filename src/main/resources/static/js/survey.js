@@ -1,3 +1,5 @@
+// import {header, token} from "/util/csrf.js";
+
 const questionsContainer = document.getElementById("questionsContainer");
 const nameContainer = document.getElementById("nameContainer");
 const surveyIdInput = document.getElementById("surveyId");
@@ -14,7 +16,7 @@ async function fetchFirstQuestion() {
         {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             }
         });
     if (response.status === 200) {
@@ -109,7 +111,8 @@ async function saveAnswer() {
             method: 'POST',
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                // [header]: token
             },
             body: JSON.stringify(
                 {
