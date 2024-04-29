@@ -23,7 +23,7 @@ cache:
   paths:
     - ${TF_ROOT}/.terraform/
 
-.gen_keys:
+gen_keys:
   image: bash:latest
   stage: gen_keys
   script:
@@ -33,18 +33,18 @@ cache:
     - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
   artifacts:
     name: keys
-    public: false
+    # public: false
     expire_in: "1 day"
     paths:
       - deploy/.creds
 
-.terraform:fmt:
+terraform:fmt:
   stage: validate
   script:
     - gitlab-terraform fmt
   allow_failure: true
 
-.terraform:validate:
+terraform:validate:
   stage: validate
   script:
     - gitlab-terraform validate
