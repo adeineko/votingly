@@ -1,7 +1,5 @@
 package be.kdg.team9.integration4.service;
 
-import be.kdg.team9.integration4.model.Question;
-import be.kdg.team9.integration4.repositories.FindAllQuestionBySurveyId;
 import be.kdg.team9.integration4.repositories.OptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

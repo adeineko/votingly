@@ -13,3 +13,4 @@ su -c "alias ssha='eval $(ssh-agent) && ssh-add /home/vscode/.ssh/id_rsa'" vscod
 # source ~/.bashrc
 # sudo 
 su -c "ssha" vscode
+su -c "echo springProfilesActiveTests=testcontainer >>  ~/.gradle/gradle.properties" vscode
