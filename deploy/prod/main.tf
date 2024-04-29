@@ -42,3 +42,9 @@ resource "google_compute_instance" "votingly-testing-vm" {
   # Script to run on every boot
   metadata_startup_script = file("../res/startup_cos_https_portal.sh")
 }
+
+# Copy the IP address into a txt file
+resource "local_file" "vm_ip" {
+  content  = google_compute_instance.votingly-testing-vm.network_interface[0].access_config[0].nat_ip
+  filename = "../vm_ip"
+}

@@ -6,6 +6,7 @@ stages:
   - validate
   - build
   - deploy
+  - ansible
   - cleanup
   # - tf_plan
   # - tf_apply
@@ -70,6 +71,30 @@ terraform:deploy:
     - gitlab-terraform apply
   resource_group: ${TF_STATE_NAME}
   # when: manual
+  artifacts:
+    name: vm_ip
+    expire_in: "1 day"
+    paths:
+      - '../vm_ip'
+
+ansible:
+  # image: python:3.9.17-slim-bullseye
+  image: alpinelinux/ansible:latest
+  stage: ansible
+  # allow_failure: true
+  script:
+    # - chmod 750 ansible_files
+    - cd deploy/ansible
+    # - apt-get update && apt-get install ansible -y
+    - ansible --version
+    - ansible-playbook install_nginx.yml
+
+terraform:drydestroy:
+  stage: cleanup
+  script:
+    - gitlab-terraform plan -destroy
+  resource_group: ${TF_STATE_NAME}
+  when: manual
 
 terraform:destroy:
   stage: cleanup
