@@ -8,6 +8,7 @@ import be.kdg.team9.integration4.model.ChoiceQuestion;
 import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.Question;
 import be.kdg.team9.integration4.model.RangeQuestion;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
@@ -27,16 +28,18 @@ public class QuestionDtoConverter {
         return dto;
     }
 
-    private QuestionDto convertChoiceQuestion(ChoiceQuestion question) {
-        ChoiceDto choiceDto = new ChoiceDto();
+    private ChoiceDto convertChoiceQuestion(ChoiceQuestion question) {
+        ChoiceDto choiceDto = new ChoiceDto(question);
         choiceDto.setOptions(question.getOptions().stream()
-                .map(option -> new OptionDto())
+                .map(option -> new OptionDto(
+                        option.getOptionId(),
+                        option.getOptionText()))
                 .collect(Collectors.toList()));
         choiceDto.setMultiChoice(question.isMultiChoice());
         return choiceDto;
     }
 
-    private QuestionDto convertRangeQuestion(RangeQuestion question) {
+    private RangeDto convertRangeQuestion(RangeQuestion question) {
         RangeDto rangeDto = new RangeDto(question);
         rangeDto.setMin(question.getMin());
         rangeDto.setMax(question.getMax());

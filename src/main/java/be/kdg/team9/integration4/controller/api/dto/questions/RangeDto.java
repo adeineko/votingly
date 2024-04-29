@@ -21,8 +21,9 @@ public class RangeDto extends QuestionDto {
 
     public RangeDto() {
     }
+
     public RangeDto(RangeQuestion rangeQuestion) {
-        super(rangeQuestion);
+        super(rangeQuestion.getId(), rangeQuestion.getQuestionName(), rangeQuestion.getQuestionType(), rangeQuestion.getSurvey().getSurveyId());
     }
 
     public int getMin() {

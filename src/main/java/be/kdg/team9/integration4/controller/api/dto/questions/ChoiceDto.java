@@ -2,7 +2,6 @@ package be.kdg.team9.integration4.controller.api.dto.questions;
 
 import be.kdg.team9.integration4.controller.api.dto.OptionDto;
 import be.kdg.team9.integration4.model.ChoiceQuestion;
-import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.QuestionType;
 
 import java.util.List;
@@ -15,12 +14,9 @@ public class ChoiceDto extends QuestionDto {
 
     public ChoiceDto() {
     }
+
     public ChoiceDto(ChoiceQuestion question) {
         super(question.getId(), question.getQuestionName(), question.getQuestionType(), question.getSurvey().getSurveyId());
-        this.isMultiChoice = question.isMultiChoice();
-        this.options = question.getOptions().stream()
-                .map(option -> new OptionDto(option.getOptionId(), option.getOptionText(), option.getQuestion()))
-                .collect(Collectors.toList());
     }
 
     public ChoiceDto(long id, String questionName, QuestionType questionType, long surveyId, boolean isMultiChoice, List<OptionDto> options) {

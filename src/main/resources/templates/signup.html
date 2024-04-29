@@ -6,13 +6,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Login and Signup Form </title>
+    <title> Signup Form </title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 
     <!-- Boxicons CSS -->
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="/js/register.js" type="module"></script>
     <style>
         *{
@@ -39,7 +41,6 @@
         form{
             margin-top: 30px;
         }
-
     </style>
 
 </head>
@@ -48,28 +49,41 @@
 <!--<header th:replace="~{header :: header}"></header>-->
 
 <section class="container forms">
-    <div class="form login">
+    <div class="form signup">
         <div class="form-content">
-            <header>Login</header>
-            <form th:action="@{/login}" method="post">
+            <header>Signup</header>
+            <form th:action="@{/process_register}" th:object="${user}" method="post">
                 <div class="field input-field">
-                    <input type="text" placeholder="User Name" name="username" id="username" class="input">
+                    <input type="text" th:field="*{firstName}" placeholder="First Name" class="input" required>
                 </div>
 
                 <div class="field input-field">
-                    <input type="password" placeholder="Password" class="password" name="password" id="password">
+                    <input type="text" th:field="*{lastName}" placeholder="Last Name" class="input" required>
+                </div>
+
+                <div class="field input-field">
+                    <input type="email" th:field="*{email}" placeholder="Email" class="input" required>
+                </div>
+
+                <div class="field input-field">
+                    <input type="password" th:field="*{password}" placeholder="Create password" class="password" required minlength="6" maxlength="10"/>
+                </div>
+
+                <div class="field input-field">
+                    <input type="password" placeholder="Confirm password" class="password">
                     <i class='bx bx-hide eye-icon'></i>
                 </div>
 
                 <div class="field button-field">
-                    <button id="signinButton" type="submit" class="btn btn-primary">Sign in</button>
+                    <button>Signup</button>
                 </div>
             </form>
 
             <div class="form-link">
-                <span>Don't have an account? <a class="link signup-link">Signup</a></span>
+                <span>Already have an account? <a class="link login-link">Login</a></span>
             </div>
         </div>
+
     </div>
 </section>
 </body>
