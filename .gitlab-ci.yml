@@ -1,5 +1,5 @@
 image:
-  name: "registry.gitlab.com/gitlab-org/terraform-images/releases/v1.8.0"
+  name: "registry.gitlab.com/gitlab-org/terraform-images/releases/v1.8.0:1.8.0"
 
 stages:
   - gen_keys
