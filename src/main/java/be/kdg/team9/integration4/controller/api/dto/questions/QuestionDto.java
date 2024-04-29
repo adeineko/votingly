@@ -1,9 +1,14 @@
-package be.kdg.team9.integration4.controller.api.dto;
+package be.kdg.team9.integration4.controller.api.dto.questions;
 
+import be.kdg.team9.integration4.controller.api.dto.OptionDto;
+import be.kdg.team9.integration4.model.Option;
+import be.kdg.team9.integration4.model.Question;
 import be.kdg.team9.integration4.model.QuestionType;
 // import jakarta.persistence.Column;
 // import jakarta.persistence.EnumType;
 // import jakarta.persistence.Enumerated;
+
+import java.util.List;
 
 public class QuestionDto {
     private long id;
@@ -12,24 +17,24 @@ public class QuestionDto {
 
     private QuestionType questionType;
 
-    long surveyId;
-
-    private int min;
-    private int max;
-    private int step;
+    private long surveyId;
 
 
     public QuestionDto() {
     }
 
-    public QuestionDto(long id, String questionName, QuestionType questionType, long surveyId, int min, int max, int step) {
+    public QuestionDto(long id, String questionName, QuestionType questionType, long surveyId) {
         this.id = id;
         this.questionName = questionName;
         this.questionType = questionType;
         this.surveyId = surveyId;
-        this.min = min;
-        this.max = max;
-        this.step = step;
+    }
+
+    public QuestionDto(Question question) {
+        this.id = question.getId();
+        this.questionName = question.getQuestionName();
+        this.questionType = question.getQuestionType();
+        this.surveyId = question.getSurvey().getSurveyId();
     }
 
     public long getId() {
@@ -64,27 +69,4 @@ public class QuestionDto {
         this.surveyId = surveyId;
     }
 
-    public int getMin() {
-        return min;
-    }
-
-    public void setMin(int min) {
-        this.min = min;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(int max) {
-        this.max = max;
-    }
-
-    public int getStep() {
-        return step;
-    }
-
-    public void setStep(int step) {
-        this.step = step;
-    }
 }

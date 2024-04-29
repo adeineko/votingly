@@ -1,31 +1,22 @@
-package be.kdg.team9.integration4.model;
+package be.kdg.team9.integration4.controller.api.dto;
 
-import jakarta.persistence.*;
+import be.kdg.team9.integration4.model.ChoiceQuestion;
 
-@Entity
-@Table(name = "option")
-public class Option {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OptionDto {
+
     private long optionId;
 
-    @Column(name = "option_text")
     private String optionText;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question", nullable = false)
     private ChoiceQuestion question;
 
-    public Option() {
+    public OptionDto() {
     }
 
-    public Option(long optionId, String optionText, ChoiceQuestion question) {
+    public OptionDto(long optionId, String optionText) {
         this.optionId = optionId;
         this.optionText = optionText;
-        this.question = question;
     }
-
-
 
     public long getOptionId() {
         return optionId;
@@ -41,6 +32,14 @@ public class Option {
 
     public void setOptionText(String optionText) {
         this.optionText = optionText;
+    }
+
+    public ChoiceQuestion getChoice() {
+        return question;
+    }
+
+    public void setChoice(ChoiceQuestion question) {
+        this.question = question;
     }
 
     public ChoiceQuestion getQuestion() {

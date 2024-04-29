@@ -1,8 +1,11 @@
+import { header, token } from "./util/csrf.js";
+
 async function getSurveys() {
     const response = await fetch('/api/surveys', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            [header]: token
         }
     });
 

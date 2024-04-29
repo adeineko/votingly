@@ -1,12 +1,13 @@
 package be.kdg.team9.integration4.service;
 
 import be.kdg.team9.integration4.model.Survey;
+import be.kdg.team9.integration4.repositories.FindAllQuestionBySurveyId;
 import be.kdg.team9.integration4.repositories.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-// import java.util.Optional;
 
 @Service
 public class SurveyService {
@@ -26,10 +27,7 @@ public class SurveyService {
         return surveyRepository.findBySurveyId(surveyId);
     }
 
-    public Survey getQuestionOfSurvey(long surveyId) {
-        return surveyRepository.getQuestionOfSurvey(surveyId).orElse(null);
-    }
-
+    @Transactional
     public List<Long> getQuestionsOfSurvey(long id) {
         return surveyRepository.getQuestionIdsBySurveyId(id);
     }

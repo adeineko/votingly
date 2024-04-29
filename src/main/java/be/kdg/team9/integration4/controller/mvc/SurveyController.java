@@ -28,8 +28,6 @@ public class SurveyController {
 
     @GetMapping("/{id}/questions")
     public String getSurvey(@PathVariable("id") long id, Model model) {
-//        model.addAttribute("survey", surveyService.getSurvey(id));
-//        model.addAttribute("question", surveyService.getQuestionOfSurvey(id));
         Survey survey = surveyService.getSurvey(id);
         List<Long> questionIds = surveyService.getQuestionsOfSurvey(id);
 
