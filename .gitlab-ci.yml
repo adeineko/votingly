@@ -1,13 +1,13 @@
 image:
-  name: hashicorp/terraform:light
+  name: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.1"
 
 stages:
   - gen_keys
   - validate
   - tf_plan
-  - tf_apply
-  - ans_config
-  - tf_destroy
+  # - tf_apply
+  # - ans_config
+  # - tf_destroy
 
 variables:
   # ENVIRONMENT: "prod"
