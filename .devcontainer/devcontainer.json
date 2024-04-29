@@ -69,7 +69,8 @@
 				"GoogleCloudTools.cloudcode",
 				"naco-siren.gradle-language",
 				"GitHub.copilot",
-				"GitHub.copilot-chat"
+				"GitHub.copilot-chat",
+				"GitLab.gitlab-workflow"
 			]
 		}
 	},

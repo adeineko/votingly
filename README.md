@@ -66,3 +66,8 @@ terraform destroy
 npm init
 docker compose up -d
 ```
+
+Run Tests
+```
+./gradlew -PspringProfilesActiveTests=<profile_name> check
+```
