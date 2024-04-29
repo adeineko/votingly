@@ -1,13 +1,24 @@
+image:
+  name: hashicorp/terraform:light
+
 stages:
   - gen_keys
+  - validate
   - tf_plan
   - tf_apply
   - ans_config
   - tf_destroy
 
 variables:
-  ENVIRONMENT: "prod"
-  TF_ADDRESS: https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/terraform/state/votingly-tf
+  # ENVIRONMENT: "prod"
+  # TF_ADDRESS: https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/terraform/state/votingly-tf
+  TF_ROOT: ${CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
+  TF_STATE_NAME: default      # The name of the state file used by the GitLab Managed Terraform state backend
+
+cache:
+  key: "${TF_ROOT}"
+  paths:
+    - ${TF_ROOT}/.terraform/
 
 gen_keys:
   image: bash:latest
@@ -15,7 +26,7 @@ gen_keys:
   script:
     - apk update && apk add openssh-client
     - mkdir deploy/.creds && cd deploy/.creds
-    - base64 -d $SA_GCP > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
+    - echo $SA_GCP | base64 -d > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
     - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
   artifacts:
     name: keys
@@ -23,24 +34,18 @@ gen_keys:
     paths:
       - deploy/.creds
 
-.provision:
+.terraform:fmt:
+  stage: validate
   script:
-    - >
-        terraform init
-        -backend-config="address=${TF_ADDRESS}"
-        -backend-config="lock_address=${TF_ADDRESS}/lock"
-        -backend-config="unlock_address=${TF_ADDRESS}/lock"
-        -backend-config="username=gitlab-ci-token"
-        -backend-config="password=${CI_JOB_TOKEN}"
-        -backend-config="lock_method=POST"
-        -backend-config="unlock_method=DELETE"
-        -backend-config="retry_wait_min=5"
+    - gitlab-terraform fmt
+  allow_failure: true
 
-dry_provision:
-  image:
-    name: hashicorp/terraform:light
-  stage: tf_plan
-  extends: .provision
+.terraform:validate:
+  stage: validate
   script:
-    - terraform validate
-    - terraform plan
+    - gitlab-terraform validate
+
+terraform-build:
+  stage: tf_plan
+  script:
+    - gitlab-terraform plan
