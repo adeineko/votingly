@@ -5,18 +5,48 @@ stages:
   - build
   - test
   - deploy
+  - destroy
 
 build-job:
+  image: gradle:8.7-jdk17-alpine
   stage: build
   script:
-    - echo "Starting build"
+    - ./gradlew clean bootJar
+  artifacts:
+    paths:
+      - "build/libs/*.jar"
 
 test-job:
   stage: test
   script:
     - echo "testing"
+  dependencies:
+    - build-job
 
 deploy-job:
+  image: docker:latest
   stage: deploy
+  services:
+    - name: docker:dind
   script:
     - echo  "Deploy"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+  dependencies:
+    - build-job
+  # Run the job only when jobs in earlier stages dont fail
+  when: on_success
+  only: # deprecated
+    - prod
+  # rules:
+  #   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    # - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"
+
+destroy-job:
+  stage: destroy
+  script:
+    - echo "Destroy"
+  when: manual
+  only:
+    - prod

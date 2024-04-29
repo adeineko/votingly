@@ -7,16 +7,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.junit.jupiter.api.Assertions.*;
+// import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ActiveProfiles("test")
+ @ActiveProfiles("test")
+//@ActiveProfiles("testcontainer")
 @AutoConfigureMockMvc
 class SurveysControllerTest {
     @Autowired
@@ -40,8 +42,9 @@ class SurveysControllerTest {
     @Test
     public void getQuestionsOfSurveyShouldReturnIsOkWIthQuestions() throws Exception {
         mockMvc.perform(
-                        get("/api/surveys/{id}/questions", 2).accept(MediaType.APPLICATION_JSON)
+                        get("/api/surveys/{id}/questions", 3).accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+                .andExpect(jsonPath("$.length()").value(1))
+                .andDo(print());
     }
 }

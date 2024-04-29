@@ -10,26 +10,28 @@
     <script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
     <link href="/css/style.css" />
-<!--    <script src="/js/account.js"></script>-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script src="/js/account.js" type="module"></script>
 </head>
 <body>
 
 <div class="row">
 
-    <input id="accountId" type="hidden" th:value="${one_user.id}">
+    <input id="accountId" type="hidden" th:value="${account.id}">
 
     <div class="col-9">
         <h4>Full Name</h4>
-        <p id="firstName" th:text="${one_user.firstName}"></p>
-        <p id="lastName" th:text="${one_user.lastName}"></p>
+        <p id="firstName" th:text="${account.firstName}"></p>
+        <p id="lastName" th:text="${account.lastName}"></p>
         <h4>Email</h4>
-        <p id="email" th:text="${one_user.email}"></p>
+        <p id="email" th:text="${account.email}"></p>
     </div>
 
 </div>
 <div class="row mt-3">
     <div>
-<!--        <button id="updateButton" type="button" class="btn btn-primary">Go Back</button>-->
+        <a th:href="@{/surveys}" type="button" class="btn btn-primary">Go Back</a>
     </div>
 </div>
 
