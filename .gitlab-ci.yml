@@ -16,7 +16,9 @@ stages:
 workflow:
   rules:
     # Run the pipeline only on merge request to prod branch
-    - if: $CI_PIPELINE_SOURCE != "merge_request_event" || $CI_COMMIT_BRANCH != "prod"
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event"
+      when: never
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME != "prod"
       when: never
     - when: always
 
