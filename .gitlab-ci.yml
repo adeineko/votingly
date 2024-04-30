@@ -13,6 +13,13 @@ stages:
   # - ans_config
   # - tf_destroy
 
+workflow:
+  rules:
+    # Run the pipeline only on merge request to prod branch
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event" || $CI_COMMIT_BRANCH != "prod"
+      when: never
+    - when: always
+
 variables:
   # ENVIRONMENT: "prod"
   # TF_ADDRESS: https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/terraform/state/votingly-tf
@@ -35,7 +42,7 @@ gen_keys:
   artifacts:
     name: keys
     # public: false
-    expire_in: "1 day"
+    expire_in: "1 hour"
     paths:
       - deploy/.creds
 
@@ -73,19 +80,18 @@ terraform:deploy:
   # when: manual
   artifacts:
     name: vm_ip
-    expire_in: "1 day"
+    expire_in: "1 hour"
     paths:
       - '../vm_ip'
 
 ansible:
   # image: python:3.9.17-slim-bullseye
-  image: alpinelinux/ansible:latest
+  image: alpine/ansible:latest
   stage: ansible
   # allow_failure: true
   script:
-    # - chmod 750 ansible_files
+    - chmod 750 ansible_files
     - cd deploy/ansible
-    # - apt-get update && apt-get install ansible -y
     - ansible --version
     - ansible-playbook install_nginx.yml
 

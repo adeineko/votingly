@@ -28,7 +28,9 @@
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
 		"ghcr.io/devcontainers/features/terraform:1": {},
 		"ghcr.io/dhoeric/features/google-cloud-cli:1": {},
-		"ghcr.io/joshuanianji/devcontainer-features/gcloud-cli-persistence:1": {}
+		"ghcr.io/joshuanianji/devcontainer-features/gcloud-cli-persistence:1": {},
+		// "ghcr.io/devcontainers/features/python:1": {},
+		"ghcr.io/devcontainers-contrib/features/ansible:2": {}
 	},
 
 	// "mounts": [
@@ -70,7 +72,9 @@
 				"naco-siren.gradle-language",
 				"GitHub.copilot",
 				"GitHub.copilot-chat",
-				"GitLab.gitlab-workflow"
+				"GitLab.gitlab-workflow",
+				"redhat.ansible",
+				"eamodio.gitlens"
 			]
 		}
 	},

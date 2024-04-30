@@ -36,7 +36,10 @@ resource "google_compute_instance" "votingly-testing-vm" {
   # Adding SSH keys
   metadata = {
     #   "user-data" = file("config/cloud-init.yml")
-    ssh-keys = "admin:${file("../.creds/vm_key.pub")}"
+    ssh-keys = <<EOF
+      admin:${file("../.creds/vm_key.pub")}
+      vscode:${file("~/.ssh/id_rsa.pub")}
+    EOF
   }
 
   # Script to run on every boot
