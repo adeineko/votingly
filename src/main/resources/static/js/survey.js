@@ -18,6 +18,7 @@ async function fetchFirstQuestion() {
             headers: {
                 'Content-Type': 'application/json',
                 [header]: token
+
             }
         });
     if (response.status === 200) {

@@ -20,16 +20,16 @@ img {
     transform: scaleX(-1);
 }
 
-.authentication{
+.authentication {
     color: #000000A6;
 }
 
-.container-fluid{
+.container-fluid {
     padding: 0;
     margin: 0;
 }
 
-.cont{
+.cont {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -50,24 +50,24 @@ img {
     box-shadow: 0 0 20px 26px rgba(0, 0, 0, 0.19)
 }
 
-.goodJob{
+.goodJob {
     font-size: 2em;
     padding: 0.3em;
     font-weight: lighter;
 }
 
-.name{
+.name {
     font-weight: bold;
 }
 
-.text{
+.text {
     padding: 1em 10em 1em 10em;
     text-align: center;
     color: #76756C;
     font-size: 1.1em;
 }
 
-.button button{
+.button button {
     border-radius: 0.7em;
     border-color: #D6E2F5;
     background-color: #D6E2F5;
@@ -80,13 +80,14 @@ img {
     box-sizing: border-box;
     position: relative;
     display: block;
-    transform: scale(var(--ggs,1));
+    transform: scale(var(--ggs, 1));
     width: 5em;
     height: 5em;
     border: 2px solid #EE5B3D;
     background-color: #EE5B3D;
     border-radius: 100px;
 }
+
 .gg-check-o::after {
     content: "";
     display: block;
@@ -104,7 +105,7 @@ img {
     transform: rotate(45deg)
 }
 
-.form{
+.form {
     position: absolute;
     max-width: 430px;
     width: 100%;
@@ -112,6 +113,7 @@ img {
     border-radius: 6px;
     background: #FFF;
 }
+
 /*.form.signup{*/
 /*    opacity: 0;*/
 /*    pointer-events: none;*/
@@ -124,15 +126,16 @@ img {
 /*!*    opacity: 0;*!*/
 /*!*    pointer-events: none;*!*/
 /*!*}*!*/
-.form .field{
+.form .field {
     position: relative;
     height: 50px;
     width: 100%;
     margin-top: 20px;
     border-radius: 6px;
 }
+
 .field input,
-.field button{
+.field button {
     height: 100%;
     width: 100%;
     border: none;
@@ -140,15 +143,18 @@ img {
     font-weight: 400;
     border-radius: 6px;
 }
-.field input{
+
+.field input {
     outline: none;
     padding: 0 15px;
-    border: 1px solid#CACACA;
+    border: 1px solid #CACACA;
 }
-.field input:focus{
+
+.field input:focus {
     border-bottom-width: 2px;
 }
-.eye-icon{
+
+.eye-icon {
     position: absolute;
     top: 50%;
     right: 10px;
@@ -158,35 +164,41 @@ img {
     cursor: pointer;
     padding: 5px;
 }
-.field button{
+
+.field button {
     color: #fff;
     background-color: #0171d3;
     transition: all 0.3s ease;
     cursor: pointer;
 }
-.field button:hover{
+
+.field button:hover {
     background-color: #016dcb;
 }
-.form-link{
+
+.form-link {
     text-align: center;
     margin-top: 10px;
 }
+
 .form-link span,
-.form-link a{
+.form-link a {
     font-size: 14px;
     font-weight: 400;
     color: #232836;
 }
-.form a{
+
+.form a {
     color: #0171d3;
     text-decoration: none;
 }
-.form-content a:hover{
+
+.form-content a:hover {
     text-decoration: underline;
 }
 
 @media screen and (max-width: 400px) {
-    .form{
+    .form {
         padding: 20px 10px;
     }
 

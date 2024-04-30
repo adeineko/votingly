@@ -1,10 +1,7 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
-import be.kdg.team9.integration4.controller.api.dto.OptionDto;
 import be.kdg.team9.integration4.model.QuestionType;
 import be.kdg.team9.integration4.model.RangeQuestion;
-
-import java.util.List;
 
 public class RangeDto extends QuestionDto {
 

@@ -33,10 +33,21 @@ resource "google_compute_instance" "votingly-testing-vm" {
     }
   }
 
-  # metadata = {
-  #   "user-data" = file("config/cloud-init.yml")
-  # }
+  # Adding SSH keys
+  metadata = {
+    #   "user-data" = file("config/cloud-init.yml")
+    ssh-keys = <<EOF
+      admin:${file("../.creds/vm_key.pub")}
+      vscode:${file("~/.ssh/id_rsa.pub")}
+    EOF
+  }
 
   # Script to run on every boot
   metadata_startup_script = file("../res/startup_cos_https_portal.sh")
+}
+
+# Copy the IP address into a txt file
+resource "local_file" "vm_ip" {
+  content  = google_compute_instance.votingly-testing-vm.network_interface[0].access_config[0].nat_ip
+  filename = "../vm_ip"
 }

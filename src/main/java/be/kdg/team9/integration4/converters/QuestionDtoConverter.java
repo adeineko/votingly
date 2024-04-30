@@ -1,18 +1,25 @@
 package be.kdg.team9.integration4.converters;
 
-import be.kdg.team9.integration4.controller.api.dto.OptionDto;
+import be.kdg.team9.integration4.controller.api.dto.questions.OptionDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.ChoiceDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.RangeDto;
 import be.kdg.team9.integration4.model.ChoiceQuestion;
-import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.Question;
 import be.kdg.team9.integration4.model.RangeQuestion;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class QuestionDtoConverter {
+
+//    public QuestionDtoConverter(Function<Question, QuestionDto> fromDto, Function<QuestionDto, Question> fromEntity) {
+//        super(fromDto, fromEntity);
+//    }
+//
+//    private static QuestionDto convertToDto(Question question) {
+//        return new QuestionDto(question.getId(), question.getQuestionName(), question.getQuestionType(), question.getSurvey().getSurveyId());
+//    }
 
     public QuestionDto convert(Question question) {
 

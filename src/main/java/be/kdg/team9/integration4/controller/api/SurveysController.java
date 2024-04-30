@@ -53,6 +53,5 @@ public class SurveysController {
                 .toList();
 
         return ResponseEntity.ok(questionDtos);
-
     }
 }

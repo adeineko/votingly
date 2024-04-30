@@ -51,12 +51,12 @@ resource "google_compute_firewall" "votingly-firewall-web" {
   }
 }
 
-# Firewall rule: Allow access via SSH from GCloud integrated terminal 
+# Firewall rule: Allow access via SSH from IP ranges
 resource "google_compute_firewall" "votingly-firewall-ssh" {
   name    = "votingly-firewall-ssh"
   network = google_compute_network.votingly-network.self_link
 
-  # IP range of GCloud integrated terminal
+  # IP range of: GCloud integrated terminal, ross development server
   source_ranges = ["35.235.240.0/20", "94.130.10.128/25"]
 
   direction   = "INGRESS"

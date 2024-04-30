@@ -1,11 +1,11 @@
 package be.kdg.team9.integration4.controller.api;
 
 import org.junit.jupiter.api.Test;
+// import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,15 +17,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
- @ActiveProfiles("test")
-//@ActiveProfiles("testcontainer")
 @AutoConfigureMockMvc
+
 class SurveysControllerTest {
     @Autowired
     private MockMvc mockMvc;
+    // private final Logger logger;
+    
+    // @Autowired
+    // public SurveysControllerTest(Logger logger) {
+    //     this.logger = logger;
+    // }
 
     @Test
     public void getAllSurveysShouldReturnListOfSurveysNames() throws Exception {
+        // logger.info("Active profiles:");
+        // logger.info(System.getProperty("spring.profiles.active"));
+        // logger.info(System.getProperty("SPRING_PROFILES_ACTIVE"));
+        // System.out.println("Active profiles:");
+        // System.out.println(System.getProperty("spring.profiles.active"));
+        // System.out.println(System.getProperty("SPRING_PROFILES_ACTIVE"));
+        
         mockMvc.perform(
                 get("/api/surveys")
                         .accept(MediaType.APPLICATION_JSON)
@@ -42,9 +54,9 @@ class SurveysControllerTest {
     @Test
     public void getQuestionsOfSurveyShouldReturnIsOkWIthQuestions() throws Exception {
         mockMvc.perform(
-                        get("/api/surveys/{id}/questions", 3).accept(MediaType.APPLICATION_JSON)
+                        get("/api/surveys/{id}/questions", 2).accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$.length()").value(3))
                 .andDo(print());
     }
 }

@@ -55,7 +55,6 @@ public class SecurityConfig {
                                     }
                                 })
                 );
-        // @formatter:on
         return http.build();
     }
 

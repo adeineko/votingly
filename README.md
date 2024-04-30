@@ -45,7 +45,7 @@ docker run -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=devcontainer" int4t9:latest
 - In [GCP IAM](https://console.cloud.google.com/iam-admin/serviceaccounts) - Create your service account with 'Compute Admin' permission. Then put its key in deploy/.creds and rename to 'gcloud_sa_compute_admin.json'
 - [Install Terraform](https://developer.hashicorp.com/terraform/install) (or see [VScode dev containers](https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-an-existing-folder-in-a-container) on how to open our project in a container)
 ```
-cd deploy/prod_testing
+cd deploy/prod
 
 # Initialize (only first time)
 terraform init
@@ -65,4 +65,9 @@ terraform destroy
 ```
 npm init
 docker compose up -d
+```
+
+Run Tests (specify spring active profile)
+```
+./gradlew -PspringProfilesActiveTests=<profile_name> check
 ```

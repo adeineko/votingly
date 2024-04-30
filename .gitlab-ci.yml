@@ -1,52 +1,110 @@
-# image:
-#   name: hashicorp/terraform:light
+image:
+  name: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.5:f61b9582b11027bd80fb52ce44d266dc1d75e2dd"
 
 stages:
+  - gen_keys
+  - validate
   - build
-  - test
   - deploy
-  - destroy
+  - ansible
+  - cleanup
+  # - tf_plan
+  # - tf_apply
+  # - ans_config
+  # - tf_destroy
 
-build-job:
-  image: gradle:8.7-jdk17-alpine
+workflow:
+  rules:
+    # Run the pipeline only on merge request to prod branch
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event" || $CI_COMMIT_BRANCH != "prod"
+      when: never
+    - when: always
+
+variables:
+  # ENVIRONMENT: "prod"
+  # TF_ADDRESS: https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/terraform/state/votingly-tf
+  TF_ROOT: ${CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
+  TF_STATE_NAME: default      # The name of the state file used by the GitLab Managed Terraform state backend
+
+cache:
+  key: "${TF_ROOT}"
+  paths:
+    - ${TF_ROOT}/.terraform/
+
+gen_keys:
+  image: bash:latest
+  stage: gen_keys
+  script:
+    - apk update && apk add openssh-client
+    - mkdir deploy/.creds && cd deploy/.creds
+    - echo $SA_GCP | base64 -d > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
+    - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
+  artifacts:
+    name: keys
+    # public: false
+    expire_in: "1 hour"
+    paths:
+      - deploy/.creds
+
+terraform:fmt:
+  stage: validate
+  script:
+    - gitlab-terraform fmt
+  allow_failure: true
+
+terraform:validate:
+  stage: validate
+  script:
+    - gitlab-terraform validate
+
+terraform:build:
   stage: build
   script:
-    - ./gradlew clean bootJar
+    - gitlab-terraform plan
+    - gitlab-terraform plan-json
+  resource_group: ${TF_STATE_NAME}
   artifacts:
+    # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
+    # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
+    # public: false
     paths:
-      - "build/libs/*.jar"
+      - ${TF_ROOT}/plan.cache
+    reports:
+      terraform: ${TF_ROOT}/plan.json
 
-test-job:
-  stage: test
-  script:
-    - echo "testing"
-  dependencies:
-    - build-job
-
-deploy-job:
-  image: docker:latest
+terraform:deploy:
   stage: deploy
-  services:
-    - name: docker:dind
   script:
-    - echo  "Deploy"
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
-  dependencies:
-    - build-job
-  # Run the job only when jobs in earlier stages dont fail
-  when: on_success
-  only: # deprecated
-    - prod
-  # rules:
-  #   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    # - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"
+    - gitlab-terraform apply
+  resource_group: ${TF_STATE_NAME}
+  # when: manual
+  artifacts:
+    name: vm_ip
+    expire_in: "1 hour"
+    paths:
+      - '../vm_ip'
 
-destroy-job:
-  stage: destroy
+ansible:
+  # image: python:3.9.17-slim-bullseye
+  image: alpine/ansible:latest
+  stage: ansible
+  # allow_failure: true
   script:
-    - echo "Destroy"
+    - chmod 750 ansible_files
+    - cd deploy/ansible
+    - ansible --version
+    - ansible-playbook install_nginx.yml
+
+terraform:drydestroy:
+  stage: cleanup
+  script:
+    - gitlab-terraform plan -destroy
+  resource_group: ${TF_STATE_NAME}
   when: manual
-  only:
-    - prod
+
+terraform:destroy:
+  stage: cleanup
+  script:
+    - gitlab-terraform destroy
+  resource_group: ${TF_STATE_NAME}
+  when: manual

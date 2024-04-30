@@ -1,0 +1,22 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+    - name: Update Repository Index
+      apt: 
+        update_cache: yes
+    - name: Install Latest nginx Server
+      apt: 
+        name: nginx # Docker not nginx
+        state: latest
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+    # - name: Deploy website
+    #   copy: 
+    #     src: ./website_folder/*
+    #     dest: /var/www/html
+    #     mode: 0755
