@@ -38,8 +38,8 @@ resource "google_compute_instance" "votingly-testing-vm" {
     #   "user-data" = file("config/cloud-init.yml")
     ssh-keys = <<EOF
       admin:${file("../.creds/vm_key.pub")}
-      vscode:${file("~/.ssh/id_rsa.pub")}
     EOF
+    # vscode:${file("~/.ssh/id_rsa.pub")}
   }
 
   # Script to run on every boot
