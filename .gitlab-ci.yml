@@ -84,16 +84,16 @@ terraform:deploy:
     paths:
       - '../vm_ip'
 
-ansible:
-  # image: python:3.9.17-slim-bullseye
-  image: alpine/ansible:latest
-  stage: ansible
-  # allow_failure: true
-  script:
-    - chmod 750 ansible_files
-    - cd deploy/ansible
-    - ansible --version
-    - ansible-playbook install_nginx.yml
+# ansible:
+#   # image: python:3.9.17-slim-bullseye
+#   image: alpine/ansible:latest
+#   stage: ansible
+#   # allow_failure: true
+#   script:
+#     - chmod 750 ansible_files
+#     - cd deploy/ansible
+#     - ansible --version
+#     - ansible-playbook install_nginx.yml
 
 terraform:drydestroy:
   stage: cleanup
