@@ -85,5 +85,5 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "bash /workspace/.devcontainer/postCreateCommand.sh",
 
-	"postAttachCommand": "echo 'Post Attach Command' && eval $(ssh-agent) && ssh-add /home/vscode/.ssh/id_rsa"
+	"postAttachCommand": "echo 'Post Attach Command'"
 }
