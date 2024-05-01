@@ -13,8 +13,8 @@ INSERT INTO question(question_name, question_type, survey_id, min, max, step)
 VALUES ('Rate following saying: bla bla bla?', 'RANGE', '2', 0, 10, 1);
 
 INSERT INTO question(question_name, question_type, survey_id, is_multi_choice)
-VALUES ('Rate following saying: bla bla bla?', 'CHOICE', '3', true),
-       ('Choose answer:', 'CHOICE', '3', false);
+VALUES ('Rate following saying: multi?', 'CHOICE', '3', true),
+       ('Choose answer: single', 'CHOICE', '3', false);
 
 INSERT INTO option(option_text, question)
 VALUES ('option1', '5'),

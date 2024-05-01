@@ -20,7 +20,7 @@ public class SecurityConfig {
         // @formatter:off
         http.authorizeHttpRequests(
                         auths -> auths
-                                .requestMatchers(regexMatcher("^/(account)"))
+                                .requestMatchers(regexMatcher("^/(signup)"))
                                 .permitAll()
                                 .requestMatchers(
                                         antMatcher(HttpMethod.GET, "/js/**"),
@@ -32,9 +32,10 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         antMatcher(HttpMethod.GET, "/api/**"),
                                         antMatcher(HttpMethod.GET, "/surveys/**"),
-                                        antMatcher(HttpMethod.GET, "/thank-you-page/**"),
-                                        antMatcher(HttpMethod.GET, "/signup/**")
-                                        )
+                                        antMatcher(HttpMethod.GET, "/signup/**"),
+                                        antMatcher(HttpMethod.GET, "/api/signup/**"),
+                                        antMatcher(HttpMethod.GET, "/thank-you-page/**")
+                                )
                                 .permitAll()
                                 .requestMatchers(antMatcher(HttpMethod.GET, "/"))
                                 .permitAll()
