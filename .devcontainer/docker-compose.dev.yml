@@ -26,12 +26,12 @@ services:
       - "8082:8080"
 
   # phpMyAdmin database manager
-  int4t9-adminer:
-    container_name: int4t9-adminer
-    image: dockette/adminer:full
-    restart: always
-    expose:
-      - "8282"
-    ports:
-      - "8282:80"
+  # int4t9-adminer:
+  #   container_name: int4t9-adminer
+  #   image: dockette/adminer:full
+  #   restart: always
+  #   expose:
+  #     - "8282"
+  #   ports:
+  #     - "8282:80"
 
