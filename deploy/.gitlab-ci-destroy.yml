@@ -5,6 +5,7 @@ image:
 
 stages:
   - gen_keys
+  - preview
   - cleanup
 
 workflow:
@@ -31,9 +32,10 @@ gen_keys:
     # - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
 
 terraform:drydestroy:
-  stage: cleanup
+  stage: preview
   script:
-    - gitlab-terraform plan -destroy
+    # - gitlab-terraform plan -destroy
+    - terraform plan -destroy
   resource_group: ${TF_STATE_NAME}
   when: manual
 
