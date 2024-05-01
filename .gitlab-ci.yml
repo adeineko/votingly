@@ -23,6 +23,7 @@ workflow:
     - when: always
 
 stages:
+  - infrastructure
   - test
   - build
   - dockerize
@@ -31,6 +32,7 @@ stages:
   - cleanup
 
 tf-deploy:
+  stage: infrastructure
   trigger:
     include: deploy/.gitlab-ci.yml
   when: manual
