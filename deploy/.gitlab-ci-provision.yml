@@ -1,25 +1,19 @@
+# TODO - Self host terraform images becuase of terraform not open source anymore 
 image:
-  name: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.5:f61b9582b11027bd80fb52ce44d266dc1d75e2dd"
+  name: "hashicorp/terraform:latest"
+  # name: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.5:f61b9582b11027bd80fb52ce44d266dc1d75e2dd"
 
 stages:
-  - gen_keys
+  - generate-secrets
   - validate
   - build
   - deploy
   - ansible
   - cleanup
-  # - tf_plan
-  # - tf_apply
-  # - ans_config
-  # - tf_destroy
 
+# REQUIRED - for child pipeline
 workflow:
   rules:
-    # Run the pipeline only on merge request to prod branch
-    # - if: $CI_PIPELINE_SOURCE != "merge_request_event"
-    #   when: never
-    # - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME != "prod"
-    #   when: never
     - when: always
 
 variables:
@@ -32,21 +26,22 @@ cache:
   key: "${TF_ROOT}"
   paths:
     - ${TF_ROOT}/.terraform/
+    - deploy/.creds/
 
-gen_keys:
+generate-secrets:
   image: bash:latest
-  stage: gen_keys
+  stage: generate-secrets
   script:
-    - apk update && apk add openssh-client
+    # - apk update && apk add openssh-client
     - mkdir deploy/.creds && cd deploy/.creds
     - echo $SA_GCP | base64 -d > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
-    - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
-  artifacts:
-    name: keys
-    # public: false
-    expire_in: "1 hour"
-    paths:
-      - deploy/.creds
+    # - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
+  # artifacts:
+  #   name: keys
+  #   # public: false
+  #   expire_in: "1 hour"
+  #   paths:
+  #     - deploy/.creds
 
 terraform:fmt:
   stage: validate
@@ -80,22 +75,22 @@ terraform:deploy:
     - gitlab-terraform apply
   resource_group: ${TF_STATE_NAME}
   # when: manual
-  artifacts:
-    name: vm_ip
-    expire_in: "1 hour"
-    paths:
-      - '../vm_ip'
+  # artifacts:
+  #   name: vm_ip
+  #   expire_in: "1 hour"
+  #   paths:
+  #     - '../.creds/vm_ip'
 
-ansible:
-  # image: python:3.9.17-slim-bullseye
-  image: alpine/ansible:latest
-  stage: ansible
-  # allow_failure: true
-  script:
-    - chmod 750 ansible_files
-    - cd deploy/ansible
-    - ansible --version
-    - ansible-playbook install_nginx.yml
+# ansible:
+#   # image: python:3.9.17-slim-bullseye
+#   image: alpine/ansible:latest
+#   stage: ansible
+#   # allow_failure: true
+#   script:
+#     - chmod 750 ansible_files
+#     - cd deploy/ansible
+#     - ansible --version
+#     - ansible-playbook install_nginx.yml
 
 terraform:drydestroy:
   stage: cleanup

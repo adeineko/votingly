@@ -49,5 +49,5 @@ resource "google_compute_instance" "votingly-testing-vm" {
 # Copy the IP address into a txt file
 resource "local_file" "vm_ip" {
   content  = google_compute_instance.votingly-testing-vm.network_interface[0].access_config[0].nat_ip
-  filename = "../vm_ip"
+  filename = "../.creds/vm_ip"
 }

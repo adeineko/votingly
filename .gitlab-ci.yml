@@ -31,10 +31,16 @@ stages:
   - destroy
   - cleanup
 
-tf-deploy:
+provision:
   stage: infrastructure
   trigger:
-    include: deploy/.gitlab-ci.yml
+    include: deploy/.gitlab-ci-provision.yml
+  when: manual
+
+destroy:
+  stage: infrastructure
+  trigger:
+    include: deploy/.gitlab-ci-destroy.yml
   when: manual
 
 test-job:
