@@ -1,12 +1,14 @@
-services:
-  - postgres:15.5-alpine3.17
-
 variables:
   POSTGRES_DB: int4t9
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: Student1234
   POSTGRES_HOST_AUTH_METHOD: trust
   SPRING_PROFILES_ACTIVE: testci
+  TF_ROOT: ${CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
+  TF_STATE_NAME: default      # The name of the state file used by the GitLab Managed Terraform state backend
+  # TODO - Self host terraform images becuase of terraform not open source anymore 
+  TF_CONTAINER_IMAGE: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.5:f61b9582b11027bd80fb52ce44d266dc1d75e2dd"
+  JAVA_CONTAINER_IMAGE: "gradle:8.7-jdk17-alpine"
 
 cache:
   paths:
@@ -28,7 +30,6 @@ stages:
   - build
   - dockerize
   - deploy
-  - destroy
   - cleanup
 
 provision:
@@ -44,7 +45,9 @@ destroy:
   when: manual
 
 test-job:
-  image: gradle:8.7-jdk17-alpine
+  image: ${JAVA_CONTAINER_IMAGE}
+  services:
+    - postgres:15.5-alpine3.17
   stage: test
   script:
     - echo "Running tests.."
@@ -52,7 +55,7 @@ test-job:
     - ./gradlew -PspringProfilesActiveTests=$SPRING_PROFILES_ACTIVE check
 
 gradle-build:
-  image: gradle:8.7-jdk17-alpine
+  image: ${JAVA_CONTAINER_IMAGE}
   # image: eclipse-temurin:17.0.10_7-jdk-alpine
   stage: build
   # Run the job only when jobs in earlier stages dont fail
@@ -77,30 +80,30 @@ dockerize-job:
     - docker push $CI_REGISTRY_IMAGE:latest
   dependencies:
     - gradle-build
-  # only: # deprecated
-  #   - prod
-  # rules:
-  #   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    # - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"
 
-# deploy-job:
-#   stage: deploy
-#   script:
-#     - echo "Deploy"
-#   when: manual
-  # only: # deprecated
-  #   - prod
-
-# destroy-job:
-#   stage: destroy
-#   script:
-#     - echo "Destroy"
-#   when: manual
-  # only:
-  #   - prod
+deploy-job:
+  image:
+    name: ${TF_CONTAINER_IMAGE}
+  stage: deploy
+  services:
+    - name: jq
+  script:
+    - gitlab-terraform refresh
+    - gitlab-terraform show -json
+    # Get the IP address of the VM
+    - gitlab-terraform show -json | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> /tmp/vm_ip
+    - cat /tmp/vm_ip
+    - |
+      [ -s /tmp/vm_ip ] || echo "VM seems not to be running" && exit 1
+    - gitlab-terraform apply -var vm_state=TERMINATED
+    - gitlab-terraform apply -var vm_state=RUNNING
+  resource_group: ${TF_STATE_NAME}
+  dependencies:
+    - "dockerize-job"
+  # when: manual
 
 cleanup-job:
-  image: gradle:8.7-jdk17-alpine
+  image: ${JAVA_CONTAINER_IMAGE}
   stage: cleanup
   script:
     - echo "Cleaning up.."
