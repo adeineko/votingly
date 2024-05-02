@@ -100,7 +100,7 @@ deploy-job:
     - cat /tmp/vm_ip
     # Fail this job if the VM is not running
     - |
-      [ -s /tmp/vm_ip ] || echo "VM seems not to be running" && exit 1
+      [ -s /tmp/vm_ip ] || (echo "VM seems not to be running" && exit 1)
     # Restart VM to udate web app image from dockerize-job
     - gitlab-terraform apply -var vm_state=TERMINATED
     - gitlab-terraform apply -var vm_state=RUNNING

@@ -52,6 +52,11 @@ resource "google_compute_instance" "votingly-testing-vm" {
   #   source      = "../res/docker-compose.yml"
   #   destination = "/etc/votingly/docker-compose.yml"
   # }
+
+  service_account {
+    email  = google_service_account.vm-secrets.email
+    scopes = ["cloud-platform"]
+  }
 }
 
 # Copy the IP address into a txt file
@@ -59,3 +64,18 @@ resource "google_compute_instance" "votingly-testing-vm" {
 #   content  = google_compute_instance.votingly-testing-vm.network_interface[0].access_config[0].nat_ip
 #   filename = "../.creds/vm_ip"
 # }
+
+# resource "google_secret_manager_secret" "secret-basic" {
+#   secret_id = "GITLAB_DEPLOY_TOKEN"
+#   labels = {
+#     label = "Deploy token for GitLab"
+#   }
+#   replication {
+#     auto {}
+#   }
+# }
+
+resource "google_service_account" "vm-secrets" {
+  account_id   = "vm-secrets@int4t9.iam.gserviceaccount.com"
+  display_name = "Custom SA for VM Instances to access Secrets"
+}

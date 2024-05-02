@@ -4,10 +4,8 @@ image:
 stages:
   - generate-secrets
   - validate
-  - build
+  - plan
   - deploy
-  - ansible
-  - cleanup
 
 # REQUIRED - for child pipeline
 workflow:
@@ -46,8 +44,8 @@ terraform:validate:
   script:
     - gitlab-terraform validate
 
-terraform:build:
-  stage: build
+terraform:plan:
+  stage: plan
   script:
     - gitlab-terraform plan
     - gitlab-terraform plan-json
