@@ -62,7 +62,7 @@ function createMultipleChoiceQuestion(question) {
             ${question.options.map(option => `
                 <div>
                     <input type="checkbox" id="${option}" name="${option}" value="${option}">
-                    <label for="${option}">${option}</label>
+                    <label for="${option}">${option.optionText}</label>
                 </div>
             `).join('')}
         </div>
@@ -80,7 +80,7 @@ function createSingleChoiceQuestion(question) {
         ${question.options.map(option => `
             <div>
                 <input type="radio" id="${option}" name="options" value="${option}">
-                <label for="${option}">${option}</label>
+                <label for="${option}">${option.optionText}</label>
             </div>
         `).join('')}
     </div>
