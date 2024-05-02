@@ -14,7 +14,7 @@ services:
         networks:
             - bridged
         depends_on:
-            - "my-apache-app"
+            - "votingly-app"
         volumes:
             - https-portal-data:/var/lib/https-portal
             - /tmp/https-portal/log:/var/log/nginx/

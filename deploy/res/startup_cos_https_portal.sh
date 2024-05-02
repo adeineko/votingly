@@ -21,5 +21,5 @@ docker login registry.gitlab.com -u int4t9-deploy-token --password-stdin <<< $(g
 # Install HTTPS Portal
 sudo su -c "mkdir ~/https-portal &&
 mkdir ~/https-portal/{log,logrotate} &&
-curl https://gist.githubusercontent.com/Rosstarz/4fcd04db36e8d6a58300c55263db3285/raw/d2039bf94c815b61156239ee19d1e8c581530b2e/docker-compose.yml -o ~/docker-compose.yml &&
-cd ~ && docker compose up -d" admin
+git clone https://gist.github.com/4fcd04db36e8d6a58300c55263db3285.git ~/votingly &&
+cd ~/votingly && docker compose up -d" admin

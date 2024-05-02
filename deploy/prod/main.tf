@@ -53,10 +53,11 @@ resource "google_compute_instance" "votingly-testing-vm" {
   #   destination = "/etc/votingly/docker-compose.yml"
   # }
 
-  service_account {
-    email  = google_service_account.vm-secrets.email
-    scopes = ["cloud-platform"]
-  }
+#  service_account {
+    # email  = google_service_account.vm-secrets.email
+ #   email  = "vm-secrets@int4t9.iam.gserviceaccount.com"
+  #  scopes = ["cloud-platform"]
+  #}
 }
 
 # Copy the IP address into a txt file
@@ -75,7 +76,7 @@ resource "google_compute_instance" "votingly-testing-vm" {
 #   }
 # }
 
-resource "google_service_account" "vm-secrets" {
-  account_id   = "vm-secrets"
-  display_name = "Custom SA for VM Instances to access Secrets"
-}
+# resource "google_service_account" "vm-secrets" {
+#   account_id   = "vm-secrets"
+#   display_name = "Custom SA for VM Instances to access Secrets"
+# }
