@@ -1,6 +1,9 @@
 image:
   name: ${TF_CONTAINER_IMAGE}
 
+# variables:
+#   TF_ROOT: ${CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
+
 stages:
   - gen_keys
   - preview
@@ -25,16 +28,16 @@ gen_keys:
     - echo $SA_GCP | base64 -d > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
     # - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
 
-terraform:drydestroy:
-  stage: preview
-  script:
-    - gitlab-terraform plan -destroy
-  resource_group: ${TF_STATE_NAME}
-  when: manual
+# terraform:drydestroy:
+#   stage: preview
+#   script:
+#     - gitlab-terraform plan -destroy
+#   resource_group: ${TF_STATE_NAME}
+  # when: manual
 
 terraform:destroy:
   stage: cleanup
   script:
     - gitlab-terraform destroy
   resource_group: ${TF_STATE_NAME}
-  when: manual
+  # when: manual

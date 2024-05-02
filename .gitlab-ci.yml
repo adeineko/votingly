@@ -4,6 +4,7 @@ variables:
   POSTGRES_PASSWORD: Student1234
   POSTGRES_HOST_AUTH_METHOD: trust
   SPRING_PROFILES_ACTIVE: testci
+  CI_PROJECT_DIR: ${CI_PROJECT_DIR}
   TF_ROOT: ${CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
   TF_STATE_NAME: default      # The name of the state file used by the GitLab Managed Terraform state backend
   # TODO - Self host terraform images becuase of terraform not open source anymore 
@@ -85,16 +86,17 @@ deploy-job:
   image:
     name: ${TF_CONTAINER_IMAGE}
   stage: deploy
-  services:
-    - name: jq
   script:
     - gitlab-terraform refresh
-    - gitlab-terraform show -json
     # Get the IP address of the VM
+    - gitlab-terraform show -json
+    - jq --version
     - gitlab-terraform show -json | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> /tmp/vm_ip
     - cat /tmp/vm_ip
+    # Fail this job if the VM is not running
     - |
       [ -s /tmp/vm_ip ] || echo "VM seems not to be running" && exit 1
+    # Restart VM to udate web app image from dockerize-job
     - gitlab-terraform apply -var vm_state=TERMINATED
     - gitlab-terraform apply -var vm_state=RUNNING
   resource_group: ${TF_STATE_NAME}
