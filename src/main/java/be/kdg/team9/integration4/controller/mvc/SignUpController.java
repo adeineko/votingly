@@ -1,11 +1,7 @@
 package be.kdg.team9.integration4.controller.mvc;
 
-<<<<<<< HEAD
 import be.kdg.team9.integration4.model.user.User;
-=======
 import be.kdg.team9.integration4.controller.api.dto.user.UserDto;
-import be.kdg.team9.integration4.model.User;
->>>>>>> f5d1b3b197e7223be799315fbf432d84bccdbdbe
 import be.kdg.team9.integration4.repositories.UserRepository;
 import be.kdg.team9.integration4.security.CustomUserDetails;
 import be.kdg.team9.integration4.service.UserService;
