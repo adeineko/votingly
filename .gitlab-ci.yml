@@ -4,7 +4,6 @@ variables:
   POSTGRES_PASSWORD: Student1234
   POSTGRES_HOST_AUTH_METHOD: trust
   SPRING_PROFILES_ACTIVE: testci
-  CI_PROJECT_DIR: ${CI_PROJECT_DIR}
   TF_ROOT: ${CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
   TF_STATE_NAME: default      # The name of the state file used by the GitLab Managed Terraform state backend
   # TODO - Self host terraform images becuase of terraform not open source anymore 
