@@ -92,8 +92,8 @@ terraform:plan:
     name: ${TF_CONTAINER_IMAGE}
   stage: deploy
   script:
-    - gitlab-terraform plan -var vm_state=TERMINATED
-    - gitlab-terraform plan-json -var vm_state=TERMINATED
+    - gitlab-terraform plan
+    - gitlab-terraform plan-json
   resource_group: ${TF_STATE_NAME}
   artifacts:
     # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
