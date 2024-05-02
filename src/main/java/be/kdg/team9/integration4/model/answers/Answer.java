@@ -1,5 +1,6 @@
-package be.kdg.team9.integration4.model;
+package be.kdg.team9.integration4.model.answers;
 
+import be.kdg.team9.integration4.model.question.Question;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,4 +1,4 @@
-import { header, token } from "./util/csrf.js";
+import {header, token} from "./util/csrf.js";
 
 const questionsContainer = document.getElementById("questionsContainer");
 const nameContainer = document.getElementById("nameContainer");
@@ -23,6 +23,7 @@ async function fetchFirstQuestion() {
         });
     if (response.status === 200) {
         questions = await response.json();
+        console.log("First question:", questions[currentQuestionIndex]); // Debugging line
         // Display the first question
         displayQuestion(questions[currentQuestionIndex]);
     }
@@ -56,16 +57,37 @@ function createMultipleChoiceQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
     questionDiv.innerHTML = `
-
         <div class="card-body">
             <label>${question.questionName}</label>
-            <select>
-                ${question.options.map(option => `<option value="${option}">${option}</option>`).join('')}
-            </select>
+            ${question.options.map(option => `
+                <div>
+                    <input type="checkbox" id="${option}" name="${option}" value="${option}">
+                    <label for="${option}">${option.optionText}</label>
+                </div>
+            `).join('')}
         </div>
+        
     `;
     return questionDiv;
 }
+
+function createSingleChoiceQuestion(question) {
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('col-lg-10');
+    questionDiv.innerHTML = `
+    <div class="card-body">
+        <label>${question.questionName}</label>
+        ${question.options.map(option => `
+            <div>
+                <input type="radio" id="${option}" name="options" value="${option}">
+                <label for="${option}">${option.optionText}</label>
+            </div>
+        `).join('')}
+    </div>
+    `;
+    return questionDiv;
+}
+
 
 function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
@@ -109,7 +131,7 @@ async function saveAnswer() {
     const openQuestionInput = document.getElementById("openQuestionInput");
     // const currentQuestion = questions[currentQuestionIndex];
     const response = await fetch(
-        `/api/answers/open`, {
+        `/api/answers/${questionId.value}`, {
             method: 'POST',
             headers: {
                 "Accept": "application/json",
@@ -123,7 +145,7 @@ async function saveAnswer() {
                         id: questionId.value
                     },
                     surveyId: surveyIdInput.value,
-                    userId: 1
+                    number: surveyIdInput.value
                 }
             )
         }
@@ -143,7 +165,13 @@ function displayQuestion(question) {
     let questionElement;
     switch (question.questionType) {
         case "CHOICE":
-            questionElement = createMultipleChoiceQuestion(question);
+            if(question.multiChoice === false){
+                console.log("single");
+                questionElement = createSingleChoiceQuestion(question);
+            }else if(question.multiChoice === true){
+                console.log("multi");
+                questionElement = createMultipleChoiceQuestion(question);
+            }
             break;
         case "OPEN":
             questionElement = createOpenQuestion(question);

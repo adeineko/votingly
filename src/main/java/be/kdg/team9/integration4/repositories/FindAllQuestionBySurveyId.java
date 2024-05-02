@@ -1,6 +1,6 @@
 package be.kdg.team9.integration4.repositories;
 
-import be.kdg.team9.integration4.model.Question;
+import be.kdg.team9.integration4.model.question.Question;
 
 import java.util.List;
 

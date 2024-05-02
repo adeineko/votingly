@@ -52,19 +52,19 @@
             <header>Signup</header>
             <form th:action="@{/api/signup}" method="post">
                 <div class="field input-field">
-                    <input name="firstName" type="text" placeholder="First Name" class="input" required>
+                    <input id="firstName" name="firstName" type="text" placeholder="First Name" class="input" required>
                 </div>
 
                 <div class="field input-field">
-                    <input name="lastName" type="text" placeholder="Last Name" class="input" required>
+                    <input id="lastName" name="lastName" type="text" placeholder="Last Name" class="input" required>
                 </div>
 
                 <div class="field input-field">
-                    <input name="email" type="email" placeholder="Email" class="input" required>
+                    <input id="email" name="email" type="email" placeholder="Email" class="input" required>
                 </div>
 
                 <div class="field input-field">
-                    <input name="password" type="password" placeholder="Create password" class="password" required minlength="6" maxlength="10"/>
+                    <input id="password" name="password" type="password" placeholder="Create password" class="password" required minlength="6" maxlength="10"/>
                     <i class='bx bx-hide eye-icon'></i>
                 </div>
 

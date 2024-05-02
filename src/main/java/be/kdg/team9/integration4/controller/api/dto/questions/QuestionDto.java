@@ -1,7 +1,7 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
-import be.kdg.team9.integration4.model.Question;
-import be.kdg.team9.integration4.model.QuestionType;
+import be.kdg.team9.integration4.model.question.Question;
+import be.kdg.team9.integration4.model.question.QuestionType;
 // import jakarta.persistence.Column;
 // import jakarta.persistence.EnumType;
 // import jakarta.persistence.Enumerated;

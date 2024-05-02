@@ -1,5 +1,6 @@
-package be.kdg.team9.integration4.model;
+package be.kdg.team9.integration4.model.user;
 
+import be.kdg.team9.integration4.model.Survey;
 import jakarta.persistence.*;
 
 import java.util.List;

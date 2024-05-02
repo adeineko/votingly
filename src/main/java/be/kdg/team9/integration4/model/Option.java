@@ -1,5 +1,7 @@
 package be.kdg.team9.integration4.model;
 
+import be.kdg.team9.integration4.model.answers.ChoiceAnswer;
+import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +18,9 @@ public class Option {
     @JoinColumn(name = "question", nullable = false)
     private ChoiceQuestion question;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ChoiceAnswer answer;
+
     public Option() {
     }
 
@@ -24,7 +29,6 @@ public class Option {
         this.optionText = optionText;
         this.question = question;
     }
-
 
 
     public long getOptionId() {

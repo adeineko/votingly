@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Survey Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Syne&display=swap" rel="stylesheet"/>
 </head>
+
 <body>
 <div class="container-fluid">
     <div th:replace="~{navbar.html}"></div>
@@ -13,7 +15,8 @@
     <form id="surveyForm">
         <div class="mb-3">
             <label for="surveyName" class="form-label">Survey Name</label>
-            <input type="text" class="form-control" id="surveyName" name="surveyName" required placeholder="Enter the name of your survey">
+            <input type="text" class="form-control" id="surveyName" name="surveyName" required
+                   placeholder="Enter the name of your survey">
         </div>
         <div class="mb-3">
             <label for="surveyType" class="form-label">Survey Type</label>

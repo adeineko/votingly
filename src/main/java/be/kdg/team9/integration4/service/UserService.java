@@ -1,6 +1,6 @@
 package be.kdg.team9.integration4.service;
 
-import be.kdg.team9.integration4.model.User;
+import be.kdg.team9.integration4.model.user.User;
 import be.kdg.team9.integration4.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

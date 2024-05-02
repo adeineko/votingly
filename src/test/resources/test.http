@@ -9,15 +9,15 @@ GET http://localhost:8080/surveys/1/questions
 
 ###API: save answer for question
 # no-redirect
-POST http://localhost:8080/api/answers/open
+POST http://localhost:8080/api/answers/1
 Accept: application/json
 Content-Type: application/json
-Cookie: JSESSIONID=685BEAC359D214787CB9C262314D9C43
-X-CSRF-TOKEN:YgffvHhQIX7FTT_L9HMfKGaZAoS08Gc9MJ_n0cbJtMOmzpHeUTK5ikFpQhzoLAv7zF4rH1f6L72GkVcQBa2D5KCrh_qU9_Dp
+Cookie: JSESSIONID=0AA3126CE36E11361F0C66430666001C
+X-CSRF-TOKEN:aqKTl462zR6i7cOCkYx-xCOfqD3EmsdmEpOgHwUPT9iXG0yGWpv2pu_S9S6P1PvkqKFKp0CrhQT8o_JLdKSRfGE5Ku-keCjj
 
 {
   "answer": "This is an answer2",
-  "surveyId": 7,
+  "surveyId": 2,
   "userId": 5,
   "questionId": {
     "id": 1
@@ -39,6 +39,26 @@ Content-Type: application/json
 Cookie: JSESSIONID=DBCE5E300402E645B209C5ED1EBCEBB0
 X-Csrf-Token: Y8u8TttsY8XFSrsjCoqlTWpAomezUHGk74sVk_wMTKo3pINvV_qNLegPUaHoLIkXOaeRLl9xj1-BaRCJjLJwp8lqdJMCkuAL
 
+<<<<<<< HEAD
+
+### Create a new survey
+POST http://localhost:8080/api/surveys
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=DBCE5E300402E645
+X-Csrf-Token: Y8u8TttsY
+
+{
+  "surveyId": 1,
+  "surveyName": "New survey",
+  "surveyType": "CIRCULAR",
+  "questions": [
+    "q1",
+    "q2"
+  ],
+  "startDate": "12-01-2018",
+  "endDate": "12-01-2019"
+=======
 ### API: Save User Account
 POST http://localhost:8080/api/signup
 Accept: application/json
@@ -51,4 +71,5 @@ X-CSRF-TOKEN: uRrss2llH7Kb5ekbEbqDxbT6vJnRjI_xsDw9LulunM5Qktu23C3ZhltcKIG214sudJ
 "lastName":"Hmyria",
 "email": "gsdhjsd@gmail.com",
 "password": "qwerty"
+>>>>>>> f5d1b3b197e7223be799315fbf432d84bccdbdbe
 }

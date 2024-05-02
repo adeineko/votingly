@@ -1,10 +1,7 @@
-package be.kdg.team9.integration4.model;
+package be.kdg.team9.integration4.model.question;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-
-import java.util.List;
 
 @Entity
 @DiscriminatorValue("RANGE")
@@ -16,12 +13,6 @@ public class RangeQuestion extends Question {
 
     public RangeQuestion() {
     }
-
-//    public RangeQuestion(int min, int max, int step) {
-//        this.min = min;
-//        this.max = max;
-//        this.step = step;
-//    }
 
     public RangeQuestion(long id, String questionName, QuestionType questionType, int min, int max, int step) {
         super(id, questionName, questionType);

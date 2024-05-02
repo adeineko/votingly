@@ -1,4 +1,4 @@
-package be.kdg.team9.integration4.model;
+package be.kdg.team9.integration4.model.question;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

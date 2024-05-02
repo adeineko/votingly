@@ -1,6 +1,6 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
-import be.kdg.team9.integration4.model.ChoiceQuestion;
+import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 
 public class OptionDto {
 

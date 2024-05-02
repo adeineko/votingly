@@ -20,6 +20,20 @@ img {
     transform: scaleX(-1);
 }
 
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+    img {
+        max-width: 80%; /* Adjust the max-width as needed for smaller screens */
+    }
+}
+
+/* Responsive styles for larger screens */
+@media screen and (min-width: 1200px) {
+    img {
+        max-width: 1200px; /* Limit the max-width for larger screens */
+    }
+}
+
 .authentication {
     color: #000000A6;
 }

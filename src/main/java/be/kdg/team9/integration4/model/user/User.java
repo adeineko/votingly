@@ -1,4 +1,4 @@
-package be.kdg.team9.integration4.model;
+package be.kdg.team9.integration4.model.user;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
