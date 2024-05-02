@@ -87,6 +87,21 @@ dockerize-job:
   dependencies:
     - gradle-build
 
+terraform:plan:
+  stage: deploy
+  script:
+    - gitlab-terraform plan -var vm_state=TERMINATED
+    - gitlab-terraform plan-json -var vm_state=TERMINATED
+  resource_group: ${TF_STATE_NAME}
+  artifacts:
+    # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
+    # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
+    # public: false
+    paths:
+      - ${TF_ROOT}/plan.cache
+    reports:
+      terraform: ${TF_ROOT}/plan.json
+
 deploy-job:
   image:
     name: ${TF_CONTAINER_IMAGE}
@@ -108,6 +123,8 @@ deploy-job:
   dependencies:
     - "dockerize-job"
   # when: manual
+  needs:
+    - job: terraform:plan
 
 cleanup-job:
   image: ${JAVA_CONTAINER_IMAGE}
