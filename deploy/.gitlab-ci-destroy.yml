@@ -1,14 +1,12 @@
 image:
   name: ${TF_CONTAINER_IMAGE}
 
-# variables:
-#   TF_ROOT: ${CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
-
 stages:
   - generate-secrets
   - preview
   - cleanup
 
+# REQUIRED - for child pipeline
 workflow:
   rules:
     - when: always

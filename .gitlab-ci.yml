@@ -12,9 +12,14 @@ variables:
   JAVA_CONTAINER_IMAGE: "gradle:8.7-jdk17-alpine"
 
 cache:
-  paths:
-    - ~/.gradle/wrapper
-    - ~/.gradle/caches
+  - key: .gradle
+    paths:
+      - ~/.gradle/wrapper
+      - ~/.gradle/caches
+  - key: "${TF_ROOT}"
+    paths:
+      - ${TF_ROOT}/.terraform/
+      - deploy/.creds/
 
 workflow:
   rules:

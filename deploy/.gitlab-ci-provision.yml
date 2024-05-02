@@ -1,9 +1,6 @@
 image:
   name: ${TF_CONTAINER_IMAGE}
 
-variables:
-  TF_ROOT: ${CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
-
 stages:
   - generate-secrets
   - validate
@@ -86,17 +83,3 @@ terraform:deploy:
 #     - cd deploy/ansible
 #     - ansible --version
 #     - ansible-playbook install_nginx.yml
-
-# terraform:drydestroy:
-#   stage: cleanup
-#   script:
-#     - gitlab-terraform plan -destroy
-#   resource_group: ${TF_STATE_NAME}
-#   when: manual
-
-# terraform:destroy:
-#   stage: cleanup
-#   script:
-#     - gitlab-terraform destroy
-#   resource_group: ${TF_STATE_NAME}
-#   when: manual
