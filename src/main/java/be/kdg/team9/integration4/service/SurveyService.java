@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+
 public class SurveyService {
 
     private final SurveyRepository surveyRepository;
@@ -19,6 +20,7 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
+    @Transactional
     public List<Survey> getAllSurveys() {
         return surveyRepository.findAll();
     }
@@ -27,8 +29,12 @@ public class SurveyService {
         return surveyRepository.findBySurveyId(surveyId);
     }
 
-    @Transactional
+    //    @Transactional
     public List<Long> getQuestionsOfSurvey(long id) {
         return surveyRepository.getQuestionIdsBySurveyId(id);
+    }
+
+    public Survey createSurvey(Survey survey) {
+        return surveyRepository.save(survey);
     }
 }

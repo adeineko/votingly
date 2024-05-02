@@ -1,11 +1,11 @@
-package be.kdg.team9.integration4.model;
+package be.kdg.team9.integration4.model.user;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("P_ADMIN")
-public class PlatformAdmin extends User{
+public class PlatformAdmin extends User {
     public PlatformAdmin() {
     }
 

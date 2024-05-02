@@ -1,5 +1,6 @@
 package be.kdg.team9.integration4.model;
 
+import be.kdg.team9.integration4.model.question.Question;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -23,8 +24,8 @@ public class Survey {
     @OneToMany(mappedBy = "survey")
     private List<Question> questions;
 
-//    private Date startDate;
-//    private Date endDate;
+    private Date startDate;
+    private Date endDate;
 //    private boolean isPublished;
 //    private boolean isDefault;
 //    private boolean isAllowedOnlyOnce;
@@ -37,10 +38,12 @@ public class Survey {
     public Survey() {
     }
 
-    public Survey(long surveyId, String surveyName, SurveyType surveyType) {
+    public Survey(long surveyId, String surveyName, SurveyType surveyType, Date startDate, Date endDate) {
         this.surveyId = surveyId;
         this.surveyName = surveyName;
         this.surveyType = surveyType;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public long getSurveyId() {
@@ -73,5 +76,21 @@ public class Survey {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

@@ -1,7 +1,7 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
-import be.kdg.team9.integration4.model.ChoiceQuestion;
-import be.kdg.team9.integration4.model.QuestionType;
+import be.kdg.team9.integration4.model.question.ChoiceQuestion;
+import be.kdg.team9.integration4.model.question.QuestionType;
 
 import java.util.List;
 

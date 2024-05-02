@@ -1,4 +1,4 @@
-import { header, token } from "./util/csrf.js";
+import {header, token} from "./util/csrf.js";
 
 const questionsContainer = document.getElementById("questionsContainer");
 const nameContainer = document.getElementById("nameContainer");
@@ -109,7 +109,7 @@ async function saveAnswer() {
     const openQuestionInput = document.getElementById("openQuestionInput");
     // const currentQuestion = questions[currentQuestionIndex];
     const response = await fetch(
-        `/api/answers/open`, {
+        `/api/answers/${questionId.value}`, {
             method: 'POST',
             headers: {
                 "Accept": "application/json",
@@ -123,7 +123,7 @@ async function saveAnswer() {
                         id: questionId.value
                     },
                     surveyId: surveyIdInput.value,
-                    userId: 1
+                    number: surveyIdInput.value
                 }
             )
         }

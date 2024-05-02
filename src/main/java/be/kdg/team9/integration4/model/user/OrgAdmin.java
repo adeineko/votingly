@@ -1,4 +1,4 @@
-package be.kdg.team9.integration4.model;
+package be.kdg.team9.integration4.model.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("ORG_ADMIN")
-public class OrgAdmin extends User{
+public class OrgAdmin extends User {
     @Column
     private long orgId;
 

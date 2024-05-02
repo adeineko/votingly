@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class ThankYouPageController {
-    @GetMapping("/thank-you-page")
+public class SurveyCreationController {
+    @GetMapping("/create-survey")
     public String getPage() {
-        return "thank-you-page";
+        return "addsurvey";
     }
 }

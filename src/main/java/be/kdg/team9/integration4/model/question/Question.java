@@ -1,10 +1,9 @@
-package be.kdg.team9.integration4.model;
+package be.kdg.team9.integration4.model.question;
 
 // import be.kdg.team9.integration4.model.Survey;
-// import be.kdg.team9.integration4.model.QuestionType;
+// import be.kdg.team9.integration4.model.question.QuestionType;
+import be.kdg.team9.integration4.model.Survey;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "question")
@@ -26,8 +25,8 @@ public class Question {
     @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
 
-    @OneToMany(mappedBy = "question")
-    private List<Answer> answers;
+//    @OneToMany(mappedBy = "question")
+//    private List<Answer> answers;
 
     public Question() {
     }
@@ -77,12 +76,12 @@ public class Question {
     public void setSurvey(Survey survey) {
         this.survey = survey;
     }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
+//
+//    public List<Answer> getAnswers() {
+//        return answers;
+//    }
+//
+//    public void setAnswers(List<Answer> answers) {
+//        this.answers = answers;
+//    }
 }

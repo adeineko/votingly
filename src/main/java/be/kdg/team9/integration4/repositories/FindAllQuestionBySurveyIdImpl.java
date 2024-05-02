@@ -1,7 +1,7 @@
 package be.kdg.team9.integration4.repositories;
 
-import be.kdg.team9.integration4.model.ChoiceQuestion;
-import be.kdg.team9.integration4.model.Question;
+import be.kdg.team9.integration4.model.question.ChoiceQuestion;
+import be.kdg.team9.integration4.model.question.Question;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
