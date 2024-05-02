@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // Prevent the default form submission
 
         // Collect user input data
-        const firstName = document.querySelector('input[name="firstName"]').value;
-        const lastName = document.querySelector('input[name="lastName"]').value;
-        const email = document.querySelector('input[name="email"]').value;
-        const password = document.querySelector('input[name="password"]').value;
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
         // // Create a user object
         // const user = {

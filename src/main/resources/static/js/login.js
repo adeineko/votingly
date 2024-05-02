@@ -16,3 +16,7 @@ pwShowHide.forEach(eyeIcon => {
 
     })
 })
+
+function redirectToIndex() {
+    window.location.href = "http://localhost:8080/"; // Change "/index" to the actual URL of your index page
+}
