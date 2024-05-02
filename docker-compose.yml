@@ -3,7 +3,7 @@ version: '3.8'
 services:
   int4t9-db:
     container_name: int4t9-db
-    image: postgres:16.1-alpine
+    image: postgres:15.5-alpine3.17
     restart: unless-stopped
     ports:
       - 5431:5432
@@ -16,7 +16,7 @@ services:
 
   int4t9-test-db:
     container_name: int4t9-test-db
-    image: postgres:16.1-alpine
+    image: postgres:15.5-alpine3.17
     restart: unless-stopped
     ports:
       - 5331:5432

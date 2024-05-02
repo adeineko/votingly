@@ -39,6 +39,7 @@ Content-Type: application/json
 Cookie: JSESSIONID=DBCE5E300402E645B209C5ED1EBCEBB0
 X-Csrf-Token: Y8u8TttsY8XFSrsjCoqlTWpAomezUHGk74sVk_wMTKo3pINvV_qNLegPUaHoLIkXOaeRLl9xj1-BaRCJjLJwp8lqdJMCkuAL
 
+<<<<<<< HEAD
 
 ### Create a new survey
 POST http://localhost:8080/api/surveys
@@ -57,4 +58,18 @@ X-Csrf-Token: Y8u8TttsY
   ],
   "startDate": "12-01-2018",
   "endDate": "12-01-2019"
+=======
+### API: Save User Account
+POST http://localhost:8080/api/signup
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=FBBC117D3710BD4B557A4C77F3ABB5A3
+X-CSRF-TOKEN: uRrss2llH7Kb5ekbEbqDxbT6vJnRjI_xsDw9LulunM5Qktu23C3ZhltcKIG214sudJe38tfNkaHh6evcgV9ZS4tfqv9g8b7Q
+
+{
+"firstName": "Sofiia",
+"lastName":"Hmyria",
+"email": "gsdhjsd@gmail.com",
+"password": "qwerty"
+>>>>>>> f5d1b3b197e7223be799315fbf432d84bccdbdbe
 }

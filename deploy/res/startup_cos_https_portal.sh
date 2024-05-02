@@ -15,6 +15,9 @@ sudo su -c "mkdir -p ~/.docker/cli-plugins &&
 ln -sf /var/lib/google/docker-compose ~/.docker/cli-plugins/docker-compose" admin
 # docker compose version
 
+# Login to gitlab registry
+docker login registry.gitlab.com -u int4t9-deploy-token --password-stdin <<< $(gcloud secrets versions access latest --secret="GITLAB_DEPLOY_TOKEN")
+
 # Install HTTPS Portal
 sudo su -c "mkdir ~/https-portal &&
 mkdir ~/https-portal/{log,logrotate} &&

@@ -1,35 +1,67 @@
-# image:
-#   name: hashicorp/terraform:light
-services:
-  - postgres:16.1-alpine
-
 variables:
   POSTGRES_DB: int4t9
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: Student1234
   POSTGRES_HOST_AUTH_METHOD: trust
   SPRING_PROFILES_ACTIVE: testci
+  MY_CI_PROJECT_DIR: ${CI_PROJECT_DIR} # Bug workaround for downstream variables passing
+  TF_ROOT: ${MY_CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
+  TF_STATE_NAME: default      # The name of the state file used by the GitLab Managed Terraform state backend
+  # TODO - Self host terraform images becuase of terraform not open source anymore
+  TF_CONTAINER_IMAGE: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.5:f61b9582b11027bd80fb52ce44d266dc1d75e2dd"
+  JAVA_CONTAINER_IMAGE: "gradle:8.7-jdk17-alpine"
 
 cache:
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
+  - key: .gradle
+    paths:
+      - ~/.gradle/wrapper
+      - ~/.gradle/caches
+  - key: "${TF_ROOT}"
+    paths:
+      - ${TF_ROOT}/.terraform/
+      - deploy/.creds/
+
+workflow:
+  rules:
+    # Run the pipeline only on merge request to prod branch
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event"
+      when: never
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME != "prod"
+      when: never
+    - when: always
 
 stages:
-  - build
+  - infrastructure
   - test
+  - build
+  - dockerize
   - deploy
-  - destroy
   - cleanup
 
+provision:
+  stage: infrastructure
+  trigger:
+    include: deploy/.gitlab-ci-provision.yml
+  when: manual
+
+destroy:
+  stage: infrastructure
+  trigger:
+    include: deploy/.gitlab-ci-destroy.yml
+  when: manual
+
 test-job:
+  image: ${JAVA_CONTAINER_IMAGE}
+  services:
+    - postgres:15.5-alpine3.17
   stage: test
   script:
     - echo "Running tests.."
+    - echo "$SPRING_PROFILES_ACTIVE"
     - ./gradlew -PspringProfilesActiveTests=$SPRING_PROFILES_ACTIVE check
 
 gradle-build:
-  image: gradle:8.7-jdk17-alpine
+  image: ${JAVA_CONTAINER_IMAGE}
   # image: eclipse-temurin:17.0.10_7-jdk-alpine
   stage: build
   # Run the job only when jobs in earlier stages dont fail
@@ -43,39 +75,62 @@ gradle-build:
 
 dockerize-job:
   image: docker:latest
-  stage: build
+  stage: dockerize
   services:
     - name: docker:dind
   script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - echo "Building docker image.."
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA -t $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
   dependencies:
     - gradle-build
-  only: # deprecated
-    - prod
-  # rules:
-  #   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    # - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"
 
-deploy-job:
+terraform:plan:
+  image:
+    name: ${TF_CONTAINER_IMAGE}
   stage: deploy
   script:
-    - echo "Deploy"
-  when: manual
-  only: # deprecated
-    - prod
+    - gitlab-terraform plan
+    - gitlab-terraform plan-json
+  resource_group: ${TF_STATE_NAME}
+  artifacts:
+    # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
+    # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
+    # public: false
+    paths:
+      - ${TF_ROOT}/plan.cache
+    reports:
+      terraform: ${TF_ROOT}/plan.json
 
-destroy-job:
-  stage: destroy
+deploy-job:
+  image:
+    name: ${TF_CONTAINER_IMAGE}
+  stage: deploy
   script:
-    - echo "Destroy"
-  when: manual
-  only:
-    - prod
+    - gitlab-terraform refresh
+    # Get the IP address of the VM
+    - gitlab-terraform show -json
+    - jq --version
+    - gitlab-terraform show -json | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> /tmp/vm_ip
+    - cat /tmp/vm_ip
+    # Fail this job if the VM is not running
+    - |
+      [ -s /tmp/vm_ip ] || (echo "VM seems not to be running" && exit 1)
+    # Restart VM to udate web app image from dockerize-job
+    - gitlab-terraform apply -var vm_state=TERMINATED
+    - gitlab-terraform apply -var vm_state=RUNNING
+  resource_group: ${TF_STATE_NAME}
+  dependencies:
+    - "dockerize-job"
+  # when: manual
+  needs:
+    - job: terraform:plan
+    - job: dockerize-job
 
 cleanup-job:
+  image: ${JAVA_CONTAINER_IMAGE}
   stage: cleanup
   script:
     - echo "Cleaning up.."

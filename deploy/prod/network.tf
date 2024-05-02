@@ -51,7 +51,7 @@ resource "google_compute_firewall" "votingly-firewall-web" {
   }
 }
 
-# Firewall rule: Allow access via SSH from GCloud integrated terminal 
+# Firewall rule: Allow access via SSH from GCloud integrated terminal
 resource "google_compute_firewall" "votingly-firewall-ssh" {
   name    = "votingly-firewall-ssh"
   network = google_compute_network.votingly-network.self_link

@@ -42,8 +42,9 @@ out/
 
 ### Deployment ###
 deploy/*.creds/
-deploy/*terraform*
-deploy/*/*terraform*
+deploy/*/*.terraform/
+deploy/*/*.tfstate*
+# .terraform.lock.hcl
 
 ### Node ###
 node_modules/
