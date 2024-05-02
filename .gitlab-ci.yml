@@ -125,6 +125,7 @@ deploy-job:
   # when: manual
   needs:
     - job: terraform:plan
+    - job: dockerize-job
 
 cleanup-job:
   image: ${JAVA_CONTAINER_IMAGE}
