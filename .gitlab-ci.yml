@@ -88,6 +88,8 @@ dockerize-job:
     - gradle-build
 
 terraform:plan:
+  image:
+    name: ${TF_CONTAINER_IMAGE}
   stage: deploy
   script:
     - gitlab-terraform plan -var vm_state=TERMINATED
