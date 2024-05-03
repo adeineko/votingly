@@ -46,14 +46,16 @@ stages:
   - deploy
   - cleanup
 
-cicd-dev:
+cicd-test:
   stage: cicd-test
+  allow_failure: true
   script:
     - pwd
     - echo ${CI_BUILDS_DIR}
     - ls -al ${CI_BUILDS_DIR}
     - echo ${CI_PROJECT_DIR}
     - ls -al ${CI_PROJECT_DIR}
+    - mkdir -p ${CI_PROJECT_DIR}/deploy/.creds
     - ls -al ${CI_PROJECT_DIR}/deploy/.creds
 
 provision:
