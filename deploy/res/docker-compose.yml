@@ -14,22 +14,22 @@ services:
         networks:
             - bridged
         depends_on:
-            - "my-apache-app"
+            - "web-app"
         volumes:
             - https-portal-data:/var/lib/https-portal
-            - /tmp/https-portal/log:/var/log/nginx/
-            - /tmp/https-portal/logrotate:/var/lib/logrotate/
-    
-    # my-apache-app:
+            - /home/admin/https-portal/log:/var/log/nginx/
+            - /home/admin/https-portal/logrotate:/var/lib/logrotate/
+
+    # web-app:
     #     image: httpd:2.4
     #     networks:
     #         - bridged
 
-    votingly-app:
+    web-app:
         image: registry.gitlab.com/kdg-ti/integration-4/2023-2024/team-9/int4t9:latest
         networks:
             - bridged
-    
+
 volumes:
     https-portal-data:
 

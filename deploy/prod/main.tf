@@ -37,13 +37,13 @@ resource "google_compute_instance" "votingly-testing-vm" {
   }
 
   # Adding SSH keys
-  # metadata = {
-  #   "user-data" = file("config/cloud-init.yml")
-  # ssh-keys = <<EOF
-  #   admin:${file("../.creds/vm_key.pub")}
-  # EOF
-  # vscode:${file("~/.ssh/id_rsa.pub")}
-  # }
+  metadata = {
+    # "user-data" = file("config/cloud-init.yml")
+    ssh-keys = <<EOF
+    admin:${file(join("/", [var.project_root, var.vm_ssh_pub_key]))}
+  EOF
+    # vscode:${file("~/.ssh/id_rsa.pub")}
+  }
 
   # Script to run on every boot
   metadata_startup_script = file("../res/startup_cos_https_portal.sh")
@@ -54,7 +54,8 @@ resource "google_compute_instance" "votingly-testing-vm" {
   # }
 
   service_account {
-    email  = google_service_account.vm-secrets.email
+    # email  = google_service_account.vm-secrets.email
+    email  = "vm-secrets@int4t9.iam.gserviceaccount.com"
     scopes = ["cloud-platform"]
   }
 }
@@ -75,7 +76,7 @@ resource "google_compute_instance" "votingly-testing-vm" {
 #   }
 # }
 
-resource "google_service_account" "vm-secrets" {
-  account_id   = "vm-secrets"
-  display_name = "Custom SA for VM Instances to access Secrets"
-}
+# resource "google_service_account" "vm-secrets" {
+#   account_id   = "vm-secrets"
+#   display_name = "Custom SA for VM Instances to access Secrets"
+# }
