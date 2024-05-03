@@ -19,7 +19,7 @@ cache:
   - key: "${TF_ROOT}"
     paths:
       - ${TF_ROOT}/.terraform/
-      - deploy/.creds/
+      - ${CI_BUILDS_DIR}/deploy/.creds/
 
 workflow:
   rules:
@@ -114,9 +114,9 @@ deploy-job:
     # Get the IP address of the VM
     - gitlab-terraform show -json
     - jq --version
-    - gitlab-terraform show -json | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> deploy/.creds/vm_ip
-    - ls deploy/.creds
-    - cat deploy/.creds/vm_ip
+    - gitlab-terraform show -json | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> ${CI_BUILDS_DIR}/deploy/.creds/vm_ip
+    - ls ${CI_BUILDS_DIR}/deploy/.creds
+    - cat ${CI_BUILDS_DIR}/deploy/.creds/vm_ip
     # Fail this job if the VM is not running
     - |
       [ -s /tmp/vm_ip ] || (echo "VM seems not to be running" && exit 1)

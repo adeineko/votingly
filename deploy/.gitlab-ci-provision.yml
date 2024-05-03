@@ -16,7 +16,7 @@ cache:
   key: "${TF_ROOT}"
   paths:
     - ${TF_ROOT}/.terraform/
-    - deploy/.creds/
+    - ${CI_BUILDS_DIR}/deploy/.creds/
 
 generate-secrets:
   stage: generate-secrets
@@ -34,7 +34,7 @@ terraform:validate:
   stage: validate
   script:
     - pwd
-    - ls deploy/.creds
+    - ls ${CI_BUILDS_DIR}/deploy/.creds
     - gitlab-terraform validate
 
 terraform:plan:
