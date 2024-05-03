@@ -40,7 +40,7 @@ resource "google_compute_instance" "votingly-testing-vm" {
   metadata = {
     # "user-data" = file("config/cloud-init.yml")
     ssh-keys = <<EOF
-    admin:${file("../.creds/vm_key.pub")}
+    admin:${file(var.vm_ssh_pub_key)}
   EOF
     # vscode:${file("~/.ssh/id_rsa.pub")}
   }

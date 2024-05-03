@@ -14,5 +14,5 @@ provider "google" {
   project     = "int4t9"
   region      = "europe-west1"
   zone        = "europe-west1-b"
-  credentials = file("../.creds/gcloud_sa_compute_admin.json")
+  credentials = var.gcp_sa_credentials
 }

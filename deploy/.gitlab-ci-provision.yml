@@ -26,6 +26,8 @@ generate-secrets:
     - mkdir deploy/.creds && cd deploy/.creds
     - echo $SA_GCP | base64 -d > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
     - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
+    - pwd
+    - ls deploy/.creds
 
 terraform:fmt:
   stage: validate
@@ -36,6 +38,8 @@ terraform:fmt:
 terraform:validate:
   stage: validate
   script:
+    - pwd
+    - ls deploy/.creds
     - gitlab-terraform validate
 
 terraform:plan:

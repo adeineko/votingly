@@ -122,6 +122,8 @@ deploy-job:
       [ -s /tmp/vm_ip ] || (echo "VM seems not to be running" && exit 1)
     # Restart VM to udate web app image from dockerize-job
     # TODO updating app
+    # TODO check if registry logged in
+    # ~/.docker/config.json
 #     ssh admin@HOST << EOF
 # COMMAND1
 # COMMAND2
