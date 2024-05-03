@@ -16,6 +16,7 @@ ln -sf /var/lib/google/docker-compose ~/.docker/cli-plugins/docker-compose" admi
 # docker compose version
 
 # Login to gitlab registry
+# docker run -ti --name gcloud-config gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud auth login
 docker login registry.gitlab.com -u int4t9-deploy-token --password-stdin <<< $(gcloud secrets versions access latest --secret="GITLAB_DEPLOY_TOKEN")
 
 # Install HTTPS Portal

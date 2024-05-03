@@ -53,11 +53,11 @@ resource "google_compute_instance" "votingly-testing-vm" {
   #   destination = "/etc/votingly/docker-compose.yml"
   # }
 
-#  service_account {
+  service_account {
     # email  = google_service_account.vm-secrets.email
- #   email  = "vm-secrets@int4t9.iam.gserviceaccount.com"
-  #  scopes = ["cloud-platform"]
-  #}
+    email  = "vm-secrets@int4t9.iam.gserviceaccount.com"
+    scopes = ["cloud-platform"]
+  }
 }
 
 # Copy the IP address into a txt file
