@@ -16,32 +16,32 @@ cache:
   key: "${TF_ROOT}"
   paths:
     - ${TF_ROOT}/.terraform/
-    - ${CI_BUILDS_DIR}/deploy/.creds/
+    - ${CI_PROJECT_DIR}/deploy/.creds/
 
 generate-secrets:
   stage: generate-secrets
   trigger:
-    include: ${CI_BUILDS_DIR}/deploy/.gitlab-ci-generate-secrets.yml
+    include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-generate-secrets.yml
     strategy: depend
 
 terraform:fmt:
   stage: validate
   script:
-    - gitlab-terraform fmt -var project_root=${CI_BUILDS_DIR}
+    - gitlab-terraform fmt -var project_root=${CI_PROJECT_DIR}
   allow_failure: true
 
 terraform:validate:
   stage: validate
   script:
     - pwd
-    - ls ${CI_BUILDS_DIR}/deploy/.creds
-    - gitlab-terraform validate -var project_root=${CI_BUILDS_DIR}
+    - ls ${CI_PROJECT_DIR}/deploy/.creds
+    - gitlab-terraform validate -var project_root=${CI_PROJECT_DIR}
 
 terraform:plan:
   stage: plan
   script:
-    - gitlab-terraform plan -var project_root=${CI_BUILDS_DIR}
-    - gitlab-terraform plan-json -var project_root=${CI_BUILDS_DIR}
+    - gitlab-terraform plan -var project_root=${CI_PROJECT_DIR}
+    - gitlab-terraform plan-json -var project_root=${CI_PROJECT_DIR}
   resource_group: ${TF_STATE_NAME}
   artifacts:
     # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
@@ -55,7 +55,7 @@ terraform:plan:
 terraform:deploy:
   stage: deploy
   script:
-    - gitlab-terraform apply -var project_root=${CI_BUILDS_DIR}
+    - gitlab-terraform apply -var project_root=${CI_PROJECT_DIR}
   resource_group: ${TF_STATE_NAME}
   # when: manual
   # artifacts:

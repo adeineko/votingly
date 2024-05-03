@@ -14,12 +14,12 @@ variables:
 cache:
   - key: .gradle
     paths:
-      - ${CI_BUILDS_DIR}/.gradle/wrapper
-      - ${CI_BUILDS_DIR}/.gradle/caches
+      - ${CI_PROJECT_DIR}/.gradle/wrapper
+      - ${CI_PROJECT_DIR}/.gradle/caches
   - key: "${TF_ROOT}"
     paths:
       - ${TF_ROOT}/.terraform/
-      - ${CI_BUILDS_DIR}/deploy/.creds/
+      - ${CI_PROJECT_DIR}/deploy/.creds/
 
 workflow:
   rules:
@@ -31,6 +31,7 @@ workflow:
     - when: always
 
 stages:
+  - cicd-test
   - infrastructure
   - test
   - build
@@ -38,16 +39,26 @@ stages:
   - deploy
   - cleanup
 
+cicd-dev:
+  stage: cicd-test
+  script:
+    - pwd
+    - echo ${CI_BUILDS_DIR}
+    - ls -al ${CI_BUILDS_DIR}
+    - echo ${CI_PROJECT_DIR}
+    - ls -al ${CI_PROJECT_DIR}
+    - ls -al ${CI_PROJECT_DIR}/deploy/.creds
+
 provision:
   stage: infrastructure
   trigger:
-    include: ${CI_BUILDS_DIR}/deploy/.gitlab-ci-provision.yml
+    include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-provision.yml
   when: manual
 
 destroy:
   stage: infrastructure
   trigger:
-    include: ${CI_BUILDS_DIR}/deploy/.gitlab-ci-destroy.yml
+    include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-destroy.yml
   when: manual
 
 test-job:
@@ -92,8 +103,8 @@ terraform:plan:
     name: ${TF_CONTAINER_IMAGE}
   stage: deploy
   script:
-    - gitlab-terraform plan -var project_root=${CI_BUILDS_DIR}
-    - gitlab-terraform plan-json -var project_root=${CI_BUILDS_DIR}
+    - gitlab-terraform plan -var project_root=${CI_PROJECT_DIR}
+    - gitlab-terraform plan-json -var project_root=${CI_PROJECT_DIR}
   resource_group: ${TF_STATE_NAME}
   when: manual
   artifacts:
@@ -110,13 +121,13 @@ deploy-job:
     name: ${TF_CONTAINER_IMAGE}
   stage: deploy
   script:
-    - gitlab-terraform refresh -var project_root=${CI_BUILDS_DIR}
+    - gitlab-terraform refresh -var project_root=${CI_PROJECT_DIR}
     # Get the IP address of the VM
-    - gitlab-terraform show -json -var project_root=${CI_BUILDS_DIR}
+    - gitlab-terraform show -json -var project_root=${CI_PROJECT_DIR}
     - jq --version
-    - gitlab-terraform show -json -var project_root=${CI_BUILDS_DIR} | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> ${CI_BUILDS_DIR}/deploy/.creds/vm_ip
-    - ls ${CI_BUILDS_DIR}/deploy/.creds
-    - cat ${CI_BUILDS_DIR}/deploy/.creds/vm_ip
+    - gitlab-terraform show -json -var project_root=${CI_PROJECT_DIR} | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> ${CI_PROJECT_DIR}/deploy/.creds/vm_ip
+    - ls ${CI_PROJECT_DIR}/deploy/.creds
+    - cat ${CI_PROJECT_DIR}/deploy/.creds/vm_ip
     # Fail this job if the VM is not running
     - |
       [ -s /tmp/vm_ip ] || (echo "VM seems not to be running" && exit 1)
@@ -129,8 +140,8 @@ deploy-job:
 # COMMAND2
 # COMMAND3
 # EOF
-    - gitlab-terraform apply -var project_root=${CI_BUILDS_DIR} -var vm_state=TERMINATED
-    - gitlab-terraform apply -var project_root=${CI_BUILDS_DIR} -var vm_state=RUNNING
+    - gitlab-terraform apply -var project_root=${CI_PROJECT_DIR} -var vm_state=TERMINATED
+    - gitlab-terraform apply -var project_root=${CI_PROJECT_DIR} -var vm_state=RUNNING
   resource_group: ${TF_STATE_NAME}
   dependencies:
     - "dockerize-job"
