@@ -14,8 +14,8 @@ variables:
 cache:
   - key: .gradle
     paths:
-      - ~/.gradle/wrapper
-      - ~/.gradle/caches
+      - ${CI_BUILDS_DIR}/.gradle/wrapper
+      - ${CI_BUILDS_DIR}/.gradle/caches
   - key: "${TF_ROOT}"
     paths:
       - ${TF_ROOT}/.terraform/
@@ -92,8 +92,8 @@ terraform:plan:
     name: ${TF_CONTAINER_IMAGE}
   stage: deploy
   script:
-    - gitlab-terraform plan
-    - gitlab-terraform plan-json
+    - gitlab-terraform plan -var project_root=${CI_BUILDS_DIR}
+    - gitlab-terraform plan-json -var project_root=${CI_BUILDS_DIR}
   resource_group: ${TF_STATE_NAME}
   when: manual
   artifacts:
@@ -110,11 +110,11 @@ deploy-job:
     name: ${TF_CONTAINER_IMAGE}
   stage: deploy
   script:
-    - gitlab-terraform refresh
+    - gitlab-terraform refresh -var project_root=${CI_BUILDS_DIR}
     # Get the IP address of the VM
-    - gitlab-terraform show -json
+    - gitlab-terraform show -json -var project_root=${CI_BUILDS_DIR}
     - jq --version
-    - gitlab-terraform show -json | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> ${CI_BUILDS_DIR}/deploy/.creds/vm_ip
+    - gitlab-terraform show -json -var project_root=${CI_BUILDS_DIR} | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> ${CI_BUILDS_DIR}/deploy/.creds/vm_ip
     - ls ${CI_BUILDS_DIR}/deploy/.creds
     - cat ${CI_BUILDS_DIR}/deploy/.creds/vm_ip
     # Fail this job if the VM is not running
@@ -129,8 +129,8 @@ deploy-job:
 # COMMAND2
 # COMMAND3
 # EOF
-    - gitlab-terraform apply -var vm_state=TERMINATED
-    - gitlab-terraform apply -var vm_state=RUNNING
+    - gitlab-terraform apply -var project_root=${CI_BUILDS_DIR} -var vm_state=TERMINATED
+    - gitlab-terraform apply -var project_root=${CI_BUILDS_DIR} -var vm_state=RUNNING
   resource_group: ${TF_STATE_NAME}
   dependencies:
     - "dockerize-job"

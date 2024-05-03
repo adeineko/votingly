@@ -26,13 +26,13 @@ generate-secrets:
 # terraform:drydestroy:
 #   stage: preview
 #   script:
-#     - gitlab-terraform plan -destroy
+#     - gitlab-terraform plan -destroy -var project_root=${CI_BUILDS_DIR}
 #   resource_group: ${TF_STATE_NAME}
   # when: manual
 
 terraform:destroy:
   stage: cleanup
   script:
-    - gitlab-terraform destroy
+    - gitlab-terraform destroy -var project_root=${CI_BUILDS_DIR}
   resource_group: ${TF_STATE_NAME}
   # when: manual

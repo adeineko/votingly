@@ -1,3 +1,8 @@
+variable "project_root" {
+  type    = string
+  default = "../../"
+}
+
 variable "vm_state" {
   type    = string
   default = "RUNNING"
@@ -5,10 +10,10 @@ variable "vm_state" {
 
 variable "vm_ssh_pub_key" {
   type    = string
-  default = "../.creds/vm_key.pub"
+  default = "${var.project_root}/deploy/.creds/vm_key.pub"
 }
 
 variable "gcp_sa_credentials" {
   type    = string
-  default = "../.creds/gcloud_sa_compute_admin.json"
+  default = "${var.project_root}/deploy/.creds/gcloud_sa_compute_admin.json"
 }
