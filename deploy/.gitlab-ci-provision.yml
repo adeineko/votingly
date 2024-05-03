@@ -27,7 +27,7 @@ generate-secrets:
 terraform:fmt:
   stage: validate
   script:
-    - gitlab-terraform fmt -var project_root=${CI_PROJECT_DIR}
+    - gitlab-terraform fmt
   allow_failure: true
 
 terraform:validate:
@@ -35,7 +35,7 @@ terraform:validate:
   script:
     - pwd
     - ls ${CI_PROJECT_DIR}/deploy/.creds
-    - gitlab-terraform validate -var project_root=${CI_PROJECT_DIR}
+    - gitlab-terraform validate
 
 terraform:plan:
   stage: plan

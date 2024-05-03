@@ -34,6 +34,7 @@ terraform:destroy:
   stage: cleanup
   script:
     - ls ${CI_PROJECT_DIR}/deploy/.creds
+    - cat ${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
     - gitlab-terraform destroy -var project_root=${CI_PROJECT_DIR}
   resource_group: ${TF_STATE_NAME}
   # when: manual
