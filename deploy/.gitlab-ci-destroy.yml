@@ -12,7 +12,7 @@ workflow:
     - when: always
 
 cache:
-  key: "${TF_ROOT}"
+  # key: "${TF_ROOT}"
   paths:
     - ${TF_ROOT}/.terraform/
     - ${CI_PROJECT_DIR}/deploy/.creds/
@@ -33,6 +33,7 @@ generate-secrets:
 terraform:destroy:
   stage: cleanup
   script:
+    - ls ${CI_PROJECT_DIR}/deploy/.creds
     - gitlab-terraform destroy -var project_root=${CI_PROJECT_DIR}
   resource_group: ${TF_STATE_NAME}
   # when: manual

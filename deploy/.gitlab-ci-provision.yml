@@ -13,7 +13,7 @@ workflow:
     - when: always
 
 cache:
-  key: "${TF_ROOT}"
+  # key: "${TF_ROOT}"
   paths:
     - ${TF_ROOT}/.terraform/
     - ${CI_PROJECT_DIR}/deploy/.creds/
