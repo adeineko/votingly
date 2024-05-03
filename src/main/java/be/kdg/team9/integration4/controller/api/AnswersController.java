@@ -50,7 +50,7 @@ public class AnswersController {
                 var createdRangeAnswer = answerService.saveRange(question.getSurvey().getSurveyId(),
                         user.getUserId(),
                         questionId,
-                        newAnswerDto.getNumber()
+                        String.valueOf(newAnswerDto.getAnswer())
                 );
                 yield new ResponseEntity<>(
                         modelMapper.map(createdRangeAnswer, AnswerDto.class),

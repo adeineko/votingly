@@ -30,6 +30,10 @@ public class Option {
         this.question = question;
     }
 
+    public Option(long optionId, String optionText) {
+        this.optionText = optionText;
+        this.optionId = optionId;
+    }
 
     public long getOptionId() {
         return optionId;
