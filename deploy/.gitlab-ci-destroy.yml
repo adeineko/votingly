@@ -20,7 +20,7 @@ cache:
 generate-secrets:
   stage: generate-secrets
   trigger:
-    include: .gitlab-ci-generate-secrets.yml
+    include: ${CI_BUILDS_DIR}/deploy/.gitlab-ci-generate-secrets.yml
     strategy: depend
 
 # terraform:drydestroy:

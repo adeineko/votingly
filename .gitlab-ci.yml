@@ -41,13 +41,13 @@ stages:
 provision:
   stage: infrastructure
   trigger:
-    include: deploy/.gitlab-ci-provision.yml
+    include: ${CI_BUILDS_DIR}/deploy/.gitlab-ci-provision.yml
   when: manual
 
 destroy:
   stage: infrastructure
   trigger:
-    include: deploy/.gitlab-ci-destroy.yml
+    include: ${CI_BUILDS_DIR}/deploy/.gitlab-ci-destroy.yml
   when: manual
 
 test-job:
