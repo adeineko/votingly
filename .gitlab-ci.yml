@@ -95,6 +95,7 @@ terraform:plan:
     - gitlab-terraform plan
     - gitlab-terraform plan-json
   resource_group: ${TF_STATE_NAME}
+  when: manual
   artifacts:
     # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
     # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
@@ -113,18 +114,25 @@ deploy-job:
     # Get the IP address of the VM
     - gitlab-terraform show -json
     - jq --version
-    - gitlab-terraform show -json | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> /tmp/vm_ip
-    - cat /tmp/vm_ip
+    - gitlab-terraform show -json | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> deploy/.creds/vm_ip
+    - ls deploy/.creds
+    - cat deploy/.creds/vm_ip
     # Fail this job if the VM is not running
     - |
       [ -s /tmp/vm_ip ] || (echo "VM seems not to be running" && exit 1)
     # Restart VM to udate web app image from dockerize-job
+    # TODO updating app
+#     ssh admin@HOST << EOF
+# COMMAND1
+# COMMAND2
+# COMMAND3
+# EOF
     - gitlab-terraform apply -var vm_state=TERMINATED
     - gitlab-terraform apply -var vm_state=RUNNING
   resource_group: ${TF_STATE_NAME}
   dependencies:
     - "dockerize-job"
-  # when: manual
+  when: manual
   needs:
     - job: terraform:plan
     - job: dockerize-job
