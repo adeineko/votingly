@@ -18,11 +18,10 @@ cache:
     - deploy/.creds/
 
 generate-secrets:
-  image: bash:latest
   stage: generate-secrets
-  script:
-    - mkdir deploy/.creds && cd deploy/.creds
-    - echo $SA_GCP | base64 -d > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
+  trigger:
+    include: .gitlab-ci-generate-secrets.yml
+    strategy: depend
 
 # terraform:drydestroy:
 #   stage: preview
