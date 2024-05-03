@@ -31,9 +31,10 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers(
                                         antMatcher(HttpMethod.GET, "/api/**"),
+                                        antMatcher(HttpMethod.POST, "/api/**"),
                                         antMatcher(HttpMethod.GET, "/surveys/**"),
                                         antMatcher(HttpMethod.GET, "/signup/**"),
-                                        antMatcher(HttpMethod.GET, "/api/signup/**"),
+                                        antMatcher(HttpMethod.POST, "/api/signup/**"),
                                         antMatcher(HttpMethod.GET, "/thank-you-page/**")
                                 )
                                 .permitAll()

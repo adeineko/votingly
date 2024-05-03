@@ -37,7 +37,8 @@ async function fetchNextQuestion() {
         displayQuestion(questions[currentQuestionIndex]);
     } else {
         // If there are no more questions, redirect to thank-you page
-        window.location.href = `/thank-you-page`;
+
+        // window.location.href = `/thank-you-page`;
     }
 }
 
@@ -61,8 +62,8 @@ function createMultipleChoiceQuestion(question) {
             <label>${question.questionName}</label>
             ${question.options.map(option => `
                 <div>
-                    <input type="checkbox" id="${option}" name="${option}" value="${option}">
-                    <label for="${option}">${option.optionText}</label>
+                    <input type="checkbox" id="multichoiceInput" name="${option}" value="${option}">
+                    <label for="choiceInput">${option.optionText}</label>
                 </div>
             `).join('')}
         </div>
@@ -79,14 +80,15 @@ function createSingleChoiceQuestion(question) {
         <label>${question.questionName}</label>
         ${question.options.map(option => `
             <div>
-                <input type="radio" id="${option}" name="options" value="${option}">
-                <label for="${option}">${option.optionText}</label>
+                <input type="radio" id="choiceInput" name="options_${question.id}" value="${option}">
+                <label for="choiceInput">${option.optionText}</label>
             </div>
         `).join('')}
     </div>
     `;
     return questionDiv;
 }
+
 
 
 function createRangeQuestion(question) {
@@ -113,7 +115,7 @@ function createRangeQuestion(question) {
     </style>
         <div class="card-body">
             <label for="range_q">${question.questionName}</label><br/>
-            <input type="range" name="range_q" min="${question.min}" max="${question.max}" list="markers" step="${question.step}"/>
+            <input id="rangeInput" type="range" name="range_q" min="${question.min}" max="${question.max}" list="markers" step="${question.step}"/>
         </div>
         <datalist id="markers">
               ${optionsHTML}
@@ -128,39 +130,90 @@ const questionId = document.getElementById("questionId");
 
 //TODO: fix questionId (for now it saves same questionId  for all questions)
 async function saveAnswer() {
-    const openQuestionInput = document.getElementById("openQuestionInput");
-    // const currentQuestion = questions[currentQuestionIndex];
-    const response = await fetch(
-        `/api/answers/${questionId.value}`, {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                [header]: token
-            },
-            body: JSON.stringify(
-                {
-                    answer: openQuestionInput.value,
-                    questionId: {
-                        id: questionId.value
-                    },
-                    surveyId: surveyIdInput.value,
-                    number: surveyIdInput.value
-                }
-            )
+    const currentQuestion = questions[currentQuestionIndex];
+    let answer;
+    let options = [];
+
+    switch (currentQuestion.questionType) {
+        case "OPEN":
+            answer = document.getElementById("openQuestionInput").value;
+            console.log(answer);
+            console.log(typeof answer);
+            break;
+        case "CHOICE":
+            // Retrieve selected choice inputs
+            const multichoiceInputs = document.getElementById("multichoiceInput");
+            const choiceInputs = document.getElementById("choiceInput");
+            // console.log("Selected choice inputs:", choiceInputs);
+            if (!currentQuestion.multiChoice) {
+                console.log("Single choice selected:", choiceInputs.length > 0 ? choiceInputs[0].value : null);
+                answer = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked")?.value || null;
+                console.log(answer);
+                console.log(typeof answer);
+            } else {
+                console.log("Multiple choices selected:", Array.from(multichoiceInputs).map(input => input.value));
+                options = Array.from(multichoiceInputs).map(input => input.value);
+                console.log(options);
+                console.log(typeof options);
+            }
+
+            break;
+        case "RANGE":
+            // Retrieve selected range input value
+            answer = document.getElementById("rangeInput").value.toString();
+            answer.toString()
+            console.log(answer);
+            console.log(typeof answer);
+            break;
+        default:
+            console.error("Unsupported question type:", currentQuestion.questionType);
+            return;
+    }
+
+
+    let answerData;
+    if(currentQuestion.questionType === 'CHOICE'){
+        if (currentQuestion.multiChoice) {
+            answerData = {
+                options: options, // if slider --> parseInt(answer)
+                questionId: currentQuestion.id,
+                surveyId: surveyIdInput.value // always parseInt
+            };
+        }else{
+            answerData = {
+                answer: answer, // if slider --> parseInt(answer)
+                questionId: currentQuestion.id,
+                surveyId: surveyIdInput.value // always parseInt
+            };
         }
-    );
-    if (response.status === 201) {
-        const answer = await response.json();
-        console.log("Successfully saved answer")
-        console.log(answer)
+    }else {
+        answerData = {
+            answer: answer, // if slider --> parseInt(answer)
+            questionId: currentQuestion.id,
+            surveyId: surveyIdInput.value // always parseInt
+        };
+    }
+
+    const response = await fetch(`/api/answers/${currentQuestion.id}`, {
+        method: 'POST',
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            [header]: token
+        },
+        body: JSON.stringify(answerData)
+    });
+
+    if (response.ok) {
+        const savedAnswer = await response.json();
+        console.log("Successfully saved answer:", savedAnswer);
     } else {
-        alert("Something went wrong!");
+        console.error("Failed to save answer:", response.status);
+        alert("Failed to save answer. Please try again.");
     }
 }
 
 function displayQuestion(question) {
-    // Clear the questions container
     questionsContainer.innerHTML = '';
     let questionElement;
     switch (question.questionType) {
@@ -186,13 +239,9 @@ function displayQuestion(question) {
     questionsContainer.appendChild(questionElement);
 }
 
-// Event listener for submit answer button
 submitAnswerButton?.addEventListener("click", async () => {
-    // Save the answer
     await saveAnswer();
-    // Fetch the next question
     await fetchNextQuestion();
 });
 
-// Initial fetch of the first question when the page loads
 window.addEventListener('load', fetchFirstQuestion);
