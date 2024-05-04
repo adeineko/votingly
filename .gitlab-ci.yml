@@ -9,6 +9,7 @@ variables:
   TF_STATE_NAME: default # The name of the state file used by the GitLab Managed Terraform state backend
   # TODO - Self host terraform images becuase of terraform not open source anymore
   TF_CONTAINER_IMAGE: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.5:f61b9582b11027bd80fb52ce44d266dc1d75e2dd"
+  # java alt image: eclipse-temurin:17.0.10_7-jdk-alpine
   JAVA_CONTAINER_IMAGE: "gradle:8.7-jdk17-alpine"
 
 cache:
@@ -82,10 +83,9 @@ test-job:
 
 gradle-build:
   image: ${JAVA_CONTAINER_IMAGE}
-  # image: eclipse-temurin:17.0.10_7-jdk-alpine
   stage: build
   # Run the job only when jobs in earlier stages dont fail
-  when: on_success
+  # when: on_success
   script:
     - echo "Building jar file.."
     - ./gradlew clean bootJar
@@ -157,16 +157,16 @@ dockerize-job:
 #     - job: terraform:plan
 #     - job: dockerize-job
 
-# TODO updating app
-# TODO check if registry logged in
+# TODO check if VM's docker is logged in to gitlab registry 
+# https://stackoverflow.com/questions/36022892/how-to-know-if-docker-is-already-logged-in-to-a-docker-registry-server
 deploy-job:
   image: google/cloud-sdk:latest
   stage: deploy
   script:
     - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
-    - gcloud compute scp ${CI_PROJECT_DIR}/deploy/vm_res/deploy.sh votingly-testing-vm:/tmp
-    - gcloud compute ssh --zone "europe-west1-b" "votingly-testing-vm" --project "int4t9" -- 'bash /tmp/deploy.sh'
-  when: manual
+    - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/deploy.sh admin@votingly-testing-vm:/tmp --zone "europe-west1-b" --project "int4t9" --strict-host-key-checking=no
+    - gcloud -q compute ssh admin@votingly-testing-vm --zone "europe-west1-b" --project "int4t9" -- 'sudo bash /tmp/deploy.sh'
+  # when: manual
   dependencies:
     - "dockerize-job"
 

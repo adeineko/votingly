@@ -6,7 +6,7 @@ stages:
   - validate
   - plan
   - deploy
-  - setup
+  - install
 
 # REQUIRED - for child pipeline
 workflow:
@@ -47,7 +47,7 @@ terraform:plan:
   artifacts:
     # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
     # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
-    # public: false
+    public: false
     paths:
       - ${TF_ROOT}/plan.cache
     reports:
@@ -61,10 +61,11 @@ terraform:deploy:
   # when: manual
 
 vm:installation:
-  image: google/cloud-sdk:latest
-  stage: setup
+  image: google/cloud-sdk:alpine
+  stage: install
   script:
     - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
-    - gcloud compute scp ${CI_PROJECT_DIR}/deploy/vm_res/installation.sh votingly-testing-vm:/tmp
-    - gcloud compute ssh --zone "europe-west1-b" "votingly-testing-vm" --project "int4t9" -- 'bash /tmp/installation.sh'
+    - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/docker-compose.yml admin@votingly-testing-vm:/home/admin/votingly --zone "europe-west1-b" --project "int4t9"
+    - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/installation.sh admin@votingly-testing-vm:/tmp --zone "europe-west1-b" --project "int4t9" --strict-host-key-checking=no
+    - gcloud -q compute ssh admin@votingly-testing-vm --zone "europe-west1-b" --project "int4t9" -- 'sudo bash /tmp/installation.sh'
   # when: manual
