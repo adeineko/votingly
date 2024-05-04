@@ -61,6 +61,7 @@ terraform:deploy:
   # when: manual
 
 vm:installation:
+  image: google/cloud-sdk:latest
   stage: setup
   script:
     - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json

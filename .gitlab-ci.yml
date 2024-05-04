@@ -160,6 +160,7 @@ dockerize-job:
 # TODO updating app
 # TODO check if registry logged in
 deploy-job:
+  image: google/cloud-sdk:latest
   stage: deploy
   script:
     - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
