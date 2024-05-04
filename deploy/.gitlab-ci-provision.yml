@@ -6,6 +6,7 @@ stages:
   - validate
   - plan
   - deploy
+  - setup
 
 # REQUIRED - for child pipeline
 workflow:
@@ -58,19 +59,11 @@ terraform:deploy:
     - gitlab-terraform apply
   resource_group: ${TF_STATE_NAME}
   # when: manual
-  # artifacts:
-  #   name: vm_ip
-  #   expire_in: "1 hour"
-  #   paths:
-  #     - '../.creds/vm_ip'
 
-# ansible:
-#   # image: python:3.9.17-slim-bullseye
-#   image: alpine/ansible:latest
-#   stage: ansible
-#   # allow_failure: true
-#   script:
-#     - chmod 750 ansible_files
-#     - cd deploy/ansible
-#     - ansible --version
-#     - ansible-playbook install_nginx.yml
+vm:installation:
+  stage: setup
+  script:
+    - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
+    - gcloud compute scp ${CI_PROJECT_DIR}/deploy/vm_res/installation.sh votingly-testing-vm:/tmp
+    - gcloud compute ssh --zone "europe-west1-b" "votingly-testing-vm" --project "int4t9" -- 'bash /tmp/installation.sh'
+  # when: manual

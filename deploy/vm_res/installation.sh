@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Automated script to run on VM boot
+# Automated script to run on CICD provision infrastructure job
 
 useradd admin
 sudo usermod -aG docker admin

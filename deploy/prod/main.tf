@@ -46,7 +46,7 @@ resource "google_compute_instance" "votingly-testing-vm" {
   }
 
   # Script to run on every boot
-  metadata_startup_script = file("../res/startup_cos_https_portal.sh")
+  metadata_startup_script = file("../vm_res/onboot.sh")
 
   # provisioner "docker-compose" {
   #   source      = "../res/docker-compose.yml"
