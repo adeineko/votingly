@@ -55,7 +55,7 @@ terraform:plan:
 terraform:deploy:
   stage: deploy
   script:
-    - gitlab-terraform apply -var project_root=${CI_PROJECT_DIR}
+    - gitlab-terraform apply
   resource_group: ${TF_STATE_NAME}
   # when: manual
   # artifacts:
