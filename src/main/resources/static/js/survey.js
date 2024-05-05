@@ -70,9 +70,10 @@ function createMultipleChoiceQuestion(question) {
     cardBody.classList.add('card-body');
     questionDiv.appendChild(cardBody);
 
-    const label = document.createElement('label');
-    label.textContent = question.questionName;
-    cardBody.appendChild(label);
+    const cardTitle = document.createElement('h5');
+    cardTitle.classList.add('card-title');
+    cardTitle.textContent = question.questionName;
+    cardBody.appendChild(cardTitle);
 
     question.options.forEach(option => {
         const optionDiv = document.createElement('div');
@@ -104,9 +105,10 @@ function createSingleChoiceQuestion(question) {
     cardBody.classList.add('card-body');
     questionDiv.appendChild(cardBody);
 
-    const label = document.createElement('label');
-    label.textContent = question.questionName;
-    cardBody.appendChild(label);
+    const cardTitle = document.createElement('h5');
+    cardTitle.classList.add('card-title');
+    cardTitle.textContent = question.questionName;
+    cardBody.appendChild(cardTitle);
 
     question.options.forEach(option => {
         const optionDiv = document.createElement('div');
@@ -130,7 +132,7 @@ function createSingleChoiceQuestion(question) {
     return questionDiv;
 }
 
-
+//TODO: change innerHTML to createElement()
 function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
