@@ -59,17 +59,17 @@ destroy:
     include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-destroy.yml
   when: manual
 
-cicd-test:
-  stage: cicd-test
-  allow_failure: true
-  script:
-    - pwd
-    - echo ${CI_BUILDS_DIR}
-    - ls -al ${CI_BUILDS_DIR}
-    - echo ${CI_PROJECT_DIR}
-    - ls -al ${CI_PROJECT_DIR}
-    - mkdir -p ${CI_PROJECT_DIR}/deploy/.creds
-    - ls -al ${CI_PROJECT_DIR}/deploy/.creds
+# cicd-test:
+#   stage: cicd-test
+#   allow_failure: true
+#   script:
+#     - pwd
+#     - echo ${CI_BUILDS_DIR}
+#     - ls -al ${CI_BUILDS_DIR}
+#     - echo ${CI_PROJECT_DIR}
+#     - ls -al ${CI_PROJECT_DIR}
+#     - mkdir -p ${CI_PROJECT_DIR}/deploy/.creds
+#     - ls -al ${CI_PROJECT_DIR}/deploy/.creds
 
 test-job:
   image: ${JAVA_CONTAINER_IMAGE}
@@ -106,56 +106,6 @@ dockerize-job:
     - docker push $CI_REGISTRY_IMAGE:latest
   dependencies:
     - gradle-build
-
-# terraform:plan:
-#   image:
-#     name: ${TF_CONTAINER_IMAGE}
-#   stage: deploy
-#   script:
-#     - gitlab-terraform plan -var project_root=${CI_PROJECT_DIR}
-#     - gitlab-terraform plan-json -var project_root=${CI_PROJECT_DIR}
-#   resource_group: ${TF_STATE_NAME}
-#   when: manual
-#   artifacts:
-#     # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
-#     # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
-#     # public: false
-#     paths:
-#       - ${TF_ROOT}/plan.cache
-#     reports:
-#       terraform: ${TF_ROOT}/plan.json
-
-# deploy-job:
-#   image:
-#     name: ${TF_CONTAINER_IMAGE}
-#   stage: deploy
-#   script:
-#     - gitlab-terraform refresh -var project_root=${CI_PROJECT_DIR}
-#     # Get the IP address of the VM
-#     - gitlab-terraform show -json -var project_root=${CI_PROJECT_DIR}
-#     - jq --version
-#     - gitlab-terraform show -json -var project_root=${CI_PROJECT_DIR} | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> ${CI_PROJECT_DIR}/deploy/.creds/vm_ip
-#     - ls ${CI_PROJECT_DIR}/deploy/.creds
-#     - cat ${CI_PROJECT_DIR}/deploy/.creds/vm_ip
-#     # Fail this job if the VM is not running
-#     - |
-#       [ -s /tmp/vm_ip ] || (echo "VM seems not to be running" && exit 1)
-#     # Restart VM to udate web app image from dockerize-job
-#     # ~/.docker/config.json
-#     #     ssh admin@HOST << EOF
-#     # COMMAND1
-#     # COMMAND2
-#     # COMMAND3
-#     # EOF
-#     - gitlab-terraform apply -var project_root=${CI_PROJECT_DIR} -var vm_state=TERMINATED
-#     - gitlab-terraform apply -var project_root=${CI_PROJECT_DIR} -var vm_state=RUNNING
-#   resource_group: ${TF_STATE_NAME}
-#   dependencies:
-#     - "dockerize-job"
-#   when: manual
-#   needs:
-#     - job: terraform:plan
-#     - job: dockerize-job
 
 # TODO check if VM's docker is logged in to gitlab registry 
 # https://stackoverflow.com/questions/36022892/how-to-know-if-docker-is-already-logged-in-to-a-docker-registry-server
