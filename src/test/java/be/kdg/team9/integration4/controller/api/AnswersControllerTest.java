@@ -1,7 +1,5 @@
 package be.kdg.team9.integration4.controller.api;
 
-import be.kdg.team9.integration4.controller.api.dto.answer.AnswerDto;
-import be.kdg.team9.integration4.controller.api.dto.answer.NewAnswerDto;
 import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.answers.ChoiceAnswer;
 import be.kdg.team9.integration4.model.answers.OpenAnswer;
@@ -59,7 +57,7 @@ class AnswersControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .with(csrf())
                         .content(objectMapper.writeValueAsString(new RangeAnswer(
-                                "2"
+                                2
                         ))))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.number").value(2))

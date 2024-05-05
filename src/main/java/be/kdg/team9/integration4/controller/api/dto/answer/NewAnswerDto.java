@@ -12,13 +12,16 @@ public class NewAnswerDto {
 
     private String answer;
 
+    private int number;
+
     private List<Option> options;
 
     public NewAnswerDto() {
     }
 
-    public NewAnswerDto(long surveyId, String answer, List<Option> options) {
+    public NewAnswerDto(long surveyId, String answer, int number, List<Option> options) {
         this.answer = answer;
+        this.number = number;
         this.options = options;
     }
 
@@ -44,5 +47,13 @@ public class NewAnswerDto {
 
     public void setOptions(List<Option> options) {
         this.options = options;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }
