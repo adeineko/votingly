@@ -1,14 +1,15 @@
 version: '3.2'
 services:
     https-portal:
-        image:  steveltn/https-portal:1
+        image:  steveltn/https-portal:latest
         ports:
             - "80:80"
             - "443:443"
         restart: always
         environment:
             DOMAINS:  "votingly.tech -> http://web-app:80"
-            STAGE:  "production"
+            # STAGE:  "production"
+            STAGE: local
 #             FORCE_RENEW:  "false"
         networks:
             - bridged
