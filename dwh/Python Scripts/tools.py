@@ -1,7 +1,7 @@
 import psycopg2
 import config
 
-def establish_connection(server=config.SERVER, database=config.DATABASE_OP, username=config.USERNAME, password=config.PASSWORD, host=config.HOST, port=config.PORT):
+def establish_connection(server=config.SERVER, database=config.DATABASE_OP, port=config.PORT_OP, username=config.USERNAME, password=config.PASSWORD, host=config.HOST):
     """
     Establishes a connection to the specified PostgreSQL database.
     Args:
@@ -15,10 +15,11 @@ def establish_connection(server=config.SERVER, database=config.DATABASE_OP, user
     try:
         connection = psycopg2.connect(
             dbname=database,
+            port=port,
             user=username,
             password=password,
-            host=host,
-            port=port
+            host=host
+
         )
        # print("Connected to the PostgreSQL database.")
         return connection
