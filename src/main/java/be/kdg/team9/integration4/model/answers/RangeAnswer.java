@@ -8,26 +8,26 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("RANGE")
 public class RangeAnswer extends Answer {
 
-    private int number;
+    private int range_answer;
 
     public RangeAnswer() {
 
     }
 
-    public RangeAnswer(int number) {
-        this.number = number;
+    public RangeAnswer(int range_answer) {
+        this.range_answer = range_answer;
     }
 
-    public RangeAnswer(long surveyId, long userId, Question question, int number) {
+    public RangeAnswer(long surveyId, long userId, Question question, int range_answer) {
         super(surveyId, userId, question);
-        this.number = number;
+        this.range_answer = range_answer;
     }
 
-    public int getNumber() {
-        return number;
+    public int getRange_answer() {
+        return range_answer;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setRange_answer(int range_answer) {
+        this.range_answer = range_answer;
     }
 }
