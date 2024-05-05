@@ -57,7 +57,8 @@ resource "google_compute_firewall" "votingly-firewall-ssh" {
   network = google_compute_network.votingly-network.self_link
 
   # IP range of GCloud integrated terminal
-  source_ranges = ["35.235.240.0/20", "94.130.10.128/25"]
+  # source_ranges = ["35.235.240.0/20", "94.130.10.128/25"]
+  source_ranges = ["0.0.0.0/0"]
 
   direction   = "INGRESS"
   source_tags = ["ssh"]
