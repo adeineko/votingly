@@ -4,6 +4,7 @@ import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.answers.ChoiceAnswer;
 import be.kdg.team9.integration4.model.answers.OpenAnswer;
 import be.kdg.team9.integration4.model.answers.RangeAnswer;
+import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,7 @@ class AnswersControllerTest {
                         ))))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.number").value(2))
+                .andDo(print())
                 .andReturn();
     }
 
@@ -71,10 +73,11 @@ class AnswersControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .with(csrf())
                         .content(objectMapper.writeValueAsString(new ChoiceAnswer(
-                               List.of(new Option())
+                               List.of(new Option(1, "option 1", new ChoiceQuestion()))
                         ))))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.options").isArray())
+                .andDo(print())
                 .andReturn();
     }
 }

@@ -1,5 +1,6 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.QuestionType;
 import be.kdg.team9.integration4.model.question.RangeQuestion;
 
@@ -9,7 +10,7 @@ public class RangeDto extends QuestionDto {
     private int max;
     private int step;
 
-    public RangeDto(long id, String questionName, QuestionType questionType, long surveyId, int min, int max, int step) {
+    public RangeDto(long id, String questionName, QuestionType questionType, Survey surveyId, int min, int max, int step) {
         super(id, questionName, questionType, surveyId);
         this.min = min;
         this.max = max;
@@ -20,7 +21,7 @@ public class RangeDto extends QuestionDto {
     }
 
     public RangeDto(RangeQuestion rangeQuestion) {
-        super(rangeQuestion.getId(), rangeQuestion.getQuestionName(), rangeQuestion.getQuestionType(), rangeQuestion.getSurvey().getSurveyId());
+        super(rangeQuestion.getId(), rangeQuestion.getQuestionName(), rangeQuestion.getQuestionType(), rangeQuestion.getSurvey());
     }
 
     public int getMin() {

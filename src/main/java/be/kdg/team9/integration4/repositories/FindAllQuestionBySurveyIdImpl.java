@@ -16,7 +16,6 @@ public class FindAllQuestionBySurveyIdImpl implements FindAllQuestionBySurveyId 
         List<ChoiceQuestion> choiceQuestions = entityManager.createQuery(
                         "select cq from ChoiceQuestion cq " +
                                 "join fetch cq.options " +
-//                "join QuestionSelection qs on cq.id = qs.question.id " +
                                 "where cq.survey.id = ?1",
                         ChoiceQuestion.class
                 )
@@ -24,7 +23,6 @@ public class FindAllQuestionBySurveyIdImpl implements FindAllQuestionBySurveyId 
                 .getResultList();
         List<Question> otherQuestions = entityManager.createQuery(
                         "select q from Question q " +
-//                "join QuestionSelection qs on q.id = qs.question.id " +
                                 "where q.survey.id = ?1",
                         Question.class
                 )

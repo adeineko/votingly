@@ -38,8 +38,7 @@ public class SurveysController {
     List<SurveyDto> getAllSurveys() {
         return surveyService.getAllSurveys()
                 .stream()
-                .map(surveyDto -> modelMapper.map(surveyDto, SurveyDto.class)).toList();
-
+                .map(survey -> modelMapper.map(survey, SurveyDto.class)).toList();
     }
 
 
@@ -57,11 +56,11 @@ public class SurveysController {
         return ResponseEntity.ok(questionDtos);
     }
 
-//    @PostMapping("/create")
-//    public ResponseEntity<SurveyDto> createSurvey(@RequestBody SurveyDto surveyDto) {
-//        Survey survey = modelMapper.map(surveyDto, Survey.class);
-//        Survey createdSurvey = surveyService.createSurvey(survey);
-//        SurveyDto createdSurveyDto = modelMapper.map(createdSurvey, SurveyDto.class);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createdSurveyDto);
-//    }
+    @PostMapping("/create")
+    public ResponseEntity<SurveyDto> createSurvey(@RequestBody SurveyDto surveyDto) {
+        Survey survey = modelMapper.map(surveyDto, Survey.class);
+        Survey createdSurvey = surveyService.createSurvey(survey);
+        SurveyDto createdSurveyDto = modelMapper.map(createdSurvey, SurveyDto.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdSurveyDto);
+    }
 }

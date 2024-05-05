@@ -1,5 +1,6 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 import be.kdg.team9.integration4.model.question.QuestionType;
 
@@ -14,10 +15,10 @@ public class ChoiceDto extends QuestionDto {
     }
 
     public ChoiceDto(ChoiceQuestion question) {
-        super(question.getId(), question.getQuestionName(), question.getQuestionType(), question.getSurvey().getSurveyId());
+        super(question.getId(), question.getQuestionName(), question.getQuestionType(), question.getSurvey());
     }
 
-    public ChoiceDto(long id, String questionName, QuestionType questionType, long surveyId, boolean isMultiChoice, List<OptionDto> options) {
+    public ChoiceDto(long id, String questionName, QuestionType questionType, Survey surveyId, boolean isMultiChoice, List<OptionDto> options) {
         super(id, questionName, questionType, surveyId);
         this.isMultiChoice = isMultiChoice;
         this.options = options;

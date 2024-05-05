@@ -1,6 +1,7 @@
 package be.kdg.team9.integration4.controller.api.dto;
 
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.SurveyType;
 import be.kdg.team9.integration4.model.question.Question;
 
@@ -19,11 +20,20 @@ public class SurveyDto {
     public SurveyDto() {
     }
 
-    public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<QuestionDto> questions, Date startDate, Date endDate) {
+
+    public SurveyDto(Survey survey) {
+        this.surveyId = survey.getSurveyId();
+        this.surveyName = survey.getSurveyName();
+        this.surveyType = survey.getSurveyType();
+//        this.questions = survey.getQuestions();
+        this.startDate = survey.getStartDate();
+        this.endDate = survey.getEndDate();
+    }
+
+    public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, Date startDate, Date endDate) {
         this.surveyId = surveyId;
         this.surveyName = surveyName;
         this.surveyType = surveyType;
-//        this.questions = questions;
         this.startDate = startDate;
         this.endDate = endDate;
     }

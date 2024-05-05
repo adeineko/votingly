@@ -3,16 +3,11 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Subscripe</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Syne&display=swap" rel="stylesheet"/>
-    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/check-o.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/css/style.css">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Subscribe</title>
+    <thymeleaf th:replace="~{header :: meta_script_link}"/>
+
     <style>
-        body{
+        body {
             background-color: #0C6EFD;
             font-family: 'Syne', sans-serif;
         }
@@ -25,17 +20,19 @@
     <div class="cont">
         <div class="gg-check-o"></div>
         <div class="goodJob">
-            <a class="goodJob">Good Job <span sec:authorize="isAuthenticated()" sec:authentication="name" class="name"></span>!</a>
+            <a class="goodJob">Good Job <span sec:authorize="isAuthenticated()" sec:authentication="name"
+                                              class="name"></span>!</a>
         </div>
         <div>
-            <p class="text" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, facere harum ipsa laborum non odio quidem quisquam ut vitae voluptate.</p>
+            <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, facere harum ipsa laborum
+                non odio quidem quisquam ut vitae voluptate.</p>
         </div>
 
         <div class="button">
             <button type="button">Subscribe</button>
         </div>
     </div>
-<!--    <img class="pattern" th:src="@{/images/2.png}">-->
+    <!--    <img class="pattern" th:src="@{/images/2.png}">-->
 </div>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
