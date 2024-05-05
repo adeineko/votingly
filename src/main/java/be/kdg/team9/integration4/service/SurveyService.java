@@ -29,7 +29,7 @@ public class SurveyService {
         return surveyRepository.findBySurveyId(surveyId);
     }
 
-    //    @Transactional
+    @Transactional
     public List<Long> getQuestionsOfSurvey(long id) {
         return surveyRepository.getQuestionIdsBySurveyId(id);
     }

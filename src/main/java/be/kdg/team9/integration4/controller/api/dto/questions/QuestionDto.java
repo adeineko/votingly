@@ -12,25 +12,25 @@ public class QuestionDto {
 
     private QuestionType questionType;
 
-    private Survey surveyId;
+    private long surveyId;
 
 
     public QuestionDto() {
     }
 
-    public QuestionDto(long id, String questionName, QuestionType questionType, Survey surveyId) {
+    public QuestionDto(long id, String questionName, QuestionType questionType, long surveyId) {
         this.id = id;
         this.questionName = questionName;
         this.questionType = questionType;
         this.surveyId = surveyId;
     }
 
-    public QuestionDto(Question question) {
-        this.id = question.getId();
-        this.questionName = question.getQuestionName();
-        this.questionType = question.getQuestionType();
-        this.surveyId = question.getSurvey();
-    }
+//    public QuestionDto(Question question) {
+//        this.id = question.getId();
+//        this.questionName = question.getQuestionName();
+//        this.questionType = question.getQuestionType();
+//        this.surveyId = question.getSurvey();
+//    }
 
     public long getId() {
         return id;
@@ -56,11 +56,11 @@ public class QuestionDto {
         this.questionType = questionType;
     }
 
-    public Survey getSurveyId() {
+    public long getSurveyId() {
         return surveyId;
     }
 
-    public void setSurveyId(Survey surveyId) {
+    public void setSurveyId(long surveyId) {
         this.surveyId = surveyId;
     }
 

@@ -10,7 +10,7 @@ public class RangeDto extends QuestionDto {
     private int max;
     private int step;
 
-    public RangeDto(long id, String questionName, QuestionType questionType, Survey surveyId, int min, int max, int step) {
+    public RangeDto(long id, String questionName, QuestionType questionType, long surveyId, int min, int max, int step) {
         super(id, questionName, questionType, surveyId);
         this.min = min;
         this.max = max;
@@ -21,7 +21,7 @@ public class RangeDto extends QuestionDto {
     }
 
     public RangeDto(RangeQuestion rangeQuestion) {
-        super(rangeQuestion.getId(), rangeQuestion.getQuestionName(), rangeQuestion.getQuestionType(), rangeQuestion.getSurvey());
+        super(rangeQuestion.getId(), rangeQuestion.getQuestionName(), rangeQuestion.getQuestionType(), rangeQuestion.getSurvey().getSurveyId());
     }
 
     public int getMin() {

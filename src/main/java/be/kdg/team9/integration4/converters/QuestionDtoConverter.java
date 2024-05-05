@@ -15,7 +15,7 @@ public class QuestionDtoConverter {
     public QuestionDto convert(Question question) {
 
         QuestionDto dto;
-        dto = new QuestionDto(question.getId(), question.getQuestionName(), question.getQuestionType(), question.getSurvey());
+        dto = new QuestionDto(question.getId(), question.getQuestionName(), question.getQuestionType(), question.getSurvey().getSurveyId());
 
         if (question instanceof ChoiceQuestion) {
             dto = convertChoiceQuestion((ChoiceQuestion) question);

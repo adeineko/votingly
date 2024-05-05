@@ -90,7 +90,6 @@ function createSingleChoiceQuestion(question) {
 }
 
 
-
 function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
@@ -160,8 +159,8 @@ async function saveAnswer() {
             break;
         case "RANGE":
             // Retrieve selected range input value
-            answer = document.getElementById("rangeInput").value.toString();
-            answer.toString()
+            answer = document.getElementById("rangeInput");
+            // answer.toString()
             console.log(answer);
             console.log(typeof answer);
             break;
@@ -172,23 +171,29 @@ async function saveAnswer() {
 
 
     let answerData;
-    if(currentQuestion.questionType === 'CHOICE'){
+    if (currentQuestion.questionType === 'CHOICE') {
         if (currentQuestion.multiChoice) {
             answerData = {
                 options: options, // if slider --> parseInt(answer)
                 questionId: currentQuestion.id,
                 surveyId: surveyIdInput.value // always parseInt
             };
-        }else{
+        } else {
             answerData = {
                 answer: answer, // if slider --> parseInt(answer)
                 questionId: currentQuestion.id,
                 surveyId: surveyIdInput.value // always parseInt
             };
         }
-    }else {
+    } else if (currentQuestion.questionType === 'OPEN') {
         answerData = {
             answer: answer, // if slider --> parseInt(answer)
+            questionId: currentQuestion.id,
+            surveyId: surveyIdInput.value // always parseInt
+        };
+    } else {
+        answerData = {
+            number: answer.value, // if slider --> parseInt(answer)
             questionId: currentQuestion.id,
             surveyId: surveyIdInput.value // always parseInt
         };
@@ -218,10 +223,10 @@ function displayQuestion(question) {
     let questionElement;
     switch (question.questionType) {
         case "CHOICE":
-            if(question.multiChoice === false){
+            if (question.multiChoice === false) {
                 console.log("single");
                 questionElement = createSingleChoiceQuestion(question);
-            }else if(question.multiChoice === true){
+            } else if (question.multiChoice === true) {
                 console.log("multi");
                 questionElement = createMultipleChoiceQuestion(question);
             }

@@ -18,7 +18,7 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
             left join fetch survey.questions question
             where question.survey.surveyId = :surveyId
              """)
-    Optional<Survey> getQuestionOfSurvey(long surveyId);
+    List<Survey> getQuestionOfSurvey(long surveyId);
 
     @Query("SELECT q.id FROM Question q WHERE q.survey.surveyId = :surveyId")
     List<Long> getQuestionIdsBySurveyId(@Param("surveyId") Long surveyId);

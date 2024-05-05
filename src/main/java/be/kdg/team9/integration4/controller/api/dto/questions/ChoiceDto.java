@@ -15,10 +15,10 @@ public class ChoiceDto extends QuestionDto {
     }
 
     public ChoiceDto(ChoiceQuestion question) {
-        super(question.getId(), question.getQuestionName(), question.getQuestionType(), question.getSurvey());
+        super(question.getId(), question.getQuestionName(), question.getQuestionType(), question.getSurvey().getSurveyId());
     }
 
-    public ChoiceDto(long id, String questionName, QuestionType questionType, Survey surveyId, boolean isMultiChoice, List<OptionDto> options) {
+    public ChoiceDto(long id, String questionName, QuestionType questionType, long surveyId, boolean isMultiChoice, List<OptionDto> options) {
         super(id, questionName, questionType, surveyId);
         this.isMultiChoice = isMultiChoice;
         this.options = options;
