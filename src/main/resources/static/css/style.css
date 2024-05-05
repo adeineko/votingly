@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Syne&display=swap');
 
-.container-xl {
-    background: red;
-}
+/*.container-xl {*/
+/*    background: red;*/
+/*}*/
 
 .navbar-brand .heart-icon {
     color: black;
@@ -79,6 +79,17 @@ img {
     text-align: center;
     color: #76756C;
     font-size: 1.1em;
+}
+
+.jumbotron {
+    background-color: #007bff;
+    color: #fff;
+    padding: 2rem 1rem;
+    margin-bottom: 0;
+}
+
+.page-content {
+    padding: 20px;
 }
 
 .button button {
