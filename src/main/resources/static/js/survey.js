@@ -193,7 +193,7 @@ async function saveAnswer() {
         };
     } else {
         answerData = {
-            number: answer.value,
+            range_answer: answer.value,
             questionId: currentQuestion.id,
             surveyId: surveyIdInput.value // always parseInt
         };
