@@ -59,7 +59,7 @@ class AnswersControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .with(csrf())
                         .content(objectMapper.writeValueAsString(new RangeAnswer(
-                                2
+                                "2"
                         ))))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.number").value(2))
