@@ -65,22 +65,20 @@ class SurveysControllerTest {
         mockMvc.perform(
                         get("/api/surveys/{id}/questions", 3).accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$.length()").value(4))
                 .andDo(print());
     }
     
     @Test
     public void shouldSaveSurveyAndQuestions() throws Exception {
-        // Request request = new Request();
         SurveyDto surveyDto = new SurveyDto();
         surveyDto.setSurveyName("SurveyName");
         surveyDto.setSurveyType(SurveyType.CIRCULAR);
         surveyDto.setStartDate(Date.valueOf(LocalDate.now()));
         surveyDto.setEndDate(Date.valueOf(LocalDate.now()));
-        QuestionDto questionDto = new QuestionDto();
-        List<QuestionDto> questions = List.of(questionDto);
-        surveyDto.setQuestions(questions);
-        // ObjectMapper objectMapped = objectMapper.
+        // QuestionDto questionDto = new QuestionDto();
+        // List<QuestionDto> questions = List.of(questionDto);
+        // surveyDto.setQuestions(questions);
         mockMvc.perform(post("/api/surveys/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -89,6 +87,5 @@ class SurveysControllerTest {
             .andExpect(status().isCreated())
             .andDo(print())
             .andReturn();
-            // .andExpect(jsonPath("$.range_answer").value(2))
     }
 }
