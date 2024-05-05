@@ -187,13 +187,13 @@ async function saveAnswer() {
         }
     } else if (currentQuestion.questionType === 'OPEN') {
         answerData = {
-            answer: answer, // if slider --> parseInt(answer)
+            answer: answer,
             questionId: currentQuestion.id,
             surveyId: surveyIdInput.value // always parseInt
         };
     } else {
         answerData = {
-            number: answer.value, // if slider --> parseInt(answer)
+            number: answer.value,
             questionId: currentQuestion.id,
             surveyId: surveyIdInput.value // always parseInt
         };
