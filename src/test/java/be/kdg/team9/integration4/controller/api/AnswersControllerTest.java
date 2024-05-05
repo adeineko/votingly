@@ -59,7 +59,7 @@ class AnswersControllerTest {
                                 2
                         ))))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.number").value(2))
+                .andExpect(jsonPath("$.range_answer").value(2))
                 .andDo(print())
                 .andReturn();
     }
