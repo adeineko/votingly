@@ -5,21 +5,29 @@ variables:
   POSTGRES_HOST_AUTH_METHOD: trust
   SPRING_PROFILES_ACTIVE: testci
   MY_CI_PROJECT_DIR: ${CI_PROJECT_DIR} # Bug workaround for downstream variables passing
-  TF_ROOT: ${MY_CI_PROJECT_DIR}/deploy/prod  # The relative path to the root directory of the Terraform project
-  TF_STATE_NAME: default      # The name of the state file used by the GitLab Managed Terraform state backend
+  TF_ROOT: ${MY_CI_PROJECT_DIR}/deploy/prod # The relative path to the root directory of the Terraform project
+  TF_STATE_NAME: default # The name of the state file used by the GitLab Managed Terraform state backend
   # TODO - Self host terraform images becuase of terraform not open source anymore
   TF_CONTAINER_IMAGE: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.5:f61b9582b11027bd80fb52ce44d266dc1d75e2dd"
+  # java alt image: eclipse-temurin:17.0.10_7-jdk-alpine
   JAVA_CONTAINER_IMAGE: "gradle:8.7-jdk17-alpine"
 
 cache:
-  - key: .gradle
-    paths:
-      - ~/.gradle/wrapper
-      - ~/.gradle/caches
-  - key: "${TF_ROOT}"
-    paths:
-      - ${TF_ROOT}/.terraform/
-      - deploy/.creds/
+  paths:
+    - ${CI_PROJECT_DIR}/.gradle/wrapper/
+    - ${CI_PROJECT_DIR}/.gradle/caches/
+    - ${TF_ROOT}/.terraform/
+    - ${CI_PROJECT_DIR}/deploy/.creds/
+
+# cache:
+#   - key: .gradle
+#     paths:
+#       - ${CI_PROJECT_DIR}/.gradle/wrapper
+#       - ${CI_PROJECT_DIR}/.gradle/caches
+#   - key: "${TF_ROOT}"
+#     paths:
+#       - ${TF_ROOT}/.terraform/
+#       - ${CI_PROJECT_DIR}/deploy/.creds/
 
 workflow:
   rules:
@@ -32,6 +40,7 @@ workflow:
 
 stages:
   - infrastructure
+  - cicd-test
   - test
   - build
   - dockerize
@@ -41,14 +50,26 @@ stages:
 provision:
   stage: infrastructure
   trigger:
-    include: deploy/.gitlab-ci-provision.yml
+    include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-provision.yml
   when: manual
 
 destroy:
   stage: infrastructure
   trigger:
-    include: deploy/.gitlab-ci-destroy.yml
+    include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-destroy.yml
   when: manual
+
+cicd-test:
+  stage: cicd-test
+  allow_failure: true
+  script:
+    - pwd
+    - echo ${CI_BUILDS_DIR}
+    - ls -al ${CI_BUILDS_DIR}
+    - echo ${CI_PROJECT_DIR}
+    - ls -al ${CI_PROJECT_DIR}
+    - mkdir -p ${CI_PROJECT_DIR}/deploy/.creds
+    - ls -al ${CI_PROJECT_DIR}/deploy/.creds
 
 test-job:
   image: ${JAVA_CONTAINER_IMAGE}
@@ -62,10 +83,9 @@ test-job:
 
 gradle-build:
   image: ${JAVA_CONTAINER_IMAGE}
-  # image: eclipse-temurin:17.0.10_7-jdk-alpine
   stage: build
   # Run the job only when jobs in earlier stages dont fail
-  when: on_success
+  # when: on_success
   script:
     - echo "Building jar file.."
     - ./gradlew clean bootJar
@@ -87,47 +107,68 @@ dockerize-job:
   dependencies:
     - gradle-build
 
-terraform:plan:
-  image:
-    name: ${TF_CONTAINER_IMAGE}
-  stage: deploy
-  script:
-    - gitlab-terraform plan
-    - gitlab-terraform plan-json
-  resource_group: ${TF_STATE_NAME}
-  artifacts:
-    # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
-    # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
-    # public: false
-    paths:
-      - ${TF_ROOT}/plan.cache
-    reports:
-      terraform: ${TF_ROOT}/plan.json
+# terraform:plan:
+#   image:
+#     name: ${TF_CONTAINER_IMAGE}
+#   stage: deploy
+#   script:
+#     - gitlab-terraform plan -var project_root=${CI_PROJECT_DIR}
+#     - gitlab-terraform plan-json -var project_root=${CI_PROJECT_DIR}
+#   resource_group: ${TF_STATE_NAME}
+#   when: manual
+#   artifacts:
+#     # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
+#     # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
+#     # public: false
+#     paths:
+#       - ${TF_ROOT}/plan.cache
+#     reports:
+#       terraform: ${TF_ROOT}/plan.json
 
+# deploy-job:
+#   image:
+#     name: ${TF_CONTAINER_IMAGE}
+#   stage: deploy
+#   script:
+#     - gitlab-terraform refresh -var project_root=${CI_PROJECT_DIR}
+#     # Get the IP address of the VM
+#     - gitlab-terraform show -json -var project_root=${CI_PROJECT_DIR}
+#     - jq --version
+#     - gitlab-terraform show -json -var project_root=${CI_PROJECT_DIR} | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> ${CI_PROJECT_DIR}/deploy/.creds/vm_ip
+#     - ls ${CI_PROJECT_DIR}/deploy/.creds
+#     - cat ${CI_PROJECT_DIR}/deploy/.creds/vm_ip
+#     # Fail this job if the VM is not running
+#     - |
+#       [ -s /tmp/vm_ip ] || (echo "VM seems not to be running" && exit 1)
+#     # Restart VM to udate web app image from dockerize-job
+#     # ~/.docker/config.json
+#     #     ssh admin@HOST << EOF
+#     # COMMAND1
+#     # COMMAND2
+#     # COMMAND3
+#     # EOF
+#     - gitlab-terraform apply -var project_root=${CI_PROJECT_DIR} -var vm_state=TERMINATED
+#     - gitlab-terraform apply -var project_root=${CI_PROJECT_DIR} -var vm_state=RUNNING
+#   resource_group: ${TF_STATE_NAME}
+#   dependencies:
+#     - "dockerize-job"
+#   when: manual
+#   needs:
+#     - job: terraform:plan
+#     - job: dockerize-job
+
+# TODO check if VM's docker is logged in to gitlab registry 
+# https://stackoverflow.com/questions/36022892/how-to-know-if-docker-is-already-logged-in-to-a-docker-registry-server
 deploy-job:
-  image:
-    name: ${TF_CONTAINER_IMAGE}
+  image: google/cloud-sdk:latest
   stage: deploy
   script:
-    - gitlab-terraform refresh
-    # Get the IP address of the VM
-    - gitlab-terraform show -json
-    - jq --version
-    - gitlab-terraform show -json | jq -r '.values.root_module.resources[] | select(.address | contains("google_compute_instance.votingly-testing-vm")).values.network_interface[0].access_config[0].nat_ip' >> /tmp/vm_ip
-    - cat /tmp/vm_ip
-    # Fail this job if the VM is not running
-    - |
-      [ -s /tmp/vm_ip ] || (echo "VM seems not to be running" && exit 1)
-    # Restart VM to udate web app image from dockerize-job
-    - gitlab-terraform apply -var vm_state=TERMINATED
-    - gitlab-terraform apply -var vm_state=RUNNING
-  resource_group: ${TF_STATE_NAME}
+    - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
+    - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/deploy.sh admin@votingly-testing-vm:/tmp --zone "europe-west1-b" --project "int4t9" --strict-host-key-checking=no
+    - gcloud -q compute ssh admin@votingly-testing-vm --zone "europe-west1-b" --project "int4t9" -- 'sudo bash /tmp/deploy.sh'
+  # when: manual
   dependencies:
     - "dockerize-job"
-  # when: manual
-  needs:
-    - job: terraform:plan
-    - job: dockerize-job
 
 cleanup-job:
   image: ${JAVA_CONTAINER_IMAGE}

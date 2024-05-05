@@ -6,6 +6,7 @@ stages:
   - validate
   - plan
   - deploy
+  - install
 
 # REQUIRED - for child pipeline
 workflow:
@@ -13,25 +14,16 @@ workflow:
     - when: always
 
 cache:
-  key: "${TF_ROOT}"
+  # key: "${TF_ROOT}"
   paths:
     - ${TF_ROOT}/.terraform/
-    - deploy/.creds/
+    - ${CI_PROJECT_DIR}/deploy/.creds/
 
 generate-secrets:
-  image: bash:latest
   stage: generate-secrets
-  script:
-    # - apk update && apk add openssh-client
-    - mkdir deploy/.creds && cd deploy/.creds
-    - echo $SA_GCP | base64 -d > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
-    # - ssh-keygen -f vm_key -q -t rsa -N "" && echo "Keys successfully generated"
-  # artifacts:
-  #   name: keys
-  #   # public: false
-  #   expire_in: "1 hour"
-  #   paths:
-  #     - deploy/.creds
+  trigger:
+    include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-generate-secrets.yml
+    strategy: depend
 
 terraform:fmt:
   stage: validate
@@ -42,18 +34,20 @@ terraform:fmt:
 terraform:validate:
   stage: validate
   script:
+    - pwd
+    - ls ${CI_PROJECT_DIR}/deploy/.creds
     - gitlab-terraform validate
 
 terraform:plan:
   stage: plan
   script:
-    - gitlab-terraform plan
-    - gitlab-terraform plan-json
+    - gitlab-terraform plan -var project_root=${CI_PROJECT_DIR}
+    - gitlab-terraform plan-json -var project_root=${CI_PROJECT_DIR}
   resource_group: ${TF_STATE_NAME}
   artifacts:
     # The next line, which disables public access to pipeline artifacts, may not be available everywhere.
     # See: https://docs.gitlab.com/ee/ci/yaml/#artifactspublic
-    # public: false
+    public: false
     paths:
       - ${TF_ROOT}/plan.cache
     reports:
@@ -65,19 +59,13 @@ terraform:deploy:
     - gitlab-terraform apply
   resource_group: ${TF_STATE_NAME}
   # when: manual
-  # artifacts:
-  #   name: vm_ip
-  #   expire_in: "1 hour"
-  #   paths:
-  #     - '../.creds/vm_ip'
 
-# ansible:
-#   # image: python:3.9.17-slim-bullseye
-#   image: alpine/ansible:latest
-#   stage: ansible
-#   # allow_failure: true
-#   script:
-#     - chmod 750 ansible_files
-#     - cd deploy/ansible
-#     - ansible --version
-#     - ansible-playbook install_nginx.yml
+vm:installation:
+  image: google/cloud-sdk:alpine
+  stage: install
+  script:
+    - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
+    - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/docker-compose.yml admin@votingly-testing-vm:/home/admin/votingly --zone "europe-west1-b" --project "int4t9"
+    - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/installation.sh admin@votingly-testing-vm:/tmp --zone "europe-west1-b" --project "int4t9" --strict-host-key-checking=no
+    - gcloud -q compute ssh admin@votingly-testing-vm --zone "europe-west1-b" --project "int4t9" -- 'sudo bash /tmp/installation.sh'
+  # when: manual

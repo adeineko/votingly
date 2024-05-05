@@ -12,28 +12,29 @@ workflow:
     - when: always
 
 cache:
-  key: "${TF_ROOT}"
+  # key: "${TF_ROOT}"
   paths:
     - ${TF_ROOT}/.terraform/
-    - deploy/.creds/
+    - ${CI_PROJECT_DIR}/deploy/.creds/
 
 generate-secrets:
-  image: bash:latest
   stage: generate-secrets
-  script:
-    - mkdir deploy/.creds && cd deploy/.creds
-    - echo $SA_GCP | base64 -d > gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
+  trigger:
+    include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-generate-secrets.yml
+    strategy: depend
 
 # terraform:drydestroy:
 #   stage: preview
 #   script:
-#     - gitlab-terraform plan -destroy
+#     - gitlab-terraform plan -destroy -var project_root=${CI_PROJECT_DIR}
 #   resource_group: ${TF_STATE_NAME}
   # when: manual
 
 terraform:destroy:
   stage: cleanup
   script:
-    - gitlab-terraform destroy
+    - ls ${CI_PROJECT_DIR}/deploy/.creds
+    # - cat ${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
+    - gitlab-terraform destroy -var project_root=${CI_PROJECT_DIR}
   resource_group: ${TF_STATE_NAME}
   # when: manual

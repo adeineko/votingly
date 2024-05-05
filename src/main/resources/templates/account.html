@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <title>My Account</title>
 <!--    <script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>-->
@@ -7,25 +7,52 @@
     <script src="/js/account.js" type="module"></script>
     <thymeleaf th:replace="~{header :: meta_script_link}"/>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Syne', sans-serif !important;
+            background-color: #0171d3;
+            padding-top: 50px;
+            position: relative;
+        }
+        .container {
+            max-width: 600px;
+            position: absolute;
+            left: 50%;
+            transform: translate(-55%, 40%);
+        }
+        .btn-go-back {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .btn-go-back:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 
-<div class="row">
-
-    <input id="accountId" type="hidden" th:value="${account.id}">
-
-    <div class="col-9">
-        <h4>Full Name</h4>
-        <p id="firstName" th:text="${account.firstName}"></p>
-        <p id="lastName" th:text="${account.lastName}"></p>
-        <h4>Email</h4>
-        <p id="email" th:text="${account.email}"></p>
-    </div>
-
-</div>
-<div class="row mt-3">
-    <div>
-        <a th:href="@{/surveys}" type="button" class="btn btn-primary">Go Back</a>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 mx-auto bg-white p-4 rounded shadow-sm">
+            <h2 class="mb-4">My Account</h2>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <p id="firstName" th:text="${account.firstName}" class="form-control-static"></p>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <p id="lastName" th:text="${account.lastName}" class="form-control-static"></p>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <p id="email" th:text="${account.email}" class="form-control-static"></p>
+            </div>
+            <div class="mt-4">
+                <a href="/surveys" class="btn btn-go-back">Go Back</a>
+            </div>
+        </div>
     </div>
 </div>
 
