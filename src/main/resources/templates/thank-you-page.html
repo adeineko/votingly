@@ -3,17 +3,11 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Subscribe</title>
+    <title>Thank You!</title>
+    <script src="/js/thank-you-page.js" type="module"></script>
     <thymeleaf th:replace="~{header :: meta_script_link}"/>
-
-    <style>
-        body {
-            background-color: #0C6EFD;
-            font-family: 'Syne', sans-serif;
-        }
-    </style>
 </head>
-<body>
+<body class="thankYouPage">
 <div th:replace="~{navbar::navbar}"></div>
 
 <div class="container-fluid">
@@ -24,18 +18,26 @@
                                               class="name"></span>!</a>
         </div>
         <div>
-            <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, facere harum ipsa laborum
-                non odio quidem quisquam ut vitae voluptate.</p>
+            <p class="text">Stay updated with the latest news and exclusive offers!
+                Subscribe now to our newsletter and never miss out on exciting updates,
+                insightful articles, and special discounts. Join our community today and embark
+                on a journey of knowledge and discovery.</p>
         </div>
 
         <div class="button">
-            <button type="button">Subscribe</button>
+            <button id="subscribeBtn" type="button">Subscribe</button>
+        </div>
+
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close">&times;</span>
+                <h2>Subscribe</h2>
+                <input type="email" id="emailInput" placeholder="Enter your email">
+                <button id="subscribeSubmit">Submit</button>
+            </div>
         </div>
     </div>
-    <!--    <img class="pattern" th:src="@{/images/2.png}">-->
 </div>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="/js/survey.js" defer></script>
 </body>
 </html>
