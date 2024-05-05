@@ -33,3 +33,6 @@ CREATE TABLE fact_survey (
                              FOREIGN KEY (time_id) REFERENCES dim_time(time_id),
                              FOREIGN KEY (survey_id) REFERENCES dim_survey(survey_id)
 );
+
+
+

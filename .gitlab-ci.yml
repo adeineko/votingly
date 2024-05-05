@@ -165,7 +165,7 @@ deploy-job:
   script:
     - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
     - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/deploy.sh admin@votingly-testing-vm:/tmp --zone "europe-west1-b" --project "int4t9" --strict-host-key-checking=no
-    - gcloud -q compute ssh admin@votingly-testing-vm --zone "europe-west1-b" --project "int4t9" -- 'bash /tmp/deploy.sh'
+    - gcloud -q compute ssh admin@votingly-testing-vm --zone "europe-west1-b" --project "int4t9" --command='bash /tmp/deploy.sh'
   # when: manual
   dependencies:
     - "dockerize-job"

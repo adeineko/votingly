@@ -16,8 +16,7 @@ ln -sf /var/lib/google/docker-compose ~/.docker/cli-plugins/docker-compose
 # docker compose version
 
 # Login to gitlab registry
-# docker login registry.gitlab.com -u int4t9-deploy-token --password-stdin <<< $(docker run -ti google/cloud-sdk:alpine gcloud secrets versions access latest --secret="GITLAB_DEPLOY_TOKEN" --project int4t9)
-docker run -ti google/cloud-sdk:alpine gcloud secrets versions access latest --secret="GITLAB_DEPLOY_TOKEN" --project int4t9 | docker login registry.gitlab.com -u int4t9-deploy-token --password-stdin
+docker login registry.gitlab.com -u int4t9-deploy-token --password-stdin <<< $(docker run google/cloud-sdk:alpine gcloud secrets versions access latest --secret="GITLAB_DEPLOY_TOKEN" --project int4t9)
 
 # Run docker compose with HTTPS Portal and Web App
 mkdir ~/https-portal
