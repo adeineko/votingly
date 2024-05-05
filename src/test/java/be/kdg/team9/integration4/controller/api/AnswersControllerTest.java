@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 class AnswersControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -35,7 +36,7 @@ class AnswersControllerTest {
     @Test
     @WithUserDetails("user")
     public void shouldSaveAnswerForOpenType() throws Exception {
-        mockMvc.perform(post("/api/answers/2")
+        mockMvc.perform(post("/api/answers/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(csrf())
@@ -51,7 +52,7 @@ class AnswersControllerTest {
     @Test
     @WithUserDetails("user")
     public void shouldSaveAnswerForRangeType() throws Exception {
-        mockMvc.perform(post("/api/answers/1")
+        mockMvc.perform(post("/api/answers/4")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(csrf())
@@ -67,7 +68,7 @@ class AnswersControllerTest {
     @Test
     @WithUserDetails("user")
     public void shouldSaveAnswerForChoiceType() throws Exception {
-        mockMvc.perform(post("/api/answers/5")
+        mockMvc.perform(post("/api/answers/2")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .with(csrf())
