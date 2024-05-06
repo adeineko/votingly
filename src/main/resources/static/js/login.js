@@ -1,4 +1,5 @@
 const pwShowHide = document.querySelectorAll(".eye-icon");
+// const signInButton = document.getElementById("signInButton");
 
 pwShowHide.forEach(eyeIcon => {
     eyeIcon.addEventListener("click", () => {
@@ -16,7 +17,8 @@ pwShowHide.forEach(eyeIcon => {
 
     })
 })
+// signInButton?.addEventListener("click", () => {window.location.href = `/`});
 
 function redirectToIndex() {
-    window.location.href = "http://localhost:8080/"; // Change "/index" to the actual URL of your index page
+    window.location.href = "/"; // Change "/index" to the actual URL of your index page
 }
