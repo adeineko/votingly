@@ -80,25 +80,27 @@ function addChoiceInput(questionNumber) {
 document.getElementById("addQuestionBtn").addEventListener("click", createQuestion);
 document.getElementById("surveyForm").addEventListener("submit", submitSurvey);
 
-function submitSurvey(event) {
+async function submitSurvey(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
-    fetch('/api/surveys', {
+    const response = await fetch('/api/surveys', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         },
         body: JSON.stringify(data)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            alert('Survey submitted successfully!');
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert('Error submitting survey.');
-        });
+    });
+
+    if (response.status === 201) {
+        const survey = await response.json();
+        alert(`Your survey was created! ${survey.name}`);
+        window.location.href = '/surveys';
+    } else {
+        console.error('Error:', response);
+        alert('Error creating survey.');
+    }
+
 }

@@ -73,3 +73,14 @@ X-CSRF-TOKEN: uRrss2llH7Kb5ekbEbqDxbT6vJnRjI_xsDw9LulunM5Qktu23C3ZhltcKIG214sudJ
 "email": "gsdhjsd@gmail.com",
 "password": "qwerty"
 }
+
+#### API: Save New Survey
+#POST http://localhost:8080/api/surveys
+#Accept: application/json
+#Content-Type: application/json
+#Cookie: JSESSIONID=FBBC117D3710BD4B557A4C77F3ABB5A3
+#X-CSRF-TOKEN: uRrss2llH7Kb5ekbEbqDxbT6vJnRjI_xsDw9LulunM5Qktu23C3ZhltcKIG214sudJe38tfNkaHh6evcgV9ZS4tfqv9g8b7Q
+#
+#{
+#
+#}
