@@ -3,25 +3,21 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <thymeleaf th:replace="~{header :: meta_script_link}"/>
+
     <title> Signup Form </title>
-
-    <link rel="stylesheet" href="css/style.css">
-
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="/js/signup.js" type="module"></script>
+
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Syne', sans-serif;
         }
-        .container{
+
+        .container {
             height: 100vh;
             width: 100%;
             display: flex;
@@ -30,13 +26,15 @@
             background-color: #4070f4;
             column-gap: 30px;
         }
-        header{
+
+        header {
             font-size: 28px;
             font-weight: 600;
             color: #232836;
             text-align: center;
         }
-        form{
+
+        form {
             margin-top: 30px;
         }
     </style>
@@ -47,7 +45,7 @@
 <!--<header th:replace="~{header :: header}"></header>-->
 
 <section class="container forms">
-    <div class="form signup">
+    <div class="form signup" id="signup">
         <div class="form-content">
             <header>Signup</header>
             <form th:action="@{/api/signup}" method="post">
@@ -64,21 +62,23 @@
                 </div>
 
                 <div class="field input-field">
-                    <input id="password" name="password" type="password" placeholder="Create password" class="password" required minlength="6" maxlength="10"/>
+                    <input id="password" name="password" type="password" placeholder="Create password" class="password"
+                           required minlength="6" maxlength="10"/>
                     <i class='bx bx-hide eye-icon'></i>
                 </div>
 
-<!--                <div class="field input-field">-->
-<!--                    <input type="password" placeholder="Confirm password" class="password">-->
-<!--                </div>-->
+                <!--                <div class="field input-field">-->
+                <!--                    <input type="password" placeholder="Confirm password" class="password">-->
+                <!--                </div>-->
 
                 <div class="field button-field">
-                    <button onclick="window.location='login';">Signup</button>
+                    <button type="submit">Signup</button>
                 </div>
             </form>
 
             <div class="form-link">
-                <span>Already have an account? <a class="link login-link" onclick="window.location='login';">Login</a></span>
+                <span>Already have an account? <a class="link login-link"
+                                                  onclick="window.location='login';">Login</a></span>
             </div>
         </div>
 

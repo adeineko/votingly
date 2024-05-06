@@ -4,7 +4,6 @@ import be.kdg.team9.integration4.model.Option;
 
 
 import java.util.List;
-import java.util.Optional;
 
 public class NewAnswerDto {
 
@@ -12,13 +11,16 @@ public class NewAnswerDto {
 
     private String answer;
 
+    private int range_answer;
+
     private List<Option> options;
 
     public NewAnswerDto() {
     }
 
-    public NewAnswerDto(long surveyId, String answer, List<Option> options) {
+    public NewAnswerDto(long surveyId, String answer, int range_answer, List<Option> options) {
         this.answer = answer;
+        this.range_answer = range_answer;
         this.options = options;
     }
 
@@ -44,5 +46,13 @@ public class NewAnswerDto {
 
     public void setOptions(List<Option> options) {
         this.options = options;
+    }
+
+    public int getRange_answer() {
+        return range_answer;
+    }
+
+    public void setRange_answer(int range_answer) {
+        this.range_answer = range_answer;
     }
 }

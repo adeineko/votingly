@@ -2,9 +2,9 @@
 
 # Automated script to run on VM boot
 
-if [ -f /home/admin/votingly/docker-compose.yml ]; then
+if [ -f /home/admin/docker-compose.yml ]; then
     # Rerun docker compose
-    sudo su -c "cd ~/votingly &&
+    sudo su -c "cd ~ &&
     docker compose down &&
     docker compose up -d" admin
 fi

@@ -27,6 +27,20 @@ services:
       - POSTGRES_PASSWORD=Student1234
       - POSTGRES_DB=int4t9
 
+  int4t9-dwh:
+    container_name: int4t9-dwh
+    image: postgres:15.5-alpine3.17
+    restart: unless-stopped
+    ports:
+      - 5433:5432
+    volumes:
+      - pgdata_dwh:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Student1234
+      - POSTGRES_DB=datawarehouse
+
 volumes:
   pgdata:
   pgdata_test:
+  pgdata_dwh:

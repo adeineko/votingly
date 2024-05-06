@@ -16,11 +16,11 @@ public class QuestionService {
     public QuestionService(QuestionsRepository questionsRepository) {
         this.questionsRepository = questionsRepository;
     }
-//    @Transactional
+    @Transactional
     public List<Question> getAllQuestions() {
         return questionsRepository.findAllQuestions();
     }
-//    @Transactional
+    @Transactional
     public Question getQuestion(long id) {
         return questionsRepository.findById(id).orElse(null);
     }

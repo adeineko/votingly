@@ -1,5 +1,6 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 import be.kdg.team9.integration4.model.question.QuestionType;
 

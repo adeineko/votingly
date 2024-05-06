@@ -27,7 +27,7 @@ public class AnswerService {
         return answerRepository.save(openAnswerEntity);
     }
 
-    public Answer saveRange(long surveyId, long userId, Question question, String answer) {
+    public Answer saveRange(long surveyId, long userId, Question question, int answer) {
         var rangeAnswerEntity = new RangeAnswer(surveyId, userId, question, answer);
 
         return answerRepository.save(rangeAnswerEntity);

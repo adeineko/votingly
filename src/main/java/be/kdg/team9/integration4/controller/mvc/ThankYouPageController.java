@@ -9,4 +9,9 @@ public class ThankYouPageController {
     public String getPage() {
         return "thank-you-page";
     }
+
+    @GetMapping("/features")
+    public String getFeaturePage() {
+        return "features";
+    }
 }

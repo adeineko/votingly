@@ -1,10 +1,8 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.model.question.QuestionType;
-// import jakarta.persistence.Column;
-// import jakarta.persistence.EnumType;
-// import jakarta.persistence.Enumerated;
 
 
 public class QuestionDto {
@@ -27,12 +25,12 @@ public class QuestionDto {
         this.surveyId = surveyId;
     }
 
-    public QuestionDto(Question question) {
-        this.id = question.getId();
-        this.questionName = question.getQuestionName();
-        this.questionType = question.getQuestionType();
-        this.surveyId = question.getSurvey().getSurveyId();
-    }
+//    public QuestionDto(Question question) {
+//        this.id = question.getId();
+//        this.questionName = question.getQuestionName();
+//        this.questionType = question.getQuestionType();
+//        this.surveyId = question.getSurvey();
+//    }
 
     public long getId() {
         return id;

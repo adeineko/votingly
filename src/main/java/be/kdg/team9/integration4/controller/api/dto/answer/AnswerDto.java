@@ -15,20 +15,20 @@ public class AnswerDto {
 
     private List<Option> options;
 
-    private int number;
+    private int range_answer;
 
 
     public AnswerDto() {
     }
 
-    public AnswerDto(long answerId, long surveyId, long userId, Question questionId, String answer, List<Option> options, int number) {
+    public AnswerDto(long answerId, long surveyId, long userId, Question questionId, String answer, List<Option> options, int range_answer) {
         this.answerId = answerId;
         this.surveyId = surveyId;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
         this.options = options;
-        this.number = number;
+        this.range_answer = range_answer;
     }
 
     public long getAnswerId() {
@@ -79,11 +79,11 @@ public class AnswerDto {
         this.options = options;
     }
 
-    public int getNumber() {
-        return number;
+    public int getRange_answer() {
+        return range_answer;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setRange_answer(int range_answer) {
+        this.range_answer = range_answer;
     }
 }

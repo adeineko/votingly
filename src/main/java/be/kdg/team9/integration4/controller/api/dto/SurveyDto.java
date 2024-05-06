@@ -1,6 +1,7 @@
 package be.kdg.team9.integration4.controller.api.dto;
 
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.SurveyType;
 import be.kdg.team9.integration4.model.question.Question;
 
@@ -11,7 +12,7 @@ public class SurveyDto {
     private long surveyId;
     private String surveyName;
     private SurveyType surveyType;
-//    private List<QuestionDto> questions;
+    // private List<QuestionDto> questions;
 
     private Date startDate;
     private Date endDate;
@@ -19,14 +20,33 @@ public class SurveyDto {
     public SurveyDto() {
     }
 
-    public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<QuestionDto> questions, Date startDate, Date endDate) {
+    public SurveyDto(Survey survey) {
+        this.surveyId = survey.getSurveyId();
+        this.surveyName = survey.getSurveyName();
+        this.surveyType = survey.getSurveyType();
+//        this.questions = survey.getQuestions();
+        this.startDate = survey.getStartDate();
+        this.endDate = survey.getEndDate();
+    }
+
+    public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, Date startDate, Date endDate) {
         this.surveyId = surveyId;
         this.surveyName = surveyName;
         this.surveyType = surveyType;
-//        this.questions = questions;
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    // public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<QuestionDto> questions,
+    //         Date startDate, Date endDate) {
+    //     this.surveyId = surveyId;
+    //     this.surveyName = surveyName;
+    //     this.surveyType = surveyType;
+    //     this.questions = questions;
+    //     this.startDate = startDate;
+    //     this.endDate = endDate;
+    // }
+
 
     public long getSurveyId() {
         return surveyId;
@@ -52,14 +72,6 @@ public class SurveyDto {
         this.surveyType = surveyType;
     }
 
-//    public List<QuestionDto> getQuestions() {
-//        return questions;
-//    }
-//
-//    public void setQuestions(List<QuestionDto> questions) {
-//        this.questions = questions;
-//    }
-
     public Date getStartDate() {
         return startDate;
     }
@@ -75,4 +87,16 @@ public class SurveyDto {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+
+    // public List<QuestionDto> getQuestions() {
+    //     return questions;
+    // }
+
+
+    // public void setQuestions(List<QuestionDto> questions) {
+    //     this.questions = questions;
+    // }
+
+    
 }

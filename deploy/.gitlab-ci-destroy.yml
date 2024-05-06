@@ -4,7 +4,7 @@ image:
 stages:
   - generate-secrets
   - preview
-  - cleanup
+  - destroy
 
 # REQUIRED - for child pipeline
 workflow:
@@ -31,7 +31,7 @@ generate-secrets:
   # when: manual
 
 terraform:destroy:
-  stage: cleanup
+  stage: destroy
   script:
     - ls ${CI_PROJECT_DIR}/deploy/.creds
     # - cat ${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json

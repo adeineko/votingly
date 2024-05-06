@@ -2,17 +2,83 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Syne&display=swap');
 
-.container-xl {
-    background: red;
+/*Pop Up Subscribe*/
+.thankYouPage {
+    background-color: #0C6EFD;
+    font-family: 'Syne', sans-serif;
 }
 
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.popup-content {
+    background-color: #fff;
+    width: 300px;
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #aaa;
+}
+
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/*End Pop Up Subscribe*/
+
+/*Header Element*/
 .navbar-brand .heart-icon {
     color: black;
 }
 
+/*End Header Element*/
+
+/*Global*/
 .h1 {
     font-family: 'Syne', sans-serif !important;
 }
+
+.container-fluid {
+    padding: 0;
+    margin: 0;
+}
+
+/*End Global*/
 
 img {
     max-width: 100%;
@@ -23,14 +89,14 @@ img {
 /* Responsive styles for smaller screens */
 @media screen and (max-width: 768px) {
     img {
-        max-width: 80%; /* Adjust the max-width as needed for smaller screens */
+        max-width: 80%;
     }
 }
 
 /* Responsive styles for larger screens */
 @media screen and (min-width: 1200px) {
     img {
-        max-width: 1200px; /* Limit the max-width for larger screens */
+        max-width: 1200px;
     }
 }
 
@@ -38,11 +104,7 @@ img {
     color: #000000A6;
 }
 
-.container-fluid {
-    padding: 0;
-    margin: 0;
-}
-
+/*Thank You Page*/
 .cont {
     position: absolute;
     top: 50%;
@@ -74,12 +136,30 @@ img {
     font-weight: bold;
 }
 
+
 .text {
     padding: 1em 10em 1em 10em;
     text-align: center;
     color: #76756C;
     font-size: 1.1em;
 }
+
+/*End Thank You Page*/
+
+/*Index Page*/
+.jumbotron {
+    background-color: #007bff;
+    color: #fff;
+    padding: 2rem 1rem;
+    margin-bottom: 0;
+}
+
+.page-content {
+    padding: 20px;
+}
+
+/*End Index Page*/
+
 
 .button button {
     border-radius: 0.7em;
@@ -140,6 +220,7 @@ img {
 /*!*    opacity: 0;*!*/
 /*!*    pointer-events: none;*!*/
 /*!*}*!*/
+
 .form .field {
     position: relative;
     height: 50px;

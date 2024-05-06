@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Survey Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Syne&display=swap" rel="stylesheet"/>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <thymeleaf th:replace="~{header :: meta_script_link}"/>
+
     <script src="/js/survey.js" type="module"></script>
 
 </head>
@@ -34,6 +30,5 @@
     </div>
 </div>
 
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
 </body>
 </html>
