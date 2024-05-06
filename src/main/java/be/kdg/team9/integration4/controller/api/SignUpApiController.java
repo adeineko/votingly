@@ -6,8 +6,7 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,39 +14,29 @@ import org.springframework.web.bind.annotation.*;
 public class SignUpApiController {
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public SignUpApiController(UserService userService, ModelMapper modelMapper) {
+    public SignUpApiController(UserService userService, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("{id}")
-    ResponseEntity<UserDto> getOneIssue(@PathVariable("id") long issueId) {
-        var issue = userService.getUserById(issueId);
-        if (issue == null) {
+    ResponseEntity<UserDto> getOneUser(@PathVariable("id") long userId) {
+        var user = userService.getUserById(userId);
+        if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(modelMapper.map(issue, UserDto.class));
+        return ResponseEntity.ok(modelMapper.map(user, UserDto.class));
     }
 
-//    @PostMapping("/process_register")
-//    @ResponseBody
-//    public String processRegistration(@RequestBody User user) {
-//        userRepository.save(user);
-//        return "User registered successfully!";
-//    }
-
-//    @PostMapping
-//    public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
-//        User createdUser = userService.addUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
-//        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-//    }
-
-
     @PostMapping
-    ResponseEntity<UserDto> addIssue(@RequestBody @Valid UserDto userDto) {
+    ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) {
+        String encryptedPassword = passwordEncoder.encode(userDto.getPassword());
+
         var createdUser = userService.addUser(
-                userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(), userDto.getPassword());
+                userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(), encryptedPassword);
         return new ResponseEntity<>(
                 modelMapper.map(createdUser, UserDto.class),
                 HttpStatus.CREATED

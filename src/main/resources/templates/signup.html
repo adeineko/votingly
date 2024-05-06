@@ -3,16 +3,10 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <thymeleaf th:replace="~{header :: meta_script_link}"/>
+
     <title> Signup Form </title>
-
-    <link rel="stylesheet" href="/css/style.css">
-
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="/js/signup.js" type="module"></script>
 
     <style>
@@ -51,7 +45,7 @@
 <!--<header th:replace="~{header :: header}"></header>-->
 
 <section class="container forms">
-    <div class="form signup">
+    <div class="form signup" id="signup">
         <div class="form-content">
             <header>Signup</header>
             <form th:action="@{/api/signup}" method="post">
@@ -78,7 +72,7 @@
                 <!--                </div>-->
 
                 <div class="field button-field">
-                    <button onclick="window.location='login';">Signup</button>
+                    <button type="submit">Signup</button>
                 </div>
             </form>
 
