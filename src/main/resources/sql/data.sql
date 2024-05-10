@@ -67,3 +67,11 @@ VALUES ('org', 'org', '1', 'org@gmail.com', '$2a$12$1OnZfrFbk3HYlrpgbHYdyOG2kFKO
 
 INSERT INTO user_table(first_name, last_name, email, password, user_type)
 VALUES ('admin', 'admin', 'admin@gmail.com', '$2a$12$1OnZfrFbk3HYlrpgbHYdyOG2kFKO97.n3f3CcToY.1cA2orKmRJl2', 'P_ADMIN');
+
+
+
+
+
+
+
+
