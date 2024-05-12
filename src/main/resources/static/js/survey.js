@@ -62,7 +62,7 @@ function createOpenQuestion(question) {
     return questionDiv;
 }
 
-function createMultipleChoiceQuestion(question) {
+function createChoiceQuestion(question, isMultiChoice) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
 
@@ -79,48 +79,15 @@ function createMultipleChoiceQuestion(question) {
         const optionDiv = document.createElement('div');
 
         const input = document.createElement('input');
-        input.setAttribute('type', 'checkbox');
-        input.setAttribute('id', 'multichoiceInput');
-        input.setAttribute('name', option);
+        if (isMultiChoice) {
+            input.setAttribute('type', 'checkbox');
+        } else {
+            input.setAttribute('type', 'radio');
+            input.setAttribute('name', `options_${question.id}`);
+        }
         input.setAttribute('value', option.optionText);
 
         const optionLabel = document.createElement('label');
-        optionLabel.setAttribute('for', 'multichoiceInput');
-        optionLabel.textContent = option.optionText;
-
-        optionDiv.appendChild(input);
-        optionDiv.appendChild(optionLabel);
-
-        cardBody.appendChild(optionDiv);
-    });
-
-    return questionDiv;
-}
-
-function createSingleChoiceQuestion(question) {
-    const questionDiv = document.createElement('div');
-    questionDiv.classList.add('col-lg-10');
-
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
-    questionDiv.appendChild(cardBody);
-
-    const cardTitle = document.createElement('h5');
-    cardTitle.classList.add('card-title');
-    cardTitle.textContent = question.questionName;
-    cardBody.appendChild(cardTitle);
-
-    question.options.forEach(option => {
-        const optionDiv = document.createElement('div');
-
-        const input = document.createElement('input');
-        input.setAttribute('type', 'radio');
-        input.setAttribute('id', 'choiceInput');
-        input.setAttribute('name', `options_${question.id}`);
-        input.setAttribute('value', option.optionText);
-
-        const optionLabel = document.createElement('label');
-        optionLabel.setAttribute('for', 'choiceInput');
         optionLabel.textContent = option.optionText;
 
         optionDiv.appendChild(input);
@@ -181,11 +148,17 @@ async function saveAnswer() {
             answer = document.getElementById("openQuestionInput").value;
             break;
         case "CHOICE":
-            const multichoiceInputs = document.querySelectorAll("#multichoiceInput input");
-            if (!currentQuestion.multiChoice) {
+            // const multichoiceInputs = document.querySelectorAll("#multichoiceInput input");
+            // if (!currentQuestion.multiChoice) {
+            //     answer = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked")?.value || null;
+            // } else {
+            //     options = Array.from(multichoiceInputs).map(input => input.value);
+            // }
+            if (currentQuestion.multiChoice) {
                 answer = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked")?.value || null;
             } else {
-                options = Array.from(multichoiceInputs).map(input => input.value);
+                const selectedOptions = document.querySelectorAll("input[name='options_" + currentQuestion.id + "']:checked");
+                options = Array.from(selectedOptions).map(input => input.value);
             }
             break;
         case "RANGE":
@@ -197,11 +170,11 @@ async function saveAnswer() {
     }
 
     const answerData = {
-        answer: currentQuestion.questionType === 'OPEN' ? answer : (currentQuestion.questionType === 'CHOICE' && !currentQuestion.multiChoice ? answer : parseInt(answer)),
-        options: currentQuestion.questionType === 'CHOICE' && currentQuestion.multiChoice ? options : null,
+        answer: currentQuestion.questionType === 'OPEN' ?/* answer : (currentQuestion.questionType === 'CHOICE' && !currentQuestion.multiChoice*/ answer : null,
+        options_answer: currentQuestion.questionType === 'CHOICE' ? options : null,
         range_answer: currentQuestion.questionType === 'RANGE' ? parseInt(answer) : null,
         questionId: currentQuestion.id,
-        surveyId: parseInt(surveyIdInput.value)
+        surveyId: surveyIdInput.value
     };
 
     const response = await fetch(`/api/answers/${currentQuestion.id}`, {
@@ -229,12 +202,10 @@ function displayQuestion(question) {
     let questionElement;
     switch (question.questionType) {
         case "CHOICE":
-            if (question.multiChoice === false) {
-                console.log("single");
-                questionElement = createSingleChoiceQuestion(question);
-            } else if (question.multiChoice === true) {
-                console.log("multi");
-                questionElement = createMultipleChoiceQuestion(question);
+            if (question.multiChoice) {
+                questionElement = createChoiceQuestion(question, true);
+            } else {
+                questionElement = createChoiceQuestion(question, false);
             }
             break;
         case "OPEN":
