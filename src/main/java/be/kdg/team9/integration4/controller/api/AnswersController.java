@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @RestController
@@ -42,7 +43,7 @@ public class AnswersController {
                         user.getUserId(),
                         questionId,
                         newAnswerDto.getAnswer(),
-                        LocalTime.now()
+                        LocalDateTime.now()
                 );
                 yield new ResponseEntity<>(
                         modelMapper.map(createdOpenAnswer, AnswerDto.class),
@@ -54,7 +55,7 @@ public class AnswersController {
                         user.getUserId(),
                         questionId,
                         newAnswerDto.getRange_answer(),
-                        LocalTime.now()
+                        LocalDateTime.now()
                 );
                 yield new ResponseEntity<>(
                         modelMapper.map(createdRangeAnswer, AnswerDto.class),
@@ -66,7 +67,7 @@ public class AnswersController {
                         user.getUserId(),
                         questionId,
                         newAnswerDto.getOptions_answer(),
-                        LocalTime.now()
+                        LocalDateTime.now()
                 );
                 yield new ResponseEntity<>(
                         modelMapper.map(createdChoiceAnswer, AnswerDto.class),

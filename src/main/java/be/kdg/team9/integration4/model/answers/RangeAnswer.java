@@ -4,6 +4,7 @@ import be.kdg.team9.integration4.model.question.Question;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -20,7 +21,7 @@ public class RangeAnswer extends Answer {
         this.range_answer = range_answer;
     }
 
-    public RangeAnswer(long surveyId, long userId, Question question, int range_answer, LocalTime answerTime) {
+    public RangeAnswer(long surveyId, long userId, Question question, int range_answer, LocalDateTime answerTime) {
         super(surveyId, userId, question, answerTime);
         this.range_answer = range_answer;
     }

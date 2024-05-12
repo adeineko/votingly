@@ -3,6 +3,7 @@ package be.kdg.team9.integration4.model.answers;
 import be.kdg.team9.integration4.model.question.Question;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -18,7 +19,7 @@ public class Answer {
     @Column(name = "user_id")
     private long userId;
     @Column(name = "answer_time")
-    private LocalTime answerTime;
+    private LocalDateTime answerTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
@@ -28,11 +29,11 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(long surveyId, long userId, Question question, LocalTime answerTime) {
+    public Answer(long surveyId, long userId, Question question, LocalDateTime answerTime) {
         this.surveyId = surveyId;
         this.userId = userId;
         this.question = question;
-        setAnswerTime(LocalTime.now());
+        setAnswerTime(LocalDateTime.now());
     }
 
     public long getAnswerId() {
@@ -67,11 +68,11 @@ public class Answer {
         this.question = question;
     }
 
-    public LocalTime getAnswerTime() {
+    public LocalDateTime getAnswerTime() {
         return answerTime;
     }
 
-    public void setAnswerTime(LocalTime answerTime) {
+    public void setAnswerTime(LocalDateTime answerTime) {
         this.answerTime = answerTime;
     }
 }

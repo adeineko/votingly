@@ -6,6 +6,7 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class ChoiceAnswer extends Answer {
         this.options_answer = options_answer;
     }
 
-    public ChoiceAnswer(long surveyId, long userId, Question question, List<Option> options_answer, LocalTime answerTime) {
+    public ChoiceAnswer(long surveyId, long userId, Question question, List<Option> options_answer, LocalDateTime answerTime) {
         super(surveyId, userId, question, answerTime);
         this.options_answer = options_answer;
     }
