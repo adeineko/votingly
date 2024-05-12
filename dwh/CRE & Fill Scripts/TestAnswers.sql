@@ -12,7 +12,7 @@ VALUES ('15', '4', '5', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-02 09:40')
 
 
 -- Survey 4 answers for user 6
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('15', '4', '6', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-02 19:23'),
        ('16', '4', '6', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-02 19:25'),
        ('18', '4', '6', 'CHOICE', 'Test answer 4', TIMESTAMP '2024-04-02 19:29'),
@@ -25,7 +25,7 @@ VALUES ('15', '4', '6', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-02 19:23')
 
 
 -- Survey 4 answers for user 8
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('15', '4', '8', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-04 16:40'),
        ('16', '4', '8', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-04 16:41'),
        ('17', '4', '8', 'OPEN', 'Test answer 3', TIMESTAMP '2024-04-04 16:43'),
@@ -39,7 +39,7 @@ VALUES ('15', '4', '8', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-04 16:40')
 
 
 -- Survey 4 answers for user 9
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('15', '4', '9', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-12 14:06'),
        ('16', '4', '9', 'CHOICE', 'Test answer 2' , TIMESTAMP '2024-04-12 14:09'),
        ('17', '4', '9', 'OPEN', 'Test answer 3', TIMESTAMP '2024-04-12 14:12'),
@@ -51,7 +51,7 @@ VALUES ('15', '4', '9', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-12 14:06')
 
 
 -- Survey 4 answers for user 10
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('15', '4', '10', 'CHOICE', 'Test answer 1' , TIMESTAMP '2024-04-23 15:34'),
        ('16', '4', '10', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-23 15:36'),
        ('17', '4', '10', 'OPEN', 'Test answer 3', TIMESTAMP '2024-04-23 15:39'),
@@ -66,7 +66,7 @@ VALUES ('15', '4', '10', 'CHOICE', 'Test answer 1' , TIMESTAMP '2024-04-23 15:34
 
 
 -- Survey 4 answers for user 12
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('15', '4', '12', 'CHOICE', 'Test answer 1' , TIMESTAMP '2024-04-17 09:10'),
        ('16', '4', '12', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-17 09:11'),
        ('18', '4', '12', 'CHOICE', 'Test answer 4', TIMESTAMP '2024-04-17 09:13'),
@@ -79,7 +79,7 @@ VALUES ('15', '4', '12', 'CHOICE', 'Test answer 1' , TIMESTAMP '2024-04-17 09:10
 
 
 -- Survey 5 answers for user 5
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('25', '5', '5', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-08 23:26'),
        ('26', '5', '5', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-08 23:29'),
        ('27', '5', '5', 'OPEN', 'Test answer 3', TIMESTAMP '2024-04-08 23:31'),
@@ -90,7 +90,7 @@ VALUES ('25', '5', '5', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-08 23:26')
 
 
 -- Survey 5 answers for user 6
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('25', '5', '6', 'CHOICE', 'Test answer 1' , TIMESTAMP '2024-04-04 17:01'),
        ('26', '5', '6', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-04 17:02'),
        ('27', '5', '6', 'OPEN', 'Test answer 3', TIMESTAMP '2024-04-04 17:06'),
@@ -102,7 +102,7 @@ VALUES ('25', '5', '6', 'CHOICE', 'Test answer 1' , TIMESTAMP '2024-04-04 17:01'
 
 
 -- Survey 5 answers for user 7
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('25', '5', '7', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-21 14:40'),
        ('26', '5', '7', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-21 14:41'),
        ('27', '5', '7', 'OPEN', 'Test answer 3', TIMESTAMP '2024-04-21 14:42'),
@@ -114,7 +114,7 @@ VALUES ('25', '5', '7', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-21 14:40')
 
 
 -- Survey 5 answers for user 9
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('25', '5', '9', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-15 01:22'),
        ('26', '5', '9', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-15 01:24'),
        ('28', '5', '9', 'RANGE', 'Test answer 4', TIMESTAMP '2024-04-15 01:28'),
@@ -125,7 +125,7 @@ VALUES ('25', '5', '9', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-15 01:22')
 
 
 -- Survey 5 answers for user 10
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('25', '5', '10', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-30 15:40'),
        ('26', '5', '10', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-30 15:41'),
        ('27', '5', '10', 'OPEN', 'Test answer 3', TIMESTAMP '2024-04-30 15:42'),
@@ -136,7 +136,7 @@ VALUES ('25', '5', '10', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-30 15:40'
 
 
 -- Survey 5 answers for user 11
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('25', '5', '11', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-05 05:40'),
        ('26', '5', '11', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-05 05:41'),
        ('27', '5', '11', 'OPEN', 'Test answer 3', TIMESTAMP '2024-04-05 05:42'),
@@ -148,7 +148,7 @@ VALUES ('25', '5', '11', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-05 05:40'
 
 
 -- Survey 5 answers for user 12
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('25', '5', '12', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-27 19:40'),
        ('26', '5', '12', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-27 19:41'),
        ('27', '5', '12', 'OPEN', 'Test answer 3', TIMESTAMP '2024-04-27 19:42'),
@@ -161,7 +161,7 @@ VALUES ('25', '5', '12', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-27 19:40'
 
 
 -- Survey 6 answers for user 6
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('33', '6', '6', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-09 14:20'),
        ('34', '6', '6', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-09 14:22'),
        ('35', '6', '6', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-09 14:24'),
@@ -175,7 +175,7 @@ VALUES ('33', '6', '6', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-09 14:20')
 
 
 -- Survey 6 answers for user 7
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('33', '6', '7', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-02 17:40'),
        ('34', '6', '7', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-02 17:41'),
        ('35', '6', '7', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-02 17:42'),
@@ -188,7 +188,7 @@ VALUES ('33', '6', '7', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-02 17:40')
 
 
 -- Survey 6 answers for user 8
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('33', '6', '8', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-13 09:40'),
        ('34', '6', '8', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-13 09:42'),
        ('35', '6', '8', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-13 09:45'),
@@ -205,7 +205,7 @@ VALUES ('33', '6', '8', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-13 09:40')
 
 
 -- Survey 6 answers for user 11
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('33', '6', '11', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-22 12:40'),
        ('34', '6', '11', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-22 12:41'),
        ('35', '6', '11', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-22 12:42'),
@@ -219,7 +219,7 @@ VALUES ('33', '6', '11', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-22 12:40'
 
 
 -- Survey 6 answers for user 12
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('33', '6', '12', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-17 15:03'),
        ('34', '6', '12', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-17 15:08'),
        ('35', '6', '12', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-17 15:10'),
@@ -234,7 +234,7 @@ VALUES ('33', '6', '12', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-17 15:03'
        ('44', '6', '12', 'CHOICE', 'Test answer 12', TIMESTAMP '2024-04-17 15:39');
 
 -- Survey 7 answers for user 5
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('45', '7', '5', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-24 09:40'),
        ('46', '7', '5', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-24 09:41'),
        ('47', '7', '5', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-24 09:42'),
@@ -243,7 +243,7 @@ VALUES ('45', '7', '5', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-24 09:40')
 
 
 -- Survey 7 answers for user 6
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('45', '7', '6', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-05 17:05'),
        ('46', '7', '6', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-05 17:07'),
        ('47', '7', '6', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-05 17:09'),
@@ -251,14 +251,14 @@ VALUES ('45', '7', '6', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-05 17:05')
        ('49', '7', '6', 'CHOICE', 'Test answer 5', TIMESTAMP '2024-04-05 17:14');
 
 -- Survey 7 answers for user 7
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('45', '7', '7', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-14 09:40'),
        ('46', '7', '7', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-14 09:41'),
        ('47', '7', '7', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-14 09:43'),
        ('49', '7', '7', 'CHOICE', 'Test answer 5', TIMESTAMP '2024-04-14 09:45');
 
 -- Survey 7 answers for user 8
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('45', '7', '8', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-22 11:23'),
        ('46', '7', '8', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-22 11:25'),
        ('47', '7', '8', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-22 11:26'),
@@ -266,14 +266,14 @@ VALUES ('45', '7', '8', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-22 11:23')
        ('49', '7', '8', 'CHOICE', 'Test answer 5', TIMESTAMP '2024-04-22 11:30');
 
 -- Survey 7 answers for user 9
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('45', '7', '9', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-28 07:40'),
        ('46', '7', '9', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-28 07:41'),
        ('48', '7', '9', 'CHOICE', 'Test answer 4', TIMESTAMP '2024-04-28 07:43'),
        ('49', '7', '9', 'CHOICE', 'Test answer 5', TIMESTAMP '2024-04-28 07:44');
 
 -- Survey 7 answers for user 10
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('45', '7', '10', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-19 21:40'),
        ('46', '7', '10', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-19 21:41'),
        ('47', '7', '10', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-19 21:44'),
@@ -281,7 +281,7 @@ VALUES ('45', '7', '10', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-19 21:40'
        ('49', '7', '10', 'CHOICE', 'Test answer 5', TIMESTAMP '2024-04-19 21:49');
 
 -- Survey 7 answers for user 11
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('45', '7', '11', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-26 03:19'),
        ('46', '7', '11', 'CHOICE', 'Test answer 2', TIMESTAMP '2024-04-26 03:22'),
        ('47', '7', '11', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-26 03:23'),
@@ -289,7 +289,7 @@ VALUES ('45', '7', '11', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-26 03:19'
        ('49', '7', '11', 'CHOICE', 'Test answer 5', TIMESTAMP '2024-04-26 03:26');
 
 -- Survey 7 answers for user 12
-INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer)
+INSERT INTO answer(question_id, survey_id, user_id, answer_type, answer, answer_time)
 VALUES ('45', '7', '12', 'CHOICE', 'Test answer 1', TIMESTAMP '2024-04-25 14:40'),
        ('47', '7', '12', 'CHOICE', 'Test answer 3', TIMESTAMP '2024-04-25 14:42'),
        ('48', '7', '12', 'CHOICE', 'Test answer 4', TIMESTAMP '2024-04-25 14:43'),
