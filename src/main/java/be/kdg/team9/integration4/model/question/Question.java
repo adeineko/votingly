@@ -36,6 +36,11 @@ public class Question {
         this.questionType = questionType;
     }
 
+    public Question(String questionName, QuestionType questionType) {
+        this.questionName = questionName;
+        this.questionType = questionType;
+    }
+
     public long getId() {
         return id;
     }
