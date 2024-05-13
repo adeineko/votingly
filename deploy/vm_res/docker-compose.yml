@@ -30,6 +30,12 @@ services:
         pull_policy: always
         networks:
             - bridged
+        environment:
+            - DB_USERNAME=postgres
+            - DB_PASSWORD=Student1234
+            - DB_ADDRESS=10.19.0.3
+            - DB_PORT=5432
+            - DB_NAME=votingly-db
 
 volumes:
     https-portal-data:

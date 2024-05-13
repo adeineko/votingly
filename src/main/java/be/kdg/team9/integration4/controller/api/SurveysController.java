@@ -58,9 +58,15 @@ public class SurveysController {
 
     @PostMapping("/create")
     public ResponseEntity<SurveyDto> createSurvey(@RequestBody SurveyDto surveyDto) {
-        Survey survey = modelMapper.map(surveyDto, Survey.class);
+        // Survey survey = modelMapper.map(surveyDto, Survey.class);
+        Survey survey = surveyDtoConverter.convertFromDto(surveyDto);
         Survey createdSurvey = surveyService.createSurvey(survey);
         SurveyDto createdSurveyDto = modelMapper.map(createdSurvey, SurveyDto.class);
+        List<Question> questions = surveyDto.getQuestions();
+        for (Question question : questions) {
+            question.setSurvey(createdSurvey);
+            // questionService.createQuestion(question);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSurveyDto);
     }
 }

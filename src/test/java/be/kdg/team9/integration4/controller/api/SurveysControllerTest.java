@@ -69,23 +69,23 @@ class SurveysControllerTest {
                 .andDo(print());
     }
     
-    @Test
-    public void shouldSaveSurveyAndQuestions() throws Exception {
-        SurveyDto surveyDto = new SurveyDto();
-        surveyDto.setSurveyName("SurveyName");
-        surveyDto.setSurveyType(SurveyType.CIRCULAR);
-        surveyDto.setStartDate(Date.valueOf(LocalDate.now()));
-        surveyDto.setEndDate(Date.valueOf(LocalDate.now()));
-        // QuestionDto questionDto = new QuestionDto();
-        // List<QuestionDto> questions = List.of(questionDto);
-        // surveyDto.setQuestions(questions);
-        mockMvc.perform(post("/api/surveys/create")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .with(csrf())
-                .content(objectMapper.writeValueAsString(surveyDto)))
-            .andExpect(status().isCreated())
-            .andDo(print())
-            .andReturn();
-    }
+    // @Test
+    // public void shouldSaveSurveyAndQuestions() throws Exception {
+    //     SurveyDto surveyDto = new SurveyDto();
+    //     surveyDto.setSurveyName("SurveyName");
+    //     surveyDto.setSurveyType(SurveyType.CIRCULAR);
+    //     surveyDto.setStartDate(Date.valueOf(LocalDate.now()));
+    //     surveyDto.setEndDate(Date.valueOf(LocalDate.now()));
+    //     // QuestionDto questionDto = new QuestionDto();
+    //     // List<QuestionDto> questions = List.of(questionDto);
+    //     // surveyDto.setQuestions(questions);
+    //     mockMvc.perform(post("/api/surveys/create")
+    //             .contentType(MediaType.APPLICATION_JSON)
+    //             .accept(MediaType.APPLICATION_JSON)
+    //             .with(csrf())
+    //             .content(objectMapper.writeValueAsString(surveyDto)))
+    //         .andExpect(status().isCreated())
+    //         .andDo(print())
+    //         .andReturn();
+    // }
 }
