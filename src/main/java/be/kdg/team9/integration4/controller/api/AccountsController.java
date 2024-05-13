@@ -24,8 +24,8 @@ public class AccountsController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getOneUser(@PathVariable("id") long userId) {
+    @GetMapping
+    public ResponseEntity<UserDto> getOneUser(@RequestParam("id") long userId) {
         var oneUser = userService.getUserById(userId);
         if (oneUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

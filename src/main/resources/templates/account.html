@@ -39,15 +39,15 @@
             <h2 class="mb-4">My Account</h2>
             <div class="form-group">
                 <label for="firstName">First Name</label>
-                <p id="firstName" th:text="${account.firstName}" class="form-control-static"></p>
+                <p id="firstName" th:href="@{/account(id=${#authentication.principal.userId})}" th:text="${account.firstName}" class="form-control-static"></p>
             </div>
             <div class="form-group">
                 <label for="lastName">Last Name</label>
-                <p id="lastName" th:text="${account.lastName}" class="form-control-static"></p>
+                <p id="lastName" th:href="@{/account(id=${#authentication.principal.userId})}" th:text="${account.lastName}" class="form-control-static"></p>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <p id="email" th:text="${account.email}" class="form-control-static"></p>
+                <p id="email" th:href="@{/account(id=${#authentication.principal.userId})}" th:text="${account.email}" class="form-control-static"></p>
             </div>
             <div class="mt-4">
                 <a href="/surveys" class="btn btn-go-back">Go Back</a>

@@ -4,6 +4,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+
 public class UserDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

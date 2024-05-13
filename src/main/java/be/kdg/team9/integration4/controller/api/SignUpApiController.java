@@ -1,6 +1,8 @@
 package be.kdg.team9.integration4.controller.api;
 
+import be.kdg.team9.integration4.controller.api.dto.user.RegularUserDto;
 import be.kdg.team9.integration4.controller.api.dto.user.UserDto;
+import be.kdg.team9.integration4.model.user.RegularUser;
 import be.kdg.team9.integration4.service.UserService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -30,15 +32,16 @@ public class SignUpApiController {
         }
         return ResponseEntity.ok(modelMapper.map(user, UserDto.class));
     }
-
+//    /api/organizations/2/orgAdmins
+//    /api/organizations/2/supervisors
     @PostMapping
-    ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) {
+    ResponseEntity<RegularUserDto> addUser(@RequestBody @Valid RegularUserDto userDto) {
         String encryptedPassword = passwordEncoder.encode(userDto.getPassword());
 
         var createdUser = userService.addUser(
                 userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(), encryptedPassword);
         return new ResponseEntity<>(
-                modelMapper.map(createdUser, UserDto.class),
+                modelMapper.map(createdUser, RegularUserDto.class),
                 HttpStatus.CREATED
         );
     }

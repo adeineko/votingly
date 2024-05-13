@@ -19,7 +19,6 @@ pwShowHide.forEach(eyeIcon => {
     })
 })
 
-console.log("kjhgfdfghjk")
 
 document.addEventListener('DOMContentLoaded', function () {
     const signupForm = document.getElementById("signup");
@@ -31,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const firstName = document.getElementById("firstName").value;
         const lastName = document.getElementById("lastName").value;
         const email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
+        const password = document.getElementById("password").value;
+        // const user_type = document.
 
         // // Create a user object
         // const user = {

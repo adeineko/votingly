@@ -24,9 +24,9 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-//    public User getUserByEmail(String email) {
-//        return userRepository.findByEmail(email);
-//    }
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 //
 //    @Transactional
 //    public User addUser(String firstName, String lastName, String email, String password){
@@ -43,8 +43,6 @@ public class UserService {
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(password);
-
-        // You might want to perform additional checks or operations here
 
         return userRepository.save(user);
     }
