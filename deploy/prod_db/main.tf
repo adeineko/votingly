@@ -51,19 +51,19 @@ resource "google_sql_database_instance" "votingly-db-instance" {
       # }
     }
     # Enable automatic backups and point-in-time recovery
-    # backup_configuration {
-    #   enabled                        = true
-    #   location                       = "europe-west1"
-    #   point_in_time_recovery_enabled = true
-    #   transaction_log_retention_days = 2
-    #   backup_retention_settings {
-    #     retention_unit   = "COUNT"
-    #     retained_backups = 2
-    #   }
-    # }
+    backup_configuration {
+      enabled                        = true
+      location                       = "europe-west1"
+      point_in_time_recovery_enabled = true
+      transaction_log_retention_days = 2
+      backup_retention_settings {
+        retention_unit   = "COUNT"
+        retained_backups = 2
+      }
+    }
   }
 
-  deletion_protection = false
+  deletion_protection = true
 }
 
 resource "google_sql_user" "db-user" {

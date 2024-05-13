@@ -38,7 +38,7 @@ public class SurveysController {
     List<SurveyDto> getAllSurveys() {
         return surveyService.getAllSurveys()
                 .stream()
-                .map(survey -> modelMapper.map(survey, SurveyDto.class)).toList();
+                .map(surveyDtoConverter::convertToDto).toList();
     }
 
 
@@ -62,10 +62,11 @@ public class SurveysController {
         Survey survey = surveyDtoConverter.convertFromDto(surveyDto);
         Survey createdSurvey = surveyService.createSurvey(survey);
         SurveyDto createdSurveyDto = modelMapper.map(createdSurvey, SurveyDto.class);
-        List<Question> questions = surveyDto.getQuestions();
+        List<Question> questions = surveyDto.getQuestions().stream()
+                .map(questionDto -> questionDtoConverter.convertFromDto(questionDto, createdSurvey))
+                .toList();
         for (Question question : questions) {
-            question.setSurvey(createdSurvey);
-            // questionService.createQuestion(question);
+            questionService.saveQuestion(question);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSurveyDto);
     }

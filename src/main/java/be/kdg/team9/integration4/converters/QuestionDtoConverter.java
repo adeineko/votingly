@@ -4,6 +4,7 @@ import be.kdg.team9.integration4.controller.api.dto.questions.OptionDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.ChoiceDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.RangeDto;
+import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.model.question.RangeQuestion;
@@ -26,11 +27,11 @@ public class QuestionDtoConverter {
         return dto;
     }
 
-    // public Question convertFromDto(QuestionDto dto) {
-    //     Question question = new Question(dto.getQuestionId(), dto.getQuestionName(), dto.getQuestionType());
-    //     question.setSurveyId(dto.getSurveyId());
-
-    // }
+    public Question convertFromDto(QuestionDto dto, Survey survey) {
+        Question question = new Question(dto.getId(), dto.getQuestionName(), dto.getQuestionType());
+        question.setSurvey(survey);
+        return question;
+    }
 
     private ChoiceDto convertChoiceQuestion(ChoiceQuestion question) {
         ChoiceDto choiceDto = new ChoiceDto(question);

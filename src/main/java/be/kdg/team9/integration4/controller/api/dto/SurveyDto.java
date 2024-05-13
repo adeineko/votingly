@@ -12,8 +12,8 @@ public class SurveyDto {
     private long surveyId;
     private String surveyName;
     private SurveyType surveyType;
-    // private List<QuestionDto> questions;
-    private List<Question> questions;
+    private List<QuestionDto> questions;
+    // private List<Question> questions;
 
     private Date startDate;
     private Date endDate;
@@ -38,17 +38,7 @@ public class SurveyDto {
         this.endDate = endDate;
     }
 
-    // public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<QuestionDto> questions,
-    //         Date startDate, Date endDate) {
-    //     this.surveyId = surveyId;
-    //     this.surveyName = surveyName;
-    //     this.surveyType = surveyType;
-    //     this.questions = questions;
-    //     this.startDate = startDate;
-    //     this.endDate = endDate;
-    // }
-
-    public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<Question> questions,
+    public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<QuestionDto> questions,
             Date startDate, Date endDate) {
         this.surveyId = surveyId;
         this.surveyName = surveyName;
@@ -57,6 +47,16 @@ public class SurveyDto {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    // public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<Question> questions,
+    //         Date startDate, Date endDate) {
+    //     this.surveyId = surveyId;
+    //     this.surveyName = surveyName;
+    //     this.surveyType = surveyType;
+    //     this.questions = questions;
+    //     this.startDate = startDate;
+    //     this.endDate = endDate;
+    // }
 
     public long getSurveyId() {
         return surveyId;
@@ -98,20 +98,20 @@ public class SurveyDto {
         this.endDate = endDate;
     }
 
-    // public List<QuestionDto> getQuestions() {
-    //     return questions;
-    // }
-
-    // public void setQuestions(List<QuestionDto> questions) {
-    //     this.questions = questions;
-    // }
-
-    public List<Question> getQuestions() {
+    public List<QuestionDto> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(List<QuestionDto> questions) {
         this.questions = questions;
     }
+
+    // public List<Question> getQuestions() {
+    //     return questions;
+    // }
+
+    // public void setQuestions(List<Question> questions) {
+    //     this.questions = questions;
+    // }
 
 }
