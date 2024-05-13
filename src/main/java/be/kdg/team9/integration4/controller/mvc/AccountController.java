@@ -2,6 +2,9 @@ package be.kdg.team9.integration4.controller.mvc;
 
 import be.kdg.team9.integration4.controller.api.dto.user.UserDto;
 import be.kdg.team9.integration4.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +28,8 @@ public class AccountController {
     }
 
     @GetMapping  // Updated mapping to include the full path
-    public ModelAndView getOneUser(@RequestParam("id") long id) {
+    public ModelAndView getOneUser(@RequestParam("id") long id, HttpServletRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         var oneUser = userService.getUserById(id);
         var mav = new ModelAndView();
         mav.setViewName("navbar");
@@ -33,7 +37,8 @@ public class AccountController {
                 oneUser.getId(),
                 oneUser.getFirstName(),
                 oneUser.getLastName(),
-                oneUser.getEmail()
+                oneUser.getEmail(),
+                authentication.isAuthenticated()
         ));
         mav.setViewName("account");
         return mav;

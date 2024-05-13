@@ -35,21 +35,26 @@
 
 <div class="container">
     <div class="row">
+        <input id="accountId" type="hidden" th:value="${account.id}">
         <div class="col-md-9 mx-auto bg-white p-4 rounded shadow-sm">
             <h2 class="mb-4">My Account</h2>
             <div class="form-group">
                 <label for="firstName">First Name</label>
-                <p id="firstName" th:href="@{/account(id=${#authentication.principal.userId})}" th:text="${account.firstName}" class="form-control-static"></p>
+                <textarea th:if="${account.modificationAllowed}" class="form-control" id="firstNameTextArea" rows="1" th:text="${#authentication.principal.firstName}"></textarea>
+                <p th:if="${!account.modificationAllowed}" id="firstName" th:text="${#authentication.principal.firstName}" class="form-control-static"></p>
             </div>
             <div class="form-group">
                 <label for="lastName">Last Name</label>
-                <p id="lastName" th:href="@{/account(id=${#authentication.principal.userId})}" th:text="${account.lastName}" class="form-control-static"></p>
+                <textarea th:if="${account.modificationAllowed}" class="form-control" id="lastNameTextArea" rows="1" th:text="${#authentication.principal.lastName}"></textarea>
+                <p th:if="${!account.modificationAllowed}" id="lastName" th:text="${#authentication.principal.lastName}" class="form-control-static"></p>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <p id="email" th:href="@{/account(id=${#authentication.principal.userId})}" th:text="${account.email}" class="form-control-static"></p>
+                <textarea th:if="${account.modificationAllowed}" class="form-control" id="emailTextArea" rows="1" th:text="${#authentication.principal.username}"></textarea>
+                <p th:if="${!account.modificationAllowed}" id="email" th:text="${#authentication.principal.username}" class="form-control-static"></p>
             </div>
-            <div class="mt-4">
+            <div th:if="${account.modificationAllowed}" class="mt-4">
+                <button id="updateButton" type="button" class="btn btn-primary">Update</button>
                 <a href="/surveys" class="btn btn-go-back">Go Back</a>
             </div>
         </div>
