@@ -53,14 +53,16 @@
     <div class="form login">
         <div class="form-content">
             <header>Login</header>
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/login}" method="post" id="signInForm">
                 <div class="field input-field">
-                    <input type="text" placeholder="User Name" name="username" id="username" class="input">
+                    <input placeholder="Email" name="username" id="username" class="input">
+                    <span class="error" aria-live="polite" id="emailError"></span>
                 </div>
 
                 <div class="field input-field">
                     <input type="password" placeholder="Password" class="password" name="password" id="password">
                     <i class='bx bx-hide eye-icon'></i>
+                    <span class="error" aria-live="polite" id="pswError"></span>
                 </div>
 
                 <div class="field button-field">

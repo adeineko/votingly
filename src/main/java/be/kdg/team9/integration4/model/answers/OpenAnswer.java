@@ -4,6 +4,9 @@ import be.kdg.team9.integration4.model.question.Question;
 import jakarta.persistence.Entity;
 import jakarta.persistence.DiscriminatorValue;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Entity
 @DiscriminatorValue("OPEN")
 public class OpenAnswer extends Answer {
@@ -17,8 +20,8 @@ public class OpenAnswer extends Answer {
     }
 
 
-    public OpenAnswer(long surveyId, long userId, Question question, String answer) {
-        super(surveyId, userId, question);
+    public OpenAnswer(long surveyId, long userId, Question question, String answer, LocalDateTime answerTime) {
+        super(surveyId, userId, question, answerTime);
         this.answer = answer;
     }
 

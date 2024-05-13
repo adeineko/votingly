@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @RestController
 @RequestMapping("/api/answers")
 public class AnswersController {
@@ -39,7 +42,8 @@ public class AnswersController {
                 var createdOpenAnswer = answerService.saveOpen(newAnswerDto.getSurveyId(),
                         user.getUserId(),
                         questionId,
-                        newAnswerDto.getAnswer()
+                        newAnswerDto.getAnswer(),
+                        LocalDateTime.now()
                 );
                 yield new ResponseEntity<>(
                         modelMapper.map(createdOpenAnswer, AnswerDto.class),
@@ -50,7 +54,8 @@ public class AnswersController {
                 var createdRangeAnswer = answerService.saveRange(question.getSurvey().getSurveyId(),
                         user.getUserId(),
                         questionId,
-                        newAnswerDto.getRange_answer()
+                        newAnswerDto.getRange_answer(),
+                        LocalDateTime.now()
                 );
                 yield new ResponseEntity<>(
                         modelMapper.map(createdRangeAnswer, AnswerDto.class),
@@ -61,7 +66,8 @@ public class AnswersController {
                 var createdChoiceAnswer = answerService.saveChoice(question.getSurvey().getSurveyId(),
                         user.getUserId(),
                         questionId,
-                        newAnswerDto.getOptions()
+                        newAnswerDto.getOptions_answer(),
+                        LocalDateTime.now()
                 );
                 yield new ResponseEntity<>(
                         modelMapper.map(createdChoiceAnswer, AnswerDto.class),

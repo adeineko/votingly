@@ -14,13 +14,8 @@ import java.util.stream.Collectors;
 public class SurveyDtoConverter {
 
 
-    public SurveyDto convert(Survey survey) {
-        SurveyDto dto;
-        dto = new SurveyDto(survey.getSurveyId(), survey.getSurveyName(), survey.getSurveyType(), survey.getStartDate(), survey.getEndDate());
-
-        dto = convertToDto(survey);
-
-        return dto;
+    public Survey convertFromDto(SurveyDto surveyDto) {
+        return new Survey(surveyDto.getSurveyId(), surveyDto.getSurveyName(), surveyDto.getSurveyType(), surveyDto.getStartDate(), surveyDto.getEndDate());
     }
 
     private SurveyDto convertToDto(Survey survey) {

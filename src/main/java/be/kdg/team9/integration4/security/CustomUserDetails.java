@@ -7,16 +7,31 @@ import java.util.Collection;
 
 public class CustomUserDetails extends User {
     private final long userId;
+    private final String firstName;
+    private final String lastName;
 
-    public CustomUserDetails(String username,
+
+    public CustomUserDetails(String email,
                              String password,
                              Collection<? extends GrantedAuthority> authorities,
-                             long userId) {
-        super(username, password, authorities);
+                             long userId,
+                             String firstName,
+                             String lastName) {
+        super(email, password, authorities);
         this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public long getUserId() {
         return userId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

@@ -6,6 +6,8 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -13,25 +15,25 @@ import java.util.List;
 public class ChoiceAnswer extends Answer {
 
     @OneToMany(mappedBy = "answer")
-    private List<Option> options;
+    private List<Option> options_answer;
 
     public ChoiceAnswer() {
     }
 
-    public ChoiceAnswer(List<Option> options) {
-        this.options = options;
+    public ChoiceAnswer(List<Option> options_answer) {
+        this.options_answer = options_answer;
     }
 
-    public ChoiceAnswer(long surveyId, long userId, Question question, List<Option> options) {
-        super(surveyId, userId, question);
-        this.options = options;
+    public ChoiceAnswer(long surveyId, long userId, Question question, List<Option> options_answer, LocalDateTime answerTime) {
+        super(surveyId, userId, question, answerTime);
+        this.options_answer = options_answer;
     }
 
-    public List<Option> getOptions() {
-        return options;
+    public List<Option> getOptions_answer() {
+        return options_answer;
     }
 
-    public void setOptions(List<Option> options) {
-        this.options = options;
+    public void setOptions_answer(List<Option> options) {
+        this.options_answer = options;
     }
 }

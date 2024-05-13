@@ -27,6 +27,12 @@ public class QuestionDtoConverter {
         return dto;
     }
 
+    // public Question convertFromDto(QuestionDto dto) {
+    //     Question question = new Question(dto.getQuestionId(), dto.getQuestionName(), dto.getQuestionType());
+    //     question.setSurveyId(dto.getSurveyId());
+
+    // }
+
     private ChoiceDto convertChoiceQuestion(ChoiceQuestion question) {
         ChoiceDto choiceDto = new ChoiceDto(question);
         choiceDto.setOptions(question.getOptions().stream()
