@@ -48,7 +48,7 @@ public class SurveyController {
 
     @GetMapping("/add")
     public String addSurvey() {
-        return "addSurvey";
+        return "addsurvey";
     }
 
     @GetMapping("/{id}/details")

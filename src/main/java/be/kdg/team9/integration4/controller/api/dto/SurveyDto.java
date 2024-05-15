@@ -25,9 +25,15 @@ public class SurveyDto {
         this.surveyId = survey.getSurveyId();
         this.surveyName = survey.getSurveyName();
         this.surveyType = survey.getSurveyType();
-//        this.questions = survey.getQuestions();
+        // this.questions = survey.getQuestions();
         this.startDate = survey.getStartDate();
         this.endDate = survey.getEndDate();
+    }
+
+    public SurveyDto(String surveyName, SurveyType surveyType, List<QuestionDto> questionDtos) {
+        this.surveyName = surveyName;
+        this.surveyType = surveyType;
+        this.questions = questionDtos;
     }
 
     public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, Date startDate, Date endDate) {
@@ -98,7 +104,6 @@ public class SurveyDto {
         this.endDate = endDate;
     }
 
-
     public List<QuestionDto> getQuestions() {
         return questions;
     }
@@ -111,10 +116,7 @@ public class SurveyDto {
     //     return questions;
     // }
 
-
     // public void setQuestions(List<Question> questions) {
     //     this.questions = questions;
     // }
-
-    
 }

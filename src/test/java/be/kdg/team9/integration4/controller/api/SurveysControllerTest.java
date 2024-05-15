@@ -68,7 +68,8 @@ class SurveysControllerTest {
         QuestionDto question2 = new QuestionDto("whats down", QuestionType.OPEN);
         List<QuestionDto> questions = List.of(question1,question2);
         surveyDto.setQuestions(questions);
-        mockMvc.perform(post("/api/surveys/create")
+        // mockMvc.perform(post("/api/surveys/create")
+        mockMvc.perform(post("/api/surveys")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .with(csrf())
@@ -76,5 +77,14 @@ class SurveysControllerTest {
             .andExpect(status().isCreated())
             .andDo(print())
             .andReturn();
+    }
+
+    @Test
+    public void getQuestionsOfSurveyShouldReturnIsOkWithQuestions() throws Exception {
+        mockMvc.perform(
+                        get("/api/surveys/{id}/questions", 4).accept(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andDo(print());
     }
 }
