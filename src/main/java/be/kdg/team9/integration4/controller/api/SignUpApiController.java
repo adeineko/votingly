@@ -2,7 +2,6 @@ package be.kdg.team9.integration4.controller.api;
 
 import be.kdg.team9.integration4.controller.api.dto.user.RegularUserDto;
 import be.kdg.team9.integration4.controller.api.dto.user.UserDto;
-import be.kdg.team9.integration4.model.user.RegularUser;
 import be.kdg.team9.integration4.service.UserService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;

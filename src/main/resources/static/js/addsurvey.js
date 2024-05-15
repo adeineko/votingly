@@ -1,7 +1,47 @@
+import { token, header } from "./util/csrf.js";
+
 let questionCount = 0;
 
+// Create initial questions
 for (let i = 0; i < 3; i++) {
-    createQuestion()
+    createQuestion();
+}
+
+function removeQuestion(questionNumber) {
+    const questionDiv = document.getElementById(`questionBlock${questionNumber}`);
+    if (questionDiv) {
+        const container = questionDiv.parentNode;
+        container.removeChild(questionDiv);
+
+        // Update IDs of remaining questions
+        const remainingQuestions = container.querySelectorAll('.question-block');
+        remainingQuestions.forEach((question, index) => {
+            const oldQuestionNumber = parseInt(question.id.replace('questionBlock', ''));
+            question.id = `questionBlock${index + 1}`;
+            question.querySelector('.remove-question-btn').dataset.questionId = index + 1;
+            question.querySelector('label').textContent = `Question ${index + 1}`;
+        });
+
+        // Add "Remove" button to new last question, if it exists
+        const lastQuestionDiv = container.querySelector('.question-block:last-child');
+        if (lastQuestionDiv && questionCount > 1) {
+            const removeButton = lastQuestionDiv.querySelector('.remove-question-btn');
+            if (!removeButton) {
+                addRemoveButton(lastQuestionDiv, questionCount - 1);
+            }
+        }
+    }
+    questionCount--;
+}
+
+function addRemoveButton(questionDiv, questionNumber) {
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.className = "btn btn-danger btn-sm remove-question-btn";
+    removeButton.textContent = "Remove Question";
+    removeButton.dataset.questionId = questionNumber;
+    removeButton.addEventListener('click', () => removeQuestion(questionNumber));
+    questionDiv.querySelector('.d-flex').appendChild(removeButton);
 }
 
 function createQuestion() {
@@ -13,30 +53,40 @@ function createQuestion() {
     questionDiv.innerHTML = `
         <div class="d-flex justify-content-between align-items-center">
             <label for="question${questionCount}" class="form-label">Question ${questionCount}</label>
-            <button type="button" class="btn btn-danger btn-sm" onclick="removeQuestion(${questionCount})">Remove Question</button>
         </div>
-        <input type="text" class="form-control" id="question${questionCount}" name="questions[${questionCount}][text]" required>
-
+        <input type="text" class="form-control" id="question${questionCount}" name="questions[${questionCount}][name]" required>
         <select class="form-select mt-2" id="questionType${questionCount}" name="questions[${questionCount}][type]">
             <option value="open">Open</option>
             <option value="multipleChoice">Multiple Choice</option>
         </select>
-
         <div id="choicesContainer${questionCount}" class="choices-container mt-2"></div>
     `;
 
     document.getElementById("questionContainer").appendChild(questionDiv);
+    addTypeChangeListener(questionCount);
 
-    // Handling type change
-    const typeSelect = document.getElementById(`questionType${questionCount}`);
-    typeSelect.addEventListener('change', () => handleTypeChange(questionCount));
+    // Remove "Remove" button from previous last question, if exists
+    const previousLastQuestionDiv = document.getElementById(`questionBlock${questionCount - 1}`);
+    if (previousLastQuestionDiv) {
+        const removeButton = previousLastQuestionDiv.querySelector('.remove-question-btn');
+        if (removeButton) {
+            removeButton.remove();
+        }
+    }
+
+    // Add "Remove" button to the new last question
+    if (questionCount > 1) {
+        addRemoveButton(questionDiv, questionCount);
+    }
 }
 
-function removeQuestion(questionNumber) {
-    const questionDiv = document.getElementById(`questionBlock${questionNumber}`);
-    questionDiv.parentNode.removeChild(questionDiv);
+// Adds change listener to question type selector
+function addTypeChangeListener(count) {
+    const typeSelect = document.getElementById(`questionType${count}`);
+    typeSelect.addEventListener('change', () => handleTypeChange(count));
 }
 
+// Handles changes to question type
 function handleTypeChange(questionNumber) {
     const typeValue = document.getElementById(`questionType${questionNumber}`).value;
     const choicesContainer = document.getElementById(`choicesContainer${questionNumber}`);
@@ -53,6 +103,7 @@ function handleTypeChange(questionNumber) {
     }
 }
 
+// Adds a new choice input for a multiple choice question
 function addChoiceInput(questionNumber) {
     const choiceContainer = document.createElement("div");
     choiceContainer.className = "input-group mb-2";
@@ -67,9 +118,7 @@ function addChoiceInput(questionNumber) {
     removeChoiceBtn.type = "button";
     removeChoiceBtn.className = "btn btn-danger";
     removeChoiceBtn.textContent = "Remove";
-    removeChoiceBtn.onclick = function() {
-        choiceContainer.remove();
-    };
+    removeChoiceBtn.onclick = () => choiceContainer.remove();
 
     choiceContainer.appendChild(choiceInput);
     choiceContainer.appendChild(removeChoiceBtn);
@@ -77,30 +126,74 @@ function addChoiceInput(questionNumber) {
     document.getElementById(`choicesContainer${questionNumber}`).appendChild(choiceContainer);
 }
 
-document.getElementById("addQuestionBtn").addEventListener("click", createQuestion);
-document.getElementById("surveyForm").addEventListener("submit", submitSurvey);
+// Adds global event listeners on document ready
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("addQuestionBtn").addEventListener("click", createQuestion);
+    document.getElementById("surveyForm").addEventListener("submit", submitSurvey);
+    document.addEventListener('click', event => {
+        if (event.target.classList.contains('remove-question-btn')) {
+            removeQuestion(event.target.dataset.questionId);
+        }
+    });
+});
 
+// Submits the survey data to the server
 async function submitSurvey(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
+
+    const survey = {
+        surveyName: document.getElementById("surveyName").value, // Assuming you have an input field with id "surveyName"
+        surveyType: document.getElementById("surveyType").value, // Assuming you have an input field with id "surveyType"
+        questions: []
+    };
+
+    let count = 1;
+
+    // Iterate over each question block
+    document.querySelectorAll('.question-block').forEach(questionBlock => {
+        const questionName = questionBlock.querySelector('input[type="text"]').value;
+        const questionType = document.getElementById("questionType" + count).value.toUpperCase();
+        const choices = [];
+        count++;
+
+        // If question type is "multipleChoice", gather choices
+        if (questionType === 'multipleChoice') {
+            questionBlock.querySelectorAll('input[name^="questions"]').forEach(choiceInput => {
+                choices.push(choiceInput.value);
+            });
+        }
+
+        // Add question object to survey.questions array
+        survey.questions.push({
+            questionName: questionName,
+            questionType: questionType,
+            options: choices
+        });
+    });
+
+    console.log(survey);
+    console.log(survey.questions);
+
+    // Ensure CSRF token inclusion
+    survey[header] = token;
 
     const response = await fetch('/api/surveys', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            [header]: token
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(survey)
     });
 
+    console.log(response.status);
+    console.log(JSON.stringify(survey))
+
     if (response.status === 201) {
-        const survey = await response.json();
-        alert(`Your survey was created! ${survey.name}`);
+        alert('Survey created successfully!');
         window.location.href = '/surveys';
     } else {
-        console.error('Error:', response);
-        alert('Error creating survey.');
+        alert('Something went wrong. Please try again.');
     }
-
 }

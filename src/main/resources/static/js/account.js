@@ -7,7 +7,7 @@ const firstName = document.getElementById("firstName")
 const lastName = document.getElementById("lastName")
 const email = document.getElementById("email")
 
-const myAccounts = document.getElementById("myAccount");
+// const myAccounts = document.getElementById("myAccount");
 
 
 async function getAccount() {
@@ -31,6 +31,37 @@ async function getAccount() {
     }
 }
 
-for (const myAccount of myAccounts) {
-    myAccount.addEventListener("click", getAccount());
+// for (const myAccount of myAccounts) {
+//     myAccount.addEventListener("click", getAccount());
+// }
+
+
+const updateButton = document.getElementById("updateButton")
+const firstTextArea = document.getElementById("firstNameTextArea");
+const lastTextArea = document.getElementById("lastNameTextArea");
+const emailTextArea = document.getElementById("emailTextArea");
+
+
+async function changeIssue() {
+    const response = await fetch(`/api/account/${accountId.value}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            [header]: token
+        },
+        body: JSON.stringify({
+            firstName: firstTextArea.value,
+            lastName: lastTextArea.value,
+            email: emailTextArea.value
+        })
+    })
+    if (response.status === 204) {
+        console.log("done")
+        // updateButton.disabled = true;
+    } else {
+        alert('Something went wrong!'); // Don't use alerts in a "real" application.
+    }
 }
+
+updateButton?.addEventListener("click", changeIssue);
+// emailTextArea?.addEventListener("input", () => updateButton.disabled = false);

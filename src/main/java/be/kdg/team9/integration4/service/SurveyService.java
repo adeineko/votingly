@@ -37,4 +37,12 @@ public class SurveyService {
     public Survey createSurvey(Survey survey) {
         return surveyRepository.save(survey);
     }
+
+    public void addSurvey(Survey survey) {
+        surveyRepository.save(survey);
+    }
+
+    public void delete(long id) {
+        surveyRepository.deleteById(id);
+    }
 }
