@@ -116,6 +116,8 @@ public class SurveysController {
     public ResponseEntity<Void> deleteSurvey(
             @PathVariable("id") final long id
     ) {
+        Survey survey = surveyService.getSurvey(id);
+        questionService.deleteQuestionsBySurvey(survey);
         surveyService.delete(id);
         return ResponseEntity.noContent().build();
     }

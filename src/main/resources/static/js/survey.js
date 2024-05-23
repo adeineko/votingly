@@ -1,43 +1,104 @@
-import {header, token} from "./util/csrf.js";
+import { header, token } from "./util/csrf.js";
 
 const questionsContainer = document.getElementById("questionsContainer");
 const nameContainer = document.getElementById("nameContainer");
 const surveyIdInput = document.getElementById("surveyId");
 const surveyNameInput = document.getElementById("surveyName");
+const surveyTypeInput = document.getElementById("surveyType");
+const pauseButton = document.getElementById("pauseButton");
+const resumeButton = document.getElementById("resumeButton");
+const progressBarContainer = document.getElementById("progress-bar-container");
+resumeButton.hidden = true;
+
+if (surveyTypeInput.value === 'LINEAR') {
+    pauseButton.hidden = true;
+    resumeButton.hidden = true;
+    progressBarContainer.hidden = true;
+}
 
 let currentQuestionIndex = 0;
-let questions = []; // Variable to store all questions
-
+let questions = [];
+let circularFlowInterval;
+let isPaused = false;
 
 nameContainer.innerHTML = surveyNameInput.value;
 
 async function fetchFirstQuestion() {
-    const response = await fetch(`/api/surveys/${surveyIdInput.value}/questions`,
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                [header]: token
-
-            }
-        });
+    const response = await fetch(`/api/surveys/${surveyIdInput.value}/questions`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            [header]: token
+        }
+    });
     if (response.status === 200) {
         questions = await response.json();
-        // Display the first question
         displayQuestion(questions[currentQuestionIndex]);
+        if (surveyTypeInput.value === 'CIRCULAR') {
+            startCircularFlow();
+            resetProgressBar(); // Start the progress bar immediately
+        }
     }
 }
 
-async function fetchNextQuestion() {
-    currentQuestionIndex++;
-    // Fetch the next question
-    if (currentQuestionIndex < questions.length) {
-        // If there are more questions, fetch the next one
-        displayQuestion(questions[currentQuestionIndex]);
-    } else {
-        // If there are no more questions, redirect to thank-you page
-        window.location.href = `/thank-you-page`;
-    }
+function fetchNextQuestion() {
+    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+    displayQuestion(questions[currentQuestionIndex]);
+    resetProgressBar(); // Reset progress bar on fetching next question
+}
+
+function startCircularFlow() {
+    circularFlowInterval = setInterval(() => {
+        if (!isPaused) {
+            fetchNextQuestion();
+        }
+    }, 8000);
+}
+
+let progressBarWidth = 0; // Variable to store the current width of the progress bar
+
+function pauseCircularFlow() {
+    isPaused = true;
+    clearInterval(circularFlowInterval); // Stop the circular flow when paused
+    progressBarWidth = getCurrentProgressBarWidth(); // Store the current width
+    pauseTransition(); // Pause the progress bar transition
+    resumeButton.hidden = false;
+    pauseButton.hidden = true;
+}
+
+function resumeCircularFlow() {
+    isPaused = false;
+    startCircularFlow(); // Resume circular flow when resumed
+    resumeTransition(); // Resume the progress bar transition
+    resumeButton.hidden = true;
+    pauseButton.hidden = false;
+}
+
+function pauseTransition() {
+    const progressBar = document.getElementById('progress-bar');
+    progressBar.style.transition = 'none'; // Pause the transition by setting it to 'none'
+    progressBar.style.width = `${progressBarWidth}px`; // Set the width to the current width
+}
+
+function resumeTransition() {
+    const progressBar = document.getElementById('progress-bar');
+    progressBar.style.transition = 'width 8s linear'; // Resume the transition
+    progressBar.style.width = '100%'; // Reset the width to 100% to resume the animation
+}
+
+function getCurrentProgressBarWidth() {
+    const progressBar = document.getElementById('progress-bar');
+    return progressBar.offsetWidth; // Return the current width of the progress bar
+}
+
+function resetProgressBar() {
+    const progressBar = document.getElementById('progress-bar');
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0';
+    setTimeout(() => {
+        progressBar.style.transition = 'width 8s linear';
+        progressBar.style.width = '100%';
+    }, 50); // Timeout to ensure the width reset takes effect
 }
 
 function createOpenQuestion(question) {
@@ -99,7 +160,6 @@ function createChoiceQuestion(question, isMultiChoice) {
     return questionDiv;
 }
 
-//TODO: change innerHTML to createElement()
 function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
@@ -133,11 +193,8 @@ function createRangeQuestion(question) {
     return questionDiv;
 }
 
-
 const submitAnswerButton = document.getElementById("submitAnswerButton");
-const questionId = document.getElementById("questionId");
 
-//TODO: fix questionId (for now it saves same questionId  for all questions)
 async function saveAnswer() {
     const currentQuestion = questions[currentQuestionIndex];
     let answer;
@@ -148,12 +205,6 @@ async function saveAnswer() {
             answer = document.getElementById("openQuestionInput").value;
             break;
         case "CHOICE":
-            // const multichoiceInputs = document.querySelectorAll("#multichoiceInput input");
-            // if (!currentQuestion.multiChoice) {
-            //     answer = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked")?.value || null;
-            // } else {
-            //     options = Array.from(multichoiceInputs).map(input => input.value);
-            // }
             if (currentQuestion.multiChoice) {
                 answer = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked")?.value || null;
             } else {
@@ -170,7 +221,7 @@ async function saveAnswer() {
     }
 
     const answerData = {
-        answer: currentQuestion.questionType === 'OPEN' ?/* answer : (currentQuestion.questionType === 'CHOICE' && !currentQuestion.multiChoice*/ answer : null,
+        answer: currentQuestion.questionType === 'OPEN' ? answer : null,
         options_answer: currentQuestion.questionType === 'CHOICE' ? options : null,
         range_answer: currentQuestion.questionType === 'RANGE' ? parseInt(answer) : null,
         questionId: currentQuestion.id,
@@ -195,7 +246,6 @@ async function saveAnswer() {
         alert("Failed to save answer. Please try again.");
     }
 }
-
 
 function displayQuestion(question) {
     questionsContainer.innerHTML = '';
@@ -223,7 +273,10 @@ function displayQuestion(question) {
 
 submitAnswerButton?.addEventListener("click", async () => {
     await saveAnswer();
-    await fetchNextQuestion();
+    fetchNextQuestion();
 });
+
+pauseButton?.addEventListener("click", pauseCircularFlow);
+resumeButton?.addEventListener("click", resumeCircularFlow);
 
 window.addEventListener('load', fetchFirstQuestion);

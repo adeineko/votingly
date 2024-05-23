@@ -23,4 +23,13 @@ public interface QuestionsRepository extends JpaRepository<Question, Long>, Find
     @Transactional
     @Query(value = "INSERT INTO question(question_name, question_type, survey_id, is_multi_choice) VALUES (:questionName, :questionType, :surveyId, 'false')", nativeQuery = true)
     void insertQuestion(String questionName, String questionType, Long surveyId);
+
+    @Transactional
+    void deleteQuestionsBySurvey(Survey survey);
+
+    @Transactional
+    void delete(Question question);
+
+//    @Transactional
+//    void deleteAll(List<Question> questions);
 }

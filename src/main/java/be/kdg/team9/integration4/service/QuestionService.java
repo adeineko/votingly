@@ -3,7 +3,9 @@ package be.kdg.team9.integration4.service;
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.answers.Answer;
 import be.kdg.team9.integration4.model.answers.OpenAnswer;
+import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 import be.kdg.team9.integration4.model.question.Question;
+import be.kdg.team9.integration4.repositories.OptionRepository;
 import be.kdg.team9.integration4.repositories.QuestionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,12 @@ import java.util.List;
 @Service
 public class QuestionService {
     private final QuestionsRepository questionsRepository;
+    private final OptionRepository optionRepository;
 
     @Autowired
-    public QuestionService(QuestionsRepository questionsRepository) {
+    public QuestionService(QuestionsRepository questionsRepository, OptionRepository optionRepository) {
         this.questionsRepository = questionsRepository;
+        this.optionRepository = optionRepository;
     }
     @Transactional
     public List<Question> getAllQuestions() {
@@ -47,5 +51,15 @@ public class QuestionService {
     @Transactional
     public Question saveQuestion(Question question) {
         return questionsRepository.save(question);
+    }
+
+    public void deleteQuestionsBySurvey(Survey survey) {
+        List<Question> questions = questionsRepository.getQuestionsBySurvey(survey);
+        for (Question question : questions) {
+            if (question.getClass().equals(ChoiceQuestion.class)) {
+                optionRepository.deleteByQuestion(question);
+            }
+            questionsRepository.delete(question);
+        }
     }
 }
