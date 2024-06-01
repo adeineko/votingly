@@ -1,6 +1,8 @@
 package be.kdg.team9.integration4.controller.api;
 
 import be.kdg.team9.integration4.controller.api.dto.answer.*;
+//import be.kdg.team9.integration4.converters.ChoiceAnswerDtoConverter;
+import be.kdg.team9.integration4.converters.ChoiceAnswerDtoConverter;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.security.CustomUserDetails;
 import be.kdg.team9.integration4.service.QuestionService;
@@ -21,12 +23,14 @@ import java.time.LocalTime;
 public class AnswersController {
     private final AnswerService answerService;
     private final QuestionService questionService;
+    private final ChoiceAnswerDtoConverter choiceAnswerDtoConverter;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public AnswersController(AnswerService answerService, QuestionService questionService, ModelMapper modelMapper) {
+    public AnswersController(AnswerService answerService, QuestionService questionService, ChoiceAnswerDtoConverter choiceAnswerDtoConverter, ModelMapper modelMapper) {
         this.answerService = answerService;
         this.questionService = questionService;
+        this.choiceAnswerDtoConverter = choiceAnswerDtoConverter;
         this.modelMapper = modelMapper;
     }
 
@@ -36,11 +40,12 @@ public class AnswersController {
                                                            @PathVariable Question questionId,
                                                            @AuthenticationPrincipal CustomUserDetails user) {
         var question = questionService.getQuestion(questionId.getId());
+        long userId = (user != null) ? user.getUserId() : 0;
 
         return switch (question.getQuestionType()) {
             case OPEN -> {
                 var createdOpenAnswer = answerService.saveOpen(newAnswerDto.getSurveyId(),
-                        user.getUserId(),
+                        userId,
                         questionId,
                         newAnswerDto.getAnswer(),
                         LocalDateTime.now()
@@ -52,19 +57,19 @@ public class AnswersController {
             }
             case RANGE -> {
                 var createdRangeAnswer = answerService.saveRange(question.getSurvey().getSurveyId(),
-                        user.getUserId(),
+                        userId,
                         questionId,
                         newAnswerDto.getRange_answer(),
-                        LocalDateTime.now()
-                );
+                        LocalDateTime.now());
                 yield new ResponseEntity<>(
                         modelMapper.map(createdRangeAnswer, AnswerDto.class),
                         HttpStatus.CREATED
                 );
             }
             case CHOICE -> {
-                var createdChoiceAnswer = answerService.saveChoice(question.getSurvey().getSurveyId(),
-                        user.getUserId(),
+                var createdChoiceAnswer = answerService.saveChoice(
+                        question.getSurvey().getSurveyId(),
+                        userId,
                         questionId,
                         newAnswerDto.getOptions_answer(),
                         LocalDateTime.now()
@@ -73,7 +78,6 @@ public class AnswersController {
                         modelMapper.map(createdChoiceAnswer, AnswerDto.class),
                         HttpStatus.CREATED
                 );
-
             }
             default ->
                     throw new UnsupportedOperationException("Unsupported question type: " + question.getQuestionType());

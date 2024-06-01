@@ -4,7 +4,6 @@ import be.kdg.team9.integration4.model.question.Question;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "answer")
@@ -25,7 +24,6 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-
     public Answer() {
     }
 
@@ -33,7 +31,7 @@ public class Answer {
         this.surveyId = surveyId;
         this.userId = userId;
         this.question = question;
-        setAnswerTime(LocalDateTime.now());
+        this.answerTime = answerTime;
     }
 
     public long getAnswerId() {

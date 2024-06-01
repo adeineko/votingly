@@ -1,11 +1,8 @@
 package be.kdg.team9.integration4.controller.api.dto.answer;
 
-import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.question.Question;
-import org.springframework.cglib.core.Local;
 
-import java.time.LocalTime;
-import java.util.List;
+import java.time.LocalDateTime;
 
 public class AnswerDto {
     private long answerId;
@@ -15,11 +12,9 @@ public class AnswerDto {
 
     private String answer;
 
-    private List<Option> options_answer;
-
     private int range_answer;
 
-    private LocalTime answerTime;
+    private LocalDateTime answerTime;
 
 
     public AnswerDto() {
@@ -30,18 +25,22 @@ public class AnswerDto {
                      long userId,
                      Question questionId,
                      String answer,
-                     List<Option> options_answer,
+            /*List<Option> options_answer,*/
                      int range_answer,
-                     LocalTime answerTime
+                     LocalDateTime answerTime
     ) {
+
+        this.answer = answer;
+        /* this.options_answer = options_answer;*/
+        this.range_answer = range_answer;
+        this.answerTime = answerTime;
+    }
+
+    public AnswerDto(long answerId, long surveyId, long userId, Question questionId) {
         this.answerId = answerId;
         this.surveyId = surveyId;
         this.userId = userId;
         this.questionId = questionId;
-        this.answer = answer;
-        this.options_answer = options_answer;
-        this.range_answer = range_answer;
-        this.answerTime = answerTime;
     }
 
     public long getAnswerId() {
@@ -84,14 +83,14 @@ public class AnswerDto {
         this.answer = answer;
     }
 
-    public List<Option> getOptions_answer() {
+    /* public List<Option> getOptions_answer() {
         return options_answer;
     }
 
     public void setOptions_answer(List<Option> options_answer) {
         this.options_answer = options_answer;
     }
-
+    */
     public int getRange_answer() {
         return range_answer;
     }
@@ -100,11 +99,11 @@ public class AnswerDto {
         this.range_answer = range_answer;
     }
 
-    public LocalTime getAnswerTime() {
+    public LocalDateTime getAnswerTime() {
         return answerTime;
     }
 
-    public void setAnswerTime(LocalTime answerTime) {
+    public void setAnswerTime(LocalDateTime answerTime) {
         this.answerTime = answerTime;
     }
 }

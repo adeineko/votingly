@@ -19,6 +19,7 @@ public class Option {
     private ChoiceQuestion question;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "options_answer")
     private ChoiceAnswer answer;
 
     public Option() {

@@ -79,13 +79,11 @@ function createChoiceQuestion(question, isMultiChoice) {
         const optionDiv = document.createElement('div');
 
         const input = document.createElement('input');
-        if (isMultiChoice) {
-            input.setAttribute('type', 'checkbox');
-        } else {
-            input.setAttribute('type', 'radio');
-            input.setAttribute('name', `options_${question.id}`);
-        }
+
+        input.setAttribute('type', isMultiChoice ? 'checkbox' : 'radio');
+        input.setAttribute('name', isMultiChoice ? `options_${question.id}[]` : `options_${question.id}`);
         input.setAttribute('value', option.optionText);
+        input.setAttribute('data-option-id', option.optionId);
 
         const optionLabel = document.createElement('label');
         optionLabel.textContent = option.optionText;
@@ -137,32 +135,33 @@ function createRangeQuestion(question) {
 const submitAnswerButton = document.getElementById("submitAnswerButton");
 const questionId = document.getElementById("questionId");
 
-//TODO: fix questionId (for now it saves same questionId  for all questions)
 async function saveAnswer() {
     const currentQuestion = questions[currentQuestionIndex];
-    let answer;
-    let options = [];
+    let answer = null;
+    let range = null;
+    let options = null;
 
     switch (currentQuestion.questionType) {
         case "OPEN":
             answer = document.getElementById("openQuestionInput").value;
             break;
         case "CHOICE":
-            // const multichoiceInputs = document.querySelectorAll("#multichoiceInput input");
-            // if (!currentQuestion.multiChoice) {
-            //     answer = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked")?.value || null;
+            // if (currentQuestion.multiChoice) {
+            //     options = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked")?.value || null;
             // } else {
-            //     options = Array.from(multichoiceInputs).map(input => input.value);
+            //     const selectedOptions = document.querySelectorAll("input[name='options_" + currentQuestion.id + "']:checked");
+            //     options = Array.from(selectedOptions).map(input => input.value);
             // }
-            if (currentQuestion.multiChoice) {
-                answer = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked")?.value || null;
-            } else {
-                const selectedOptions = document.querySelectorAll("input[name='options_" + currentQuestion.id + "']:checked");
-                options = Array.from(selectedOptions).map(input => input.value);
-            }
+            // if (currentQuestion.multiChoice) {
+            //     const selectedOptionInputs = document.querySelectorAll("input[name='options_" + currentQuestion.id + "']:checked");
+            //     options = Array.from(selectedOptionInputs).map(input => input.getAttribute('data-option-id'));
+            // } else {
+            const selectedOptionInput = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked");
+            options = selectedOptionInput ? [selectedOptionInput.getAttribute('data-option-id')] : [];
+            // }
             break;
         case "RANGE":
-            answer = document.getElementById("rangeInput").value;
+            range = document.getElementById("rangeInput").value;
             break;
         default:
             console.error("Unsupported question type:", currentQuestion.questionType);
@@ -170,11 +169,12 @@ async function saveAnswer() {
     }
 
     const answerData = {
-        answer: currentQuestion.questionType === 'OPEN' ?/* answer : (currentQuestion.questionType === 'CHOICE' && !currentQuestion.multiChoice*/ answer : null,
+        answer: currentQuestion.questionType === 'OPEN' ? answer : null,
         options_answer: currentQuestion.questionType === 'CHOICE' ? options : null,
-        range_answer: currentQuestion.questionType === 'RANGE' ? parseInt(answer) : null,
+        range_answer: currentQuestion.questionType === 'RANGE' ? parseInt(range) : null,
         questionId: currentQuestion.id,
-        surveyId: surveyIdInput.value
+        surveyId: surveyIdInput.value,
+        answerType: currentQuestion.questionType,
     };
 
     const response = await fetch(`/api/answers/${currentQuestion.id}`, {
@@ -187,7 +187,7 @@ async function saveAnswer() {
         body: JSON.stringify(answerData)
     });
 
-    if (response.ok) {
+    if (response.status === 201) {
         const savedAnswer = await response.json();
         console.log("Successfully saved answer:", savedAnswer);
     } else {

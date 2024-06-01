@@ -3,6 +3,7 @@ package be.kdg.team9.integration4.controller.api.dto.answer;
 import be.kdg.team9.integration4.model.Option;
 
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -16,15 +17,16 @@ public class NewAnswerDto {
 
     private List<Option> options_answer;
 
-//    private LocalTime answerTime;
+    private LocalDateTime answerTime;
 
     public NewAnswerDto() {
     }
 
-    public NewAnswerDto(long surveyId, String answer, int range_answer, List<Option> options_answer) {
+    public NewAnswerDto(String answer, int range_answer, List<Option> options_answer, LocalDateTime answerTime) {
         this.answer = answer;
         this.range_answer = range_answer;
         this.options_answer = options_answer;
+        this.answerTime = answerTime;
     }
 
     public long getSurveyId() {
@@ -57,5 +59,13 @@ public class NewAnswerDto {
 
     public void setRange_answer(int range_answer) {
         this.range_answer = range_answer;
+    }
+
+    public LocalDateTime getAnswerTime() {
+        return answerTime;
+    }
+
+    public void setAnswerTime(LocalDateTime answerTime) {
+        this.answerTime = answerTime;
     }
 }

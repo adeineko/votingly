@@ -74,13 +74,18 @@ X-CSRF-TOKEN: uRrss2llH7Kb5ekbEbqDxbT6vJnRjI_xsDw9LulunM5Qktu23C3ZhltcKIG214sudJ
 "password": "qwerty"
 }
 
-#### API: Save New Survey
-#POST http://localhost:8080/api/surveys
-#Accept: application/json
-#Content-Type: application/json
-#Cookie: JSESSIONID=FBBC117D3710BD4B557A4C77F3ABB5A3
-#X-CSRF-TOKEN: uRrss2llH7Kb5ekbEbqDxbT6vJnRjI_xsDw9LulunM5Qktu23C3ZhltcKIG214sudJe38tfNkaHh6evcgV9ZS4tfqv9g8b7Q
-#
-#{
-#
-#}
+#### API: Save New Answer
+POST http://localhost:8080/api/answers/1
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=496CD70699E4F62F50A10A632A1F25E5
+X-CSRF-TOKEN: 2x6mixvLJrGhC4K44RTSzNqq6h864qvp2GvpCTkzAFthuSVL4yeVs37yEImMabKBhDnmru_OxycJ1srE6g2PPwtWMzoCjx1y
+
+{
+  "range_answer": 6,
+  "answerTime": "2024-06-01T16:26:08.404389",
+  "questionId": 4,
+  "surveyId": 1,
+  "userId": 1,
+  "answerType": "RANGE"
+}

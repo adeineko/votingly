@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
         //     email: email,
         //     password: password
         // };
-
+//TODO: make it async
         // Send a POST request to the backend API
         fetch('/api/signup', {
             method: 'POST',
