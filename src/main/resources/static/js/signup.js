@@ -24,14 +24,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const signupForm = document.getElementById("signup");
 
     signupForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
 
         // Collect user input data
         const firstName = document.getElementById("firstName").value;
         const lastName = document.getElementById("lastName").value;
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        // const user_type = document.
 
         // // Create a user object
         // const user = {
@@ -57,10 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => {
                 if (response.ok) {
-                    // If the request was successful, redirect to a success page or do something else
-                    window.location.href = '/login'; // Redirect to success page
+                    window.location.href = '/login';
                 } else {
-                    // If the request was not successful, handle the error
                     return response.json().then(data => {
                         throw new Error(data.message || 'Error occurred during signup. Please try again later.');
                     });
@@ -68,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Error:', error.message);
-                // Display the error message to the user or handle it appropriately
                 alert(error.message);
             });
     });

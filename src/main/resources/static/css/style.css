@@ -2,6 +2,101 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Syne&display=swap');
 
+/*Account Page*/
+.containerAccount {
+    position: absolute;
+    left: 50%;
+    transform: translate(-55%, 40%);
+}
+.bodyAccount {
+    font-family: 'Syne', sans-serif !important;
+    background-color: #0171d3;
+    padding-top: 50px;
+    position: relative;
+}
+.btn-go-back {
+    background-color: #007bff;
+    color: #fff;
+}
+.btn-go-back:hover {
+    background-color: #0056b3;
+}
+/*End Account Page*/
+
+/*Login Page*/
+.containerLogin{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4070f4;
+    column-gap: 30px;
+}
+
+.bodyLogin{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Syne', sans-serif;
+    background-color: #4070f4;
+}
+
+.headerLogin{
+    font-size: 28px;
+    font-weight: 600;
+    color: #232836;
+    text-align: center;
+}
+
+.formLogin{
+    margin-top: 30px;
+
+}
+/*End Login Page*/
+
+/*SignUp Page*/
+.bodySign{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Syne', sans-serif;
+    background-color: #4070f4;
+}
+
+.containerSign {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4070f4;
+    column-gap: 30px;
+}
+
+.headerSign{
+    font-size: 28px;
+    font-weight: 600;
+    color: #232836;
+    text-align: center;
+}
+
+.formSign {
+    margin-top: 30px;
+}
+/*End SignUp Page*/
+
+/*Surveys Page*/
+.survey-item {
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+/*End Surveys Page*/
+
 /*Pop Up Subscribe*/
 .thankYouPage {
     background-color: #0C6EFD;
