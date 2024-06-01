@@ -2,9 +2,7 @@ package be.kdg.team9.integration4.controller.api.dto.answer;
 
 import be.kdg.team9.integration4.model.Option;
 
-
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 public class NewAnswerDto {

@@ -53,11 +53,19 @@ public class SecurityConfig {
                                 (request, response, exception) -> {
                                     if (request.getRequestURI().startsWith("/api")) {
                                         response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                                    } else if (request.getRequestURI().startsWith("/error")) {
+                                        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                                     } else {
                                         response.sendRedirect(request.getContextPath() + "/login");
                                     }
                                 })
-                );
+                ).logout(logout ->
+                        logout
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/login?logout")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
+                                .permitAll());
         return http.build();
     }
 
