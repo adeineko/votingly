@@ -1,22 +1,31 @@
 package be.kdg.team9.integration4.controller.api;
 
-import be.kdg.team9.integration4.controller.api.dto.answer.*;
-//import be.kdg.team9.integration4.converters.ChoiceAnswerDtoConverter;
+import be.kdg.team9.integration4.controller.api.dto.answer.AnswerDto;
+import be.kdg.team9.integration4.controller.api.dto.answer.NewAnswerDto;
 import be.kdg.team9.integration4.converters.ChoiceAnswerDtoConverter;
+import be.kdg.team9.integration4.model.answers.Answer;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.security.CustomUserDetails;
-import be.kdg.team9.integration4.service.QuestionService;
-import org.modelmapper.ModelMapper;
 import be.kdg.team9.integration4.service.AnswerService;
+import be.kdg.team9.integration4.service.QuestionService;
 import jakarta.validation.Valid;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/answers")
@@ -83,4 +92,38 @@ public class AnswersController {
                     throw new UnsupportedOperationException("Unsupported question type: " + question.getQuestionType());
         };
     }
+
+    @GetMapping(value = "/{surveyId}/export-csv", produces = "text/csv")
+    public ResponseEntity<byte[]> exportAnswersToCSV(@PathVariable("surveyId") long surveyId) {
+        List<Answer> answers = answerService.getAllSurveys(surveyId);
+
+        if (answers.isEmpty()) {
+            return ResponseEntity.noContent().build(); // No content to export
+        }
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        try (CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), CSVFormat.DEFAULT.withHeader("AnswerID", "SurveyID", "UserID", "QuestionID", "AnswerTime"))) {
+            for (Answer answer : answers) {
+                csvPrinter.printRecord(answer.getAnswerId(), surveyId, answer.getUserId(), answer.getQuestion(), answer.getAnswerTime());
+            }
+            csvPrinter.flush();
+        } catch (IOException e) {
+            // Log the exception and return an internal server error response
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        byte[] csvBytes = out.toByteArray();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=survey_answers.csv");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(csvBytes);
+    }
+
+
 }

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Transactional
 public class QuestionService {
     private final QuestionsRepository questionsRepository;
     private final OptionRepository optionRepository;
@@ -24,16 +25,13 @@ public class QuestionService {
         this.questionsRepository = questionsRepository;
         this.optionRepository = optionRepository;
     }
-    @Transactional
     public List<Question> getAllQuestions() {
         return questionsRepository.findAllQuestions();
     }
-    @Transactional
     public Question getQuestion(long id) {
         return questionsRepository.findById(id).orElse(null);
     }
 
-    @Transactional
     public List<Question> findAllQuestionById(long id) {
         return questionsRepository.findAllBySurveyIdFetched(id);
     }
@@ -46,11 +44,6 @@ public class QuestionService {
 
     public List<Question> getQuestionsBySurvey(Survey survey) {
         return questionsRepository.getQuestionsBySurvey(survey);
-    }
-
-    @Transactional
-    public Question saveQuestion(Question question) {
-        return questionsRepository.save(question);
     }
 
     public void deleteQuestionsBySurvey(Survey survey) {

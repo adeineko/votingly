@@ -42,4 +42,8 @@ public class AnswerService {
         return answerRepository.save(choiceAnswerEntity);
     }
 
+    public List<Answer> getAllSurveys(long surveyId) {
+        return answerRepository.findBySurveyId(surveyId);
+    }
+
 }

@@ -26,15 +26,7 @@ public class Survey {
 
     private Date startDate;
     private Date endDate;
-//    private boolean isPublished;
-//    private boolean isDefault;
-//    private boolean isAllowedOnlyOnce;
-//    private long userId;
-//    private int timeSpent;
-//    private Date submitDate;
 
-
-    // Constructors, getters, and setters
     public Survey() {
     }
 

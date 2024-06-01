@@ -1,4 +1,4 @@
-import { header, token } from "./util/csrf.js";
+import {header, token} from "./util/csrf.js";
 
 async function getSurveys() {
     const response = await fetch('/api/surveys', {
@@ -40,6 +40,31 @@ async function getSurveys() {
             viewDetailsButton.addEventListener('click', () => {
                 window.location.href = `/surveys/${survey.surveyId}/details`;
             });
+            const exportDataCsvDataButton = document.createElement('div');
+            exportDataCsvDataButton.classList.add('btn', 'btn-primary');
+            exportDataCsvDataButton.innerText = 'Export CSV';
+            exportDataCsvDataButton.addEventListener('click', async () => {
+                const response = await fetch(`/api/answers/${survey.surveyId}/export-csv`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'text/csv',
+                        'Content-Type': 'text/csv',
+                        [header]: token
+                    },
+
+                });
+
+                if (response.status === 200) {
+                    const csvData = await response.blob();
+                    const url = window.URL.createObjectURL(csvData);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'survey_answers.csv';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                }
+            });
 
             innerDiv.appendChild(titleElement);
             innerDiv.appendChild(descriptionElement);
@@ -47,6 +72,7 @@ async function getSurveys() {
 
             surveyItem.appendChild(innerDiv);
             surveyItem.appendChild(viewDetailsButton);
+            surveyItem.appendChild(exportDataCsvDataButton);
             surveysList.appendChild(surveyItem);
         });
     }

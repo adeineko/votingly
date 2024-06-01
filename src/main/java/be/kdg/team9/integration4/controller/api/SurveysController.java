@@ -11,10 +11,14 @@ import be.kdg.team9.integration4.service.QuestionService;
 import be.kdg.team9.integration4.service.SurveyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,26 +62,13 @@ public class SurveysController {
         return ResponseEntity.ok(questionDtos);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<SurveyDto> createSurvey(@RequestBody SurveyDto surveyDto) {
-        Survey survey = surveyDtoConverter.convertFromDto(surveyDto);
-        Survey createdSurvey = surveyService.createSurvey(survey);
-        SurveyDto createdSurveyDto = modelMapper.map(createdSurvey, SurveyDto.class);
-        // List<Question> questions = surveyDto.getQuestions();
-        // for (Question question : questions) {
-        //     question.setSurvey(createdSurvey);
-        //     // questionService.createQuestion(question);
-        // }
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdSurveyDto);
-    }
-
     @PostMapping
     public ResponseEntity<SurveyDto> addSurvey(
             @RequestBody SurveyDto surveyDto
     ) {
         Survey survey = modelMapper.map(surveyDto, Survey.class);
         List<Question> questions = new ArrayList<>();
-        for (QuestionDto questionDto: surveyDto.getQuestions()) {
+        for (QuestionDto questionDto : surveyDto.getQuestions()) {
             Question question = new Question(
                     questionDto.getQuestionName(),
                     questionDto.getQuestionType()
