@@ -10,12 +10,10 @@ public class Supervisor extends User {
 
     @Column(name = "notes_taken")
     private String notesTaken;
-    private long orgId;
 
-    public Supervisor(String firstName, String lastName, String email, String password, String notesTaken, long orgId) {
-        super(firstName, lastName, email, password);
+    public Supervisor(long id, String firstName, String lastName, String email, String password, String notesTaken) {
+        super(id, firstName, lastName, email, password);
         this.notesTaken = notesTaken;
-        this.orgId = orgId;
     }
 
     public Supervisor() {
@@ -29,11 +27,15 @@ public class Supervisor extends User {
         this.notesTaken = notesTaken;
     }
 
-    public long getOrgId() {
-        return orgId;
-    }
-
-    public void setOrgId(long orgId) {
-        this.orgId = orgId;
-    }
+//    @Override
+//    public String getUserType() {
+//        return "SUPERVISOR";
+//    }
+//
+//    @Override
+//    public void setUserType(String userType) {
+//        if (!"SUPERVISOR".equals(userType)) {
+//            throw new IllegalArgumentException("Invalid user type: " + userType);
+//        }
+//    }
 }
