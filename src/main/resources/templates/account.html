@@ -30,9 +30,17 @@
                 <textarea th:if="${account.modificationAllowed}" class="form-control" id="emailTextArea" rows="1" th:text="${#authentication.principal.username}"></textarea>
                 <p th:if="${!account.modificationAllowed}" id="email" th:text="${#authentication.principal.username}" class="form-control-static"></p>
             </div>
+            <div class="form-group">
+                <label for="email">User Type</label>
+                <p id="userType" th:text="${#authentication.principal.userType}" class="form-control-static"></p>
+            </div>
             <div th:if="${account.modificationAllowed}" class="mt-4">
                 <a href="/surveys" class="btn btn-go-back">Go Back</a>
                 <button id="updateButton" type="button" class="btn btn-primary">Update</button>
+            </div>
+
+            <div th:if="${account.userType == 'ORG_ADMIN'}">
+                <a href="/addSupervisor" class="btn btn-go-back">Add Supervisor</a>
             </div>
         </div>
     </div>

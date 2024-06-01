@@ -29,4 +29,9 @@ public class OrgAdmin extends User {
     public void setOrgId(long orgId) {
         this.orgId = orgId;
     }
+
+    @Override
+    public String getUserType() {
+        return "ORG_ADMIN";
+    }
 }

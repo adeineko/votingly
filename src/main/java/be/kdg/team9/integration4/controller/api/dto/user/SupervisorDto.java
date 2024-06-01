@@ -3,12 +3,10 @@ package be.kdg.team9.integration4.controller.api.dto.user;
 
 public class SupervisorDto extends UserDto {
     private String notesTaken;
-    private long orgId;
 
-    public SupervisorDto(long id, String firstName, String lastName, String email, String notesTaken, long orgId) {
-        super(id, firstName, lastName, email);
+    public SupervisorDto(long id, String firstName, String lastName, String email, String password, String userType, String notesTaken) {
+        super(id, firstName, lastName, email, password, userType);
         this.notesTaken = notesTaken;
-        this.orgId = orgId;
     }
 
     public SupervisorDto() {
@@ -22,11 +20,13 @@ public class SupervisorDto extends UserDto {
         this.notesTaken = notesTaken;
     }
 
-    public long getOrgId() {
-        return orgId;
+    public String getUserType() {
+        return "SUPERVISOR";
     }
 
-    public void setOrgId(long orgId) {
-        this.orgId = orgId;
+    public void setUserType(String userType) {
+        if (!"SUPERVISOR".equals(userType)) {
+            throw new IllegalArgumentException("Invalid user type: " + userType);
+        }
     }
 }

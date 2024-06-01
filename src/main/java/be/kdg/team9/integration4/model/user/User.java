@@ -26,7 +26,19 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Transient
+    private String userType;
+
     public User() {
+    }
+
+    public User(long id, String firstName, String lastName, String email, String password, String userType) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.userType = userType;
     }
 
     public User(long id, String firstName, String lastName, String email, String password) {
@@ -84,5 +96,13 @@ public class User {
 
     public long getId() {
         return id;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

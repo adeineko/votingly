@@ -30,8 +30,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                     authorities,
                     user.getId(),
                     user.getFirstName(),
-                    user.getLastName());
+                    user.getLastName(),
+                    user.getUserType());
+        }else {
+            throw new UsernameNotFoundException("User with email " + username + " was not found.");
         }
-        throw new UsernameNotFoundException("User with email " + username + " was not found.");
     }
 }

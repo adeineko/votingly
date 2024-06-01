@@ -14,22 +14,13 @@
 <section class="container forms containerSign">
     <div class="form signup" id="signup">
         <div class="form-content">
-            <header class="headerSign">Signup</header>
-            <form th:action="@{/api/signup}" method="post" class="formSign" data-action="/api/signup">
+            <header class="headerSign">Create Account</header>
+            <form th:action="@{/api/addSupervisor}" method="post" class="formSign">
                 <div th:replace="userCreationForm"></div>
-                <!--                <div class="field input-field">-->
-                <!--                    <input type="password" placeholder="Confirm password" class="password">-->
-                <!--                </div>-->
-
                 <div class="field button-field">
-                    <button type="submit">Signup</button>
+                    <button type="submit">Create Account</button>
                 </div>
             </form>
-
-            <div class="form-link">
-                <span>Already have an account? <a class="link login-link"
-                                                  onclick="window.location='login';">Login</a></span>
-            </div>
         </div>
 
     </div>

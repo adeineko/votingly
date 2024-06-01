@@ -19,7 +19,6 @@ pwShowHide.forEach(eyeIcon => {
     })
 })
 
-
 document.addEventListener('DOMContentLoaded', function () {
     const signupForm = document.getElementById("signup");
 
@@ -31,17 +30,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const lastName = document.getElementById("lastName").value;
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
+        const form = document.querySelector('.formSign');
+        const actionUrl = form.getAttribute('action');
 
-        // // Create a user object
-        // const user = {
-        //     firstName: firstName,
-        //     lastName: lastName,
-        //     email: email,
-        //     password: password
-        // };
-//TODO: make it async
+        console.log(actionUrl);
         // Send a POST request to the backend API
-        fetch('/api/signup', {
+        fetch(`${actionUrl}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,4 +63,3 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
-

@@ -38,6 +38,7 @@ public class AccountController {
                 oneUser.getFirstName(),
                 oneUser.getLastName(),
                 oneUser.getEmail(),
+                oneUser.getUserType(),
                 authentication.isAuthenticated()
         ));
         mav.setViewName("account");

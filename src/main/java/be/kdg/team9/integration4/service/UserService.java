@@ -1,6 +1,7 @@
 package be.kdg.team9.integration4.service;
 
 import be.kdg.team9.integration4.model.user.RegularUser;
+import be.kdg.team9.integration4.model.user.Supervisor;
 import be.kdg.team9.integration4.model.user.User;
 import be.kdg.team9.integration4.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -44,6 +45,17 @@ public class UserService {
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(password);
+
+        return userRepository.save(user);
+    }
+
+    public Supervisor addSupervisor(String firstName, String lastName, String email, String password) {
+        Supervisor user = new Supervisor();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setUserType("SUPERVISOR");
 
         return userRepository.save(user);
     }

@@ -14,6 +14,7 @@ public class UserDto {
     private String lastName;
     private String email;
     private String password;
+    private String userType;
     private boolean modificationAllowed;
 
     public UserDto() {
@@ -25,6 +26,28 @@ public class UserDto {
         this.lastName = lastName;
         this.email = email;
         this.modificationAllowed = modificationAllowed;
+    }
+
+    public UserDto(long id, String firstName, String lastName, String email, String userType, boolean modificationAllowed) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userType = userType;
+        this.modificationAllowed = modificationAllowed;
+    }
+
+    public UserDto(long id, String firstName, String lastName, String email, String password, String userType) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.userType = userType;
+    }
+
+    public UserDto(long id) {
+        this.id = id;
     }
 
     public UserDto(long id, String firstName, String lastName, String email, String password) {
@@ -88,5 +111,13 @@ public class UserDto {
 
     public void setModificationAllowed(boolean modificationAllowed) {
         this.modificationAllowed = modificationAllowed;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

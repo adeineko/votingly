@@ -12,4 +12,9 @@ public class PlatformAdmin extends User {
     public PlatformAdmin(String firstName, String lastName, String email, String password, long id) {
         super(id, firstName, lastName, email, password);
     }
+
+    @Override
+    public String getUserType() {
+        return "P_ADMIN";
+    }
 }

@@ -24,6 +24,11 @@ public class RegularUser extends User {
         return surveySubmitted;
     }
 
+    @Override
+    public String getUserType() {
+        return "REGULAR";
+    }
+
     public void setSurveySubmitted(List<Survey> surveySubmitted) {
         this.surveySubmitted = surveySubmitted;
     }
