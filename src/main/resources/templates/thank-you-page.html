@@ -14,7 +14,7 @@
     <div class="cont">
         <div class="gg-check-o"></div>
         <div class="goodJob">
-            <a class="goodJob">Good Job <span sec:authorize="isAuthenticated()" sec:authentication="name"
+            <a class="goodJob">Good Job <span sec:authorize="isAuthenticated()" th:text="${#authentication.principal.firstName}"
                                               class="name"></span>!</a>
         </div>
         <div>

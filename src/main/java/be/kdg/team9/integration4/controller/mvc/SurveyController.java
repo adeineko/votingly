@@ -1,13 +1,16 @@
 package be.kdg.team9.integration4.controller.mvc;
 
 import be.kdg.team9.integration4.model.Survey;
+import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.service.SurveyService;
 import be.kdg.team9.integration4.service.QuestionService;
+import be.kdg.team9.integration4.viewmodel.SurveyViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -16,14 +19,20 @@ import java.util.List;
 public class SurveyController {
 
     private final SurveyService surveyService;
+    private final QuestionService questionService;
 
-    public SurveyController(SurveyService surveyService) {
+    public SurveyController(SurveyService surveyService, QuestionService questionService) {
         this.surveyService = surveyService;
+        this.questionService = questionService;
     }
 
     @GetMapping
-    public String survey() {
-        return "surveys";
+    public ModelAndView getAllSurveys() {
+        final ModelAndView modelAndView = new ModelAndView("surveys");
+        final List<Survey> surveys = surveyService.getAllSurveys();
+        final List<SurveyViewModel> viewModels = surveys.stream().map(SurveyViewModel::fromDomain).toList();
+        modelAndView.addObject("surveys", viewModels);
+        return modelAndView;
     }
 
     @GetMapping("/{id}/questions")
@@ -39,6 +48,16 @@ public class SurveyController {
 
     @GetMapping("/add")
     public String addSurvey() {
-        return "addSurvey";
+        return "addsurvey";
+    }
+
+    @GetMapping("/{id}/details")
+    public String surveyDetails(@PathVariable("id") long id, Model model) {
+        final Survey survey = surveyService.getSurvey(id);
+        final List<Question> questions = questionService.getQuestionsBySurvey(survey);
+        survey.setQuestions(questions);
+        final SurveyViewModel viewModel = SurveyViewModel.fromDomain(survey);
+        model.addAttribute("survey", viewModel);
+        return "surveydetails";
     }
 }

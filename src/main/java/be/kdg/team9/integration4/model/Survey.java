@@ -21,7 +21,7 @@ public class Survey {
     @Enumerated(EnumType.STRING)
     private SurveyType surveyType;
 
-    @OneToMany(mappedBy = "survey")
+    @OneToMany(mappedBy = "survey", fetch = FetchType.EAGER)
     private List<Question> questions;
 
     private Date startDate;

@@ -6,6 +6,7 @@ import be.kdg.team9.integration4.converters.QuestionDtoConverter;
 import be.kdg.team9.integration4.converters.SurveyDtoConverter;
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.Question;
+import be.kdg.team9.integration4.model.question.QuestionType;
 import be.kdg.team9.integration4.service.QuestionService;
 import be.kdg.team9.integration4.service.SurveyService;
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,7 +40,7 @@ public class SurveysController {
     List<SurveyDto> getAllSurveys() {
         return surveyService.getAllSurveys()
                 .stream()
-                .map(survey -> modelMapper.map(survey, SurveyDto.class)).toList();
+                .map(surveyDtoConverter::convertToDto).toList();
     }
 
 
@@ -58,9 +60,67 @@ public class SurveysController {
 
     @PostMapping("/create")
     public ResponseEntity<SurveyDto> createSurvey(@RequestBody SurveyDto surveyDto) {
-        Survey survey = modelMapper.map(surveyDto, Survey.class);
+        Survey survey = surveyDtoConverter.convertFromDto(surveyDto);
         Survey createdSurvey = surveyService.createSurvey(survey);
         SurveyDto createdSurveyDto = modelMapper.map(createdSurvey, SurveyDto.class);
+        // List<Question> questions = surveyDto.getQuestions();
+        // for (Question question : questions) {
+        //     question.setSurvey(createdSurvey);
+        //     // questionService.createQuestion(question);
+        // }
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSurveyDto);
     }
+
+    @PostMapping
+    public ResponseEntity<SurveyDto> addSurvey(
+            @RequestBody SurveyDto surveyDto
+    ) {
+        Survey survey = modelMapper.map(surveyDto, Survey.class);
+        List<Question> questions = new ArrayList<>();
+        for (QuestionDto questionDto: surveyDto.getQuestions()) {
+            Question question = new Question(
+                    questionDto.getQuestionName(),
+                    questionDto.getQuestionType()
+            );
+
+            // Infer isMultiChoice based on questionType
+            boolean isMultiChoice = question.getQuestionType() == QuestionType.CHOICE;
+
+            questions.add(question);
+        }
+        surveyService.addSurvey(survey);
+        questions.forEach(question -> question.setSurvey(survey));
+        questionService.addQuestions(questions);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(surveyDto);
+    }
+
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<SurveyDto> getSurveyDetails(@PathVariable("id") long id) {
+        Survey survey = surveyService.getSurvey(id);
+        List<Question> questions = questionService.getQuestionsBySurvey(survey);
+        List<QuestionDto> questionDtos = questions.stream()
+                .map(question -> modelMapper.map(question, QuestionDto.class))
+                .toList();
+//        survey.setQuestions(questions);
+        SurveyDto surveyDto = new SurveyDto(
+                survey.getSurveyName(),
+                survey.getSurveyType(),
+                questionDtos
+        );
+        return ResponseEntity.ok(surveyDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSurvey(
+            @PathVariable("id") final long id
+    ) {
+        Survey survey = surveyService.getSurvey(id);
+        questionService.deleteQuestionsBySurvey(survey);
+        surveyService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

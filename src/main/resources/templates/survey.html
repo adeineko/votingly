@@ -4,6 +4,27 @@
     <title>Survey Page</title>
     <thymeleaf th:replace="~{header :: meta_script_link}"/>
 
+    <style>
+        #progress-bar-container {
+            width: 80%;
+            background-color: #e0e0e0;
+            border-radius: 25px;
+            overflow: hidden;
+            height: 10px;
+            margin-top: 5vw;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #727070;
+            transition: width 0.5s linear;
+        }
+
+    </style>
+
     <script src="/js/survey.js" type="module"></script>
 
 </head>
@@ -13,6 +34,7 @@
 
     <input type="hidden" id="surveyName" th:value="${survey.surveyName}">
     <input type="hidden" id="surveyId" th:value="${survey.surveyId}">
+    <input type="hidden" id="surveyType" th:value="${survey.surveyType}">
 
 
     <div class="container my-4">
@@ -29,6 +51,14 @@
         <button class="btn btn-primary" id="submitAnswerButton">Submit</button>
     </div>
 </div>
+
+<div id="progress-bar-container">
+    <div id="progress-bar"></div>
+</div> <!-- Progress bar container -->
+
+<button id="pauseButton">Pause</button>
+<button id="resumeButton">Resume</button>
+
 
 </body>
 </html>

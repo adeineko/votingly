@@ -20,16 +20,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userService.getUserByName(username);
+        var user = userService.getUserByEmail(username); // Fetch user by email
         if (user != null) {
             var authorities = new ArrayList<SimpleGrantedAuthority>();
             // Spring's `User`
             return new CustomUserDetails(
-                    user.getFirstName(),
+                    user.getEmail(),
                     user.getPassword(),
                     authorities,
-                    user.getId());
+                    user.getId(),
+                    user.getFirstName(),
+                    user.getLastName());
         }
-        throw new UsernameNotFoundException("User with" + username + " was not found.");
+        throw new UsernameNotFoundException("User with email " + username + " was not found.");
     }
 }

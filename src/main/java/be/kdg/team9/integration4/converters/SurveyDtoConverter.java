@@ -14,34 +14,14 @@ import java.util.stream.Collectors;
 public class SurveyDtoConverter {
 
 
-    public SurveyDto convert(Survey survey) {
-        SurveyDto dto;
-        dto = new SurveyDto(survey.getSurveyId(), survey.getSurveyName(), survey.getSurveyType(), survey.getStartDate(), survey.getEndDate());
-
-        dto = convertToDto(survey);
-
-        return dto;
+    public Survey convertFromDto(SurveyDto surveyDto) {
+        return new Survey(surveyDto.getSurveyId(), surveyDto.getSurveyName(), surveyDto.getSurveyType(), surveyDto.getStartDate(), surveyDto.getEndDate());
     }
 
-    private SurveyDto convertToDto(Survey survey) {
-//        List<QuestionDto> questionDtos = survey.getQuestions()
-////                .stream()
-////                .map(question -> new QuestionDto(
-////                        question.getId(),
-////                        question.getQuestionName(),
-////                        question.getQuestionType(),
-////                        question.getSurvey()
-////                ))
-////                .collect(Collectors.toList());
-        SurveyDto surveyDto = new SurveyDto(survey);
-        surveyDto.setSurveyId(survey.getSurveyId());
-        surveyDto.setSurveyName(survey.getSurveyName());
-        surveyDto.setSurveyType(survey.getSurveyType());
-        surveyDto.setEndDate(survey.getEndDate());
-        surveyDto.setStartDate(survey.getStartDate());
-//        surveyDto.setQuestions(questionDtos);
-        return surveyDto;
+    public SurveyDto convertToDto(Survey survey) {
+        return new SurveyDto(survey.getSurveyId(),survey.getSurveyName(),survey.getSurveyType(),survey.getStartDate(),survey.getEndDate());
     }
+
 //public SurveyDto convert(Survey survey) {
 //    List<QuestionDto> questionDtos = survey.getQuestions().stream()
 //            .map(question -> modelMapper.map(question, QuestionDto.class))

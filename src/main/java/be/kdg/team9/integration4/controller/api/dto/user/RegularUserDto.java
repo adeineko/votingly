@@ -1,6 +1,7 @@
 package be.kdg.team9.integration4.controller.api.dto.user;
 
 import be.kdg.team9.integration4.model.Survey;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Transient;
 
 import java.util.List;

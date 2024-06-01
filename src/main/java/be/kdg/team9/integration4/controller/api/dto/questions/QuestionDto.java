@@ -18,6 +18,11 @@ public class QuestionDto {
     public QuestionDto() {
     }
 
+    public QuestionDto(String questionName, QuestionType questionType) {
+        this.questionName = questionName;
+        this.questionType = questionType;
+    }
+
     public QuestionDto(long id, String questionName, QuestionType questionType, long surveyId) {
         this.id = id;
         this.questionName = questionName;

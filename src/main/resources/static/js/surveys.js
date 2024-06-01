@@ -34,11 +34,19 @@ async function getSurveys() {
                 window.location.href = `/surveys/${survey.surveyId}/questions`;
             });
 
+            const viewDetailsButton = document.createElement('div');
+            viewDetailsButton.classList.add('btn', 'btn-primary');
+            viewDetailsButton.innerText = 'View Details';
+            viewDetailsButton.addEventListener('click', () => {
+                window.location.href = `/surveys/${survey.surveyId}/details`;
+            });
+
             innerDiv.appendChild(titleElement);
             innerDiv.appendChild(descriptionElement);
             innerDiv.appendChild(timeElement);
 
             surveyItem.appendChild(innerDiv);
+            surveyItem.appendChild(viewDetailsButton);
             surveysList.appendChild(surveyItem);
         });
     }

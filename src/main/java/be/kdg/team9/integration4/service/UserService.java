@@ -1,5 +1,6 @@
 package be.kdg.team9.integration4.service;
 
+import be.kdg.team9.integration4.model.user.RegularUser;
 import be.kdg.team9.integration4.model.user.User;
 import be.kdg.team9.integration4.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,9 +25,9 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-//    public User getUserByEmail(String email) {
-//        return userRepository.findByEmail(email);
-//    }
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 //
 //    @Transactional
 //    public User addUser(String firstName, String lastName, String email, String password){
@@ -37,16 +38,26 @@ public class UserService {
 //        return savedUser;
 //    }
 
-    public User addUser(String firstName, String lastName, String email, String password) {
-        User user = new User();
+    public RegularUser addUser(String firstName, String lastName, String email, String password) {
+        RegularUser user = new RegularUser(); // Create an instance of RegularUser
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(password);
 
-        // You might want to perform additional checks or operations here
-
         return userRepository.save(user);
+    }
+
+    public boolean changeUserInfo(long issueId, String newFirstName, String newLastName, String newEmail) {
+        var user = userRepository.findById(issueId);
+        if (user == null) {
+            return false;
+        }
+        user.setFirstName(newFirstName);
+        user.setLastName(newLastName);
+        user.setEmail(newEmail);
+        userRepository.save(user);
+        return true;
     }
 
 }
