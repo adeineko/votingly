@@ -1,14 +1,10 @@
 import { header, token } from "./util/csrf.js";
 
-
 const accountId = document.getElementById("accountId")
 
 const firstName = document.getElementById("firstName")
 const lastName = document.getElementById("lastName")
 const email = document.getElementById("email")
-
-// const myAccounts = document.getElementById("myAccount");
-
 
 async function getAccount() {
     const response = await fetch(`/api/account/${accountId.value}`, {
@@ -27,14 +23,9 @@ async function getAccount() {
     if (response.status === 200) {
         const account = await response.json();
     } else {
-        alert("Something went wrong!"); // alerts are "bad"...
+        alert("Something went wrong!");
     }
 }
-
-// for (const myAccount of myAccounts) {
-//     myAccount.addEventListener("click", getAccount());
-// }
-
 
 const updateButton = document.getElementById("updateButton")
 const firstTextArea = document.getElementById("firstNameTextArea");
@@ -57,11 +48,9 @@ async function changeIssue() {
     })
     if (response.status === 204) {
         console.log("done")
-        // updateButton.disabled = true;
     } else {
         alert('Something went wrong!'); // Don't use alerts in a "real" application.
     }
 }
 
 updateButton?.addEventListener("click", changeIssue);
-// emailTextArea?.addEventListener("input", () => updateButton.disabled = false);
