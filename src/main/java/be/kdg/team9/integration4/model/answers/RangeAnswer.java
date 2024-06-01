@@ -5,7 +5,6 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @DiscriminatorValue("RANGE")

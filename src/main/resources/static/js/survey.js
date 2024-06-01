@@ -140,13 +140,11 @@ function createChoiceQuestion(question, isMultiChoice) {
         const optionDiv = document.createElement('div');
 
         const input = document.createElement('input');
-        if (isMultiChoice) {
-            input.setAttribute('type', 'checkbox');
-        } else {
-            input.setAttribute('type', 'radio');
-            input.setAttribute('name', `options_${question.id}`);
-        }
+
+        input.setAttribute('type', isMultiChoice ? 'checkbox' : 'radio');
+        input.setAttribute('name', isMultiChoice ? `options_${question.id}[]` : `options_${question.id}`);
         input.setAttribute('value', option.optionText);
+        input.setAttribute('data-option-id', option.optionId);
 
         const optionLabel = document.createElement('label');
         optionLabel.textContent = option.optionText;
@@ -160,6 +158,7 @@ function createChoiceQuestion(question, isMultiChoice) {
     return questionDiv;
 }
 
+//TODO: change innerHTML to createElement()
 function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
@@ -197,8 +196,9 @@ const submitAnswerButton = document.getElementById("submitAnswerButton");
 
 async function saveAnswer() {
     const currentQuestion = questions[currentQuestionIndex];
-    let answer;
-    let options = [];
+    let answer = null;
+    let range = null;
+    let options = null;
 
     switch (currentQuestion.questionType) {
         case "OPEN":
@@ -213,7 +213,7 @@ async function saveAnswer() {
             }
             break;
         case "RANGE":
-            answer = document.getElementById("rangeInput").value;
+            range = document.getElementById("rangeInput").value;
             break;
         default:
             console.error("Unsupported question type:", currentQuestion.questionType);
@@ -223,7 +223,7 @@ async function saveAnswer() {
     const answerData = {
         answer: currentQuestion.questionType === 'OPEN' ? answer : null,
         options_answer: currentQuestion.questionType === 'CHOICE' ? options : null,
-        range_answer: currentQuestion.questionType === 'RANGE' ? parseInt(answer) : null,
+        range_answer: currentQuestion.questionType === 'RANGE' ? parseInt(range) : null,
         questionId: currentQuestion.id,
         surveyId: surveyIdInput.value
     };
@@ -238,7 +238,7 @@ async function saveAnswer() {
         body: JSON.stringify(answerData)
     });
 
-    if (response.ok) {
+    if (response.status === 201) {
         const savedAnswer = await response.json();
         console.log("Successfully saved answer:", savedAnswer);
     } else {

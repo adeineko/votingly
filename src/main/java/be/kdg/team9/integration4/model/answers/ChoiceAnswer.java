@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Entity

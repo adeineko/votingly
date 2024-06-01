@@ -26,11 +26,21 @@ document.addEventListener('DOMContentLoaded', function () {
     signupForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
+        // Collect user input data
         const firstName = document.getElementById("firstName").value;
         const lastName = document.getElementById("lastName").value;
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
+        // // Create a user object
+        // const user = {
+        //     firstName: firstName,
+        //     lastName: lastName,
+        //     email: email,
+        //     password: password
+        // };
+//TODO: make it async
+        // Send a POST request to the backend API
         fetch('/api/signup', {
             method: 'POST',
             headers: {

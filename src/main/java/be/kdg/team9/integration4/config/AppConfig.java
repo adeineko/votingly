@@ -17,8 +17,4 @@ public class AppConfig {
     public QuestionDtoConverter questionDtoConverter() {
         return new QuestionDtoConverter();
     }
-//    @Bean
-//    public SurveyDtoConverter surveyDtoConverter() {
-//        return new SurveyDtoConverter();
-//    }
 }
