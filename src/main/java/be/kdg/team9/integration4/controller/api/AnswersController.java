@@ -4,6 +4,8 @@ import be.kdg.team9.integration4.controller.api.dto.answer.AnswerDto;
 import be.kdg.team9.integration4.controller.api.dto.answer.NewAnswerDto;
 import be.kdg.team9.integration4.converters.ChoiceAnswerDtoConverter;
 import be.kdg.team9.integration4.model.answers.Answer;
+import be.kdg.team9.integration4.model.answers.OpenAnswer;
+import be.kdg.team9.integration4.model.answers.RangeAnswer;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.security.CustomUserDetails;
 import be.kdg.team9.integration4.service.AnswerService;
@@ -98,18 +100,31 @@ public class AnswersController {
         List<Answer> answers = answerService.getAllSurveys(surveyId);
 
         if (answers.isEmpty()) {
-            return ResponseEntity.noContent().build(); // No content to export
+            return ResponseEntity.noContent().build();
         }
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        try (CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), CSVFormat.DEFAULT.withHeader("AnswerID", "SurveyID", "UserID", "QuestionID", "AnswerTime"))) {
+        try (CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), CSVFormat.DEFAULT.withHeader("AnswerID", "SurveyID", "UserID", "QuestionType", "AnswerValue", "AnswerTime"))) {
             for (Answer answer : answers) {
-                csvPrinter.printRecord(answer.getAnswerId(), surveyId, answer.getUserId(), answer.getQuestion(), answer.getAnswerTime());
+                String answerType = answer.getClass().getSimpleName();
+
+                switch (answerType) {
+                    case "OpenAnswer":
+                        OpenAnswer openAnswer = (OpenAnswer) answer;
+                        csvPrinter.printRecord(openAnswer.getAnswerId(), openAnswer.getSurveyId(), openAnswer.getUserId(), answerType, openAnswer.getAnswer(), openAnswer.getAnswerTime());
+                        break;
+                    case "RangeAnswer":
+                        RangeAnswer rangeAnswer = (RangeAnswer) answer;
+                        csvPrinter.printRecord(rangeAnswer.getAnswerId(), rangeAnswer.getSurveyId(), rangeAnswer.getUserId(), answerType, rangeAnswer.getRange_answer(), rangeAnswer.getAnswerTime());
+                        break;
+                    // TODO: Add more cases for other types of answers
+                    default:
+                        break;
+                }
             }
             csvPrinter.flush();
         } catch (IOException e) {
-            // Log the exception and return an internal server error response
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
