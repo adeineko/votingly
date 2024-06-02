@@ -139,6 +139,7 @@ public class SurveysController {
                 .toList();
 //        survey.setQuestions(questions);
         SurveyDto surveyDto = new SurveyDto(
+                survey.getSurveyId(),
                 survey.getSurveyName(),
                 survey.getSurveyType(),
                 questionDtos

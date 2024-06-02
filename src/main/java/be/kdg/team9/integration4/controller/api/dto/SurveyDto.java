@@ -44,14 +44,14 @@ public class SurveyDto {
         this.endDate = endDate;
     }
 
-    public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<QuestionDto> questions,
-            Date startDate, Date endDate) {
+    public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<QuestionDto> questions
+          /*  Date startDate, Date endDate*/) {
         this.surveyId = surveyId;
         this.surveyName = surveyName;
         this.surveyType = surveyType;
         this.questions = questions;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    /*    this.startDate = startDate;
+        this.endDate = endDate;*/
     }
 
     // public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<Question> questions,

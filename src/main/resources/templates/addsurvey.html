@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div th:replace="~{navbar.html}"></div>
+    <header th:replace="~{header :: header}"></header>
 
     <form id="surveyForm">
         <div class="mb-3">
@@ -30,6 +30,7 @@
 
 
 </div>
+<div th:replace="~{footer :: footer}"></div>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>

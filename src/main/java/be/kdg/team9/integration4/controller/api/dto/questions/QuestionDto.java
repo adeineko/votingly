@@ -1,7 +1,5 @@
 package be.kdg.team9.integration4.controller.api.dto.questions;
 
-import be.kdg.team9.integration4.model.Survey;
-import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.model.question.QuestionType;
 
 
@@ -29,14 +27,6 @@ public class QuestionDto {
         this.questionType = questionType;
         this.surveyId = surveyId;
     }
-
-//    public QuestionDto(Question question) {
-//        this.id = question.getId();
-//        this.questionName = question.getQuestionName();
-//        this.questionType = question.getQuestionType();
-//        this.surveyId = question.getSurvey();
-//    }
-
     public long getId() {
         return id;
     }

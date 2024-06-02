@@ -47,7 +47,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div th:replace="~{navbar::navbar}"></div>
+    <header th:replace="~{header :: header}"></header>
 
     <input type="hidden" id="surveyName" th:value="${survey.surveyName}">
     <input type="hidden" id="surveyId" th:value="${survey.surveyId}">
@@ -79,5 +79,6 @@
 <div class="container center-container m-3">
     <div id="qrcode"></div>
 </div>
+<div th:replace="~{footer :: footer}"></div>
 </body>
 </html>

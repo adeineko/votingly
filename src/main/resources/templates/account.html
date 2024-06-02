@@ -8,44 +8,57 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
 </head>
-<body class="bodyAccount">
+<body>
+<header th:replace="~{header :: header}"></header>
 
-<div class="container containerAccount" style="max-width: 600px;">
+<div class="header-account">
+    <div class="container">
+        <h1>My Account</h1>
+        <p>Welcome, <span th:text="${#authentication.principal.firstName}"></span>!</p>
+        <p>You can manage your data here.</p>
+    </div>
+</div>
+
+<div class="container container-account">
     <div class="row">
         <input id="accountId" type="hidden" th:value="${account.id}">
-        <div class="col-md-9 mx-auto bg-white p-4 rounded shadow-sm">
-            <h2 class="mb-4">My Account</h2>
+        <div class="col-md-12 bg-white p-4 rounded shadow-sm">
             <div class="form-group">
                 <label for="firstName">First Name</label>
-                <textarea th:if="${account.modificationAllowed}" class="form-control" id="firstNameTextArea" rows="1" th:text="${#authentication.principal.firstName}"></textarea>
-                <p th:if="${!account.modificationAllowed}" id="firstName" th:text="${#authentication.principal.firstName}" class="form-control-static"></p>
+                <textarea th:if="${account.modificationAllowed}" class="form-control" id="firstNameTextArea" rows="1"
+                          th:text="${#authentication.principal.firstName}"></textarea>
+                <p th:if="${!account.modificationAllowed}" id="firstName"
+                   th:text="${#authentication.principal.firstName}" class="form-control-static"></p>
             </div>
             <div class="form-group">
                 <label for="lastName">Last Name</label>
-                <textarea th:if="${account.modificationAllowed}" class="form-control" id="lastNameTextArea" rows="1" th:text="${#authentication.principal.lastName}"></textarea>
-                <p th:if="${!account.modificationAllowed}" id="lastName" th:text="${#authentication.principal.lastName}" class="form-control-static"></p>
+                <textarea th:if="${account.modificationAllowed}" class="form-control" id="lastNameTextArea" rows="1"
+                          th:text="${#authentication.principal.lastName}"></textarea>
+                <p th:if="${!account.modificationAllowed}" id="lastName" th:text="${#authentication.principal.lastName}"
+                   class="form-control-static"></p>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <textarea th:if="${account.modificationAllowed}" class="form-control" id="emailTextArea" rows="1" th:text="${#authentication.principal.username}"></textarea>
-                <p th:if="${!account.modificationAllowed}" id="email" th:text="${#authentication.principal.username}" class="form-control-static"></p>
+                <textarea th:if="${account.modificationAllowed}" class="form-control" id="emailTextArea" rows="1"
+                          th:text="${#authentication.principal.username}"></textarea>
+                <p th:if="${!account.modificationAllowed}" id="email" th:text="${#authentication.principal.username}"
+                   class="form-control-static"></p>
             </div>
             <div class="form-group">
-                <label for="email">User Type</label>
+                <label for="userType">User Type</label>
                 <p id="userType" th:text="${#authentication.principal.userType}" class="form-control-static"></p>
             </div>
-            <div th:if="${account.modificationAllowed}" class="mt-4">
-                <a href="/surveys" class="btn btn-go-back">Go Back</a>
+            <div class="button-group mt-4">
+                <a href="/surveys" class="btn btn-outline-dark">Go Back</a>
                 <button id="updateButton" type="button" class="btn btn-primary">Update</button>
-            </div>
-
-            <div th:if="${account.userType == 'ORG_ADMIN'}">
-                <a href="/addSupervisor" class="btn btn-go-back">Add Supervisor</a>
+                <a th:if="${account.userType == 'ORG_ADMIN'}" href="/addSupervisor" class="btn btn-primary">Add
+                    Supervisor</a>
             </div>
         </div>
     </div>
 </div>
 
+<div th:replace="~{footer :: footer}"></div>
+
 </body>
 </html>
-

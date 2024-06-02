@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:fragment="html_head">
+    <meta charset="UTF-8">
+    <title>[[${pageTitle}]]</title>
+</head>
+<body>
+<div th:fragment="footer" >
+    <footer class="fixed-bottom footer py-3 bg-light">
+        <div class="container">
+           <span class="text-muted">
+                ©<script th:inline="javascript">
+                    document.write(new Date().getFullYear())
+                </script> Votingly.
+            </span>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

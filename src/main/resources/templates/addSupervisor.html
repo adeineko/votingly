@@ -10,6 +10,7 @@
     <script src="/js/signup.js" type="module"></script>
 </head>
 <body class="bodySign">
+<header th:replace="~{header :: header}"></header>
 
 <section class="container forms containerSign">
     <div class="form signup" id="signup">
@@ -25,6 +26,8 @@
 
     </div>
 </section>
+<div th:replace="~{footer :: footer}"></div>
+
 </body>
 </html>
 
