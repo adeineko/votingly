@@ -59,4 +59,9 @@ public class QuestionDto {
         this.surveyId = surveyId;
     }
 
+    @Override
+    public String toString() {
+        return "QuestionDto [id=" + id + ", questionName=" + questionName + ", questionType=" + questionType
+                + ", surveyId=" + surveyId + "]";
+    }
 }

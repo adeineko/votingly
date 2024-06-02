@@ -10,7 +10,12 @@ public class OpenQuestion extends Question {
     public OpenQuestion() {
     }
 
+
     public OpenQuestion(long id, String questionName, QuestionType questionType) {
         super(id, questionName, questionType);
+    }
+
+    public OpenQuestion(String questionName, QuestionType questionType) {
+        super(questionName, questionType);
     }
 }

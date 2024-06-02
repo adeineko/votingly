@@ -25,6 +25,10 @@ public class Option {
     public Option() {
     }
 
+    public Option(String optionText) {
+        this.optionText = optionText;
+    }
+
     public Option(long optionId, String optionText, ChoiceQuestion question) {
         this.optionId = optionId;
         this.optionText = optionText;

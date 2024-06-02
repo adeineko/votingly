@@ -24,6 +24,12 @@ public class ChoiceQuestion extends Question {
         this.options = options;
     }
 
+    public ChoiceQuestion(String questionName, QuestionType questionType, boolean isMultiChoice, List<Option> options) {
+        super(questionName, questionType);
+        this.isMultiChoice = isMultiChoice;
+        this.options = options;
+    }
+
     public ChoiceQuestion(long id, String questionName, QuestionType questionType, boolean isMultiChoice, List<Option> options) {
         super(id, questionName, questionType);
         this.isMultiChoice = isMultiChoice;
