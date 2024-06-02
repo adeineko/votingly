@@ -52,27 +52,4 @@ public class SurveyService {
         surveyRepository.deleteById(id);
     }
 
-    public ByteArrayInputStream exportSurveyToCSV(long surveyId) {
-        Survey survey = surveyRepository.findBySurveyId(surveyId);
-        if (survey == null) {
-            return null;
-        }
-
-        List<Survey> surveys = new ArrayList<>();
-        surveys.add(survey);
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        try (CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), CSVFormat.DEFAULT.withHeader("ID", "Name", "Type", "Start Date", "End Date"))) {
-            for (Survey s : surveys) {
-                csvPrinter.printRecord(s.getSurveyId(), s.getSurveyName(), s.getSurveyType(), s.getStartDate(), s.getEndDate());
-            }
-            csvPrinter.flush();
-        } catch (IOException e) {
-            e.printStackTrace(); // Improve error handling
-        }
-
-        return new ByteArrayInputStream(out.toByteArray());
-    }
-
 }
