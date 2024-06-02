@@ -1,4 +1,4 @@
-package be.kdg.team9.integration4.controller.api.dto;
+package be.kdg.team9.integration4.controller.api.dto.survey;
 
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
 import be.kdg.team9.integration4.model.Survey;
@@ -13,7 +13,6 @@ public class SurveyDto {
     private String surveyName;
     private SurveyType surveyType;
     private List<QuestionDto> questions;
-    // private List<Question> questions;
 
     private Date startDate;
     private Date endDate;
@@ -54,14 +53,15 @@ public class SurveyDto {
         this.endDate = endDate;
     }
 
-    // public SurveyDto(long surveyId, String surveyName, SurveyType surveyType, List<Question> questions,
-    //         Date startDate, Date endDate) {
-    //     this.surveyId = surveyId;
-    //     this.surveyName = surveyName;
-    //     this.surveyType = surveyType;
-    //     this.questions = questions;
-    //     this.startDate = startDate;
-    //     this.endDate = endDate;
+    // public SurveyDto(long surveyId, String surveyName, SurveyType surveyType,
+    // List<Question> questions,
+    // Date startDate, Date endDate) {
+    // this.surveyId = surveyId;
+    // this.surveyName = surveyName;
+    // this.surveyType = surveyType;
+    // this.questions = questions;
+    // this.startDate = startDate;
+    // this.endDate = endDate;
     // }
 
     public long getSurveyId() {
@@ -112,11 +112,18 @@ public class SurveyDto {
         this.questions = questions;
     }
 
+    @Override
+    public String toString() {
+        return "SurveyDto [surveyId=" + surveyId + ", surveyName=" + surveyName + ", surveyType=" + surveyType
+                + ", questions=" + questions + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+    }
+
     // public List<Question> getQuestions() {
-    //     return questions;
+    // return questions;
     // }
 
     // public void setQuestions(List<Question> questions) {
-    //     this.questions = questions;
+    // this.questions = questions;
     // }
+
 }

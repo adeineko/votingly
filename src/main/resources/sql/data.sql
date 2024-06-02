@@ -53,6 +53,7 @@ VALUES ('Never', '2'),
        ('Moderately', '11'),
        ('Extremely', '11');
 
+--  All user passwords: 'maria'
 INSERT INTO user_table(first_name, last_name, email, password, user_type)
 VALUES ('user', 'user', 'user@gmail.com', '$2a$12$1OnZfrFbk3HYlrpgbHYdyOG2kFKO97.n3f3CcToY.1cA2orKmRJl2', 'REGULAR');
 

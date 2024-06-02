@@ -1,19 +1,26 @@
 package be.kdg.team9.integration4.controller.api;
 
-import be.kdg.team9.integration4.controller.api.dto.SurveyDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.ChoiceDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
+import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDtoIn;
 import be.kdg.team9.integration4.controller.api.dto.questions.RangeDto;
+import be.kdg.team9.integration4.controller.api.dto.survey.SurveyDto;
+import be.kdg.team9.integration4.controller.api.dto.survey.SurveyDtoIn;
 import be.kdg.team9.integration4.converters.QuestionDtoConverter;
 import be.kdg.team9.integration4.converters.SurveyDtoConverter;
 import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 import be.kdg.team9.integration4.model.question.Question;
+import be.kdg.team9.integration4.model.question.QuestionType;
 import be.kdg.team9.integration4.model.question.RangeQuestion;
+import be.kdg.team9.integration4.service.OptionService;
 import be.kdg.team9.integration4.service.QuestionService;
 import be.kdg.team9.integration4.service.SurveyService;
+
+// import org.hibernate.mapping.Map;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,18 +39,23 @@ public class SurveysController {
     private final ModelMapper modelMapper;
     private final QuestionDtoConverter questionDtoConverter;
     private final SurveyDtoConverter surveyDtoConverter;
+    private final Logger logger;
+    private final OptionService optionService;
 
     @Autowired
-    public SurveysController(SurveyService surveyService, QuestionService questionService, ModelMapper modelMapper, QuestionDtoConverter questionDtoConverter, SurveyDtoConverter surveyDtoConverter) {
+    public SurveysController(SurveyService surveyService, QuestionService questionService, ModelMapper modelMapper, QuestionDtoConverter questionDtoConverter, SurveyDtoConverter surveyDtoConverter, Logger logger, OptionService optionService) {
         this.surveyService = surveyService;
         this.questionService = questionService;
         this.modelMapper = modelMapper;
         this.questionDtoConverter = questionDtoConverter;
         this.surveyDtoConverter = surveyDtoConverter;
+        this.logger = logger;
+        this.optionService = optionService;
     }
 
     @GetMapping
     List<SurveyDto> getAllSurveys() {
+        logger.info("Getting all surveys");
         return surveyService.getAllSurveys()
                 .stream()
                 .map(surveyDtoConverter::convertToDto).toList();
@@ -88,42 +101,13 @@ public class SurveysController {
 //    }
 
     @PostMapping
-    public ResponseEntity<SurveyDto> addSurvey(@RequestBody SurveyDto surveyDto) {
+    public ResponseEntity<SurveyDtoIn> addSurvey(@RequestBody SurveyDtoIn surveyDto) {
+        logger.info(surveyDto.toString());
         Survey survey = modelMapper.map(surveyDto, Survey.class);
-        List<Question> questions = new ArrayList<>();
-
-        for (QuestionDto questionDto : surveyDto.getQuestions()) {
-            Question question;
-            if (questionDto instanceof ChoiceDto choiceDto) {
-                question = new ChoiceQuestion(
-                        questionDto.getId(),
-                        questionDto.getQuestionName(),
-                        questionDto.getQuestionType(),
-                        choiceDto.isMultiChoice(),
-                        choiceDto.getOptions().stream()
-                                .map(optionDto -> new Option(optionDto.getOptionId(), optionDto.getOptionText()))
-                                .collect(Collectors.toList())
-                );
-            } else if (questionDto instanceof RangeDto rangeDto) {
-                question = new RangeQuestion(
-                        questionDto.getId(),
-                        questionDto.getQuestionName(),
-                        questionDto.getQuestionType(),
-                        rangeDto.getMin(),
-                        rangeDto.getMax(),
-                        rangeDto.getStep()
-                );
-            } else {
-                question = new Question(
-                        questionDto.getId(),
-                        questionDto.getQuestionName(),
-                        questionDto.getQuestionType()
-                );
-            }
-            questions.add(question);
-        }
+        List<Question> questions = surveyDto.getQuestions().stream()
+        .map(questionDtoIn -> questionDtoConverter.convertFromDtoIn(questionDtoIn, survey)).toList();
+        
         surveyService.addSurvey(survey);
-        questions.forEach(question -> question.setSurvey(survey));
         questionService.addQuestions(questions);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(surveyDto);

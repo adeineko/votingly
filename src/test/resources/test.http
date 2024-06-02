@@ -42,24 +42,6 @@ X-Csrf-Token: Y8u8TttsY8XFSrsjCoqlTWpAomezUHGk74sVk_wMTKo3pINvV_qNLegPUaHoLIkXOa
 ### Save answers to choice question
 POST http://localhost:8080/api/answers/6
 
-### Create a new survey
-POST http://localhost:8080/api/surveys
-Accept: application/json
-Content-Type: application/json
-Cookie: JSESSIONID=DBCE5E300402E645
-X-Csrf-Token: Y8u8TttsY
-
-{
-  "surveyId": 1,
-  "surveyName": "New survey",
-  "surveyType": "CIRCULAR",
-  "questions": [
-    "q1",
-    "q2"
-  ],
-  "startDate": "12-01-2018",
-  "endDate": "12-01-2019"
-}
 ### API: Save User Account
 POST http://localhost:8080/api/signup
 Accept: application/json

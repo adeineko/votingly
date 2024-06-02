@@ -1,4 +1,4 @@
-package be.kdg.team9.integration4.config;
+package be.kdg.team9.integration4.utils;
 
 import org.springframework.boot.CommandLineRunner;
 

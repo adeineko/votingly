@@ -20,8 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import be.kdg.team9.integration4.controller.api.dto.SurveyDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
+import be.kdg.team9.integration4.controller.api.dto.survey.SurveyDto;
 import be.kdg.team9.integration4.model.SurveyType;
 import be.kdg.team9.integration4.model.question.QuestionType;
 

@@ -1,7 +1,7 @@
 package be.kdg.team9.integration4.converters;
 
-import be.kdg.team9.integration4.controller.api.dto.SurveyDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
+import be.kdg.team9.integration4.controller.api.dto.survey.SurveyDto;
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 import be.kdg.team9.integration4.model.question.RangeQuestion;
