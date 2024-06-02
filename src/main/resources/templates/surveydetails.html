@@ -9,8 +9,9 @@
     <header th:replace="~{header :: header}"></header>
     <div class="mb-3">
         <label for="surveyName" class="form-label">Survey Name</label>
-        <input type="text" class="form-control" id="surveyName" name="surveyName" required value="Sample Survey" disabled>
-<!--        <button type="button" class="btn btn-primary mt-2" id="editSurveyNameBtn">Edit</button>-->
+        <input type="text" class="form-control" id="surveyName" name="surveyName" required value="Sample Survey"
+               disabled>
+        <!--        <button type="button" class="btn btn-primary mt-2" id="editSurveyNameBtn">Edit</button>-->
         <input type="hidden" id="surveyId" th:value="${survey.id}"></div>
     <div class="mb-3">
         <label for="surveyType" class="form-label">Survey Type</label>
@@ -18,14 +19,16 @@
             <option value="LINEAR">Linear</option>
             <option value="CIRCULAR" selected>Circular</option>
         </select>
-<!--        <button type="button" class="btn btn-primary mt-2" id="editSurveyTypeBtn">Edit</button>-->
+        <!--        <button type="button" class="btn btn-primary mt-2" id="editSurveyTypeBtn">Edit</button>-->
     </div>
     <div id="questionContainer">
         <!-- Questions will be populated dynamically -->
     </div>
-    <button type="button" class="btn btn-primary mt-3" id="addQuestionBtn">Add Question</button>
-    <button type="button" class="btn btn-success mt-3" id="saveChangesBtn" disabled>Save Changes</button>
-    <button id="removeSurveyBtn" class="btn btn-danger mt-3" style="right: 20px" >Remove Survey</button>
+    <div class="button-group">
+        <button type="button" class="btn btn-outline-primary" id="addQuestionBtn">Add Question</button>
+        <button type="button" class="btn btn-success" id="saveChangesBtn" disabled>Save Changes</button>
+        <button id="removeSurveyBtn" class="btn btn-outline-danger">Remove Survey</button>
+    </div>
 </div>
 <div th:replace="~{footer :: footer}"></div>
 
