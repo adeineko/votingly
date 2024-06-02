@@ -1,6 +1,5 @@
 package be.kdg.team9.integration4.repositories;
 
-// import be.kdg.team9.integration4.model.answers.Answer;
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.Question;
 import jakarta.transaction.Transactional;
@@ -16,8 +15,8 @@ public interface QuestionsRepository extends JpaRepository<Question, Long>, Find
     @Query("SELECT questions FROM Question questions")
     List<Question> findAllQuestions();
 
-
     List<Question> getQuestionsBySurvey(Survey survey);
+
 
     @Modifying
     @Transactional

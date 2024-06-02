@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-
+@Transactional
 public class SurveyService {
 
     private final SurveyRepository surveyRepository;
@@ -27,7 +27,6 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
-    @Transactional
     public List<Survey> getAllSurveys() {
         return surveyRepository.findAll();
     }
