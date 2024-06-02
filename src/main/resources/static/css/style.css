@@ -8,7 +8,7 @@ body {
     font-family: 'Inter', sans-serif;
     overflow-y: scroll;
     padding-bottom: 70px;
-    min-height: 100vh; /* Set body to at least viewport height */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -16,11 +16,18 @@ body {
 .h1 {
     font-family: 'Syne', sans-serif;
 }
+.h3{
+    font-family: 'Syne', sans-serif;
+}
+.select{
+    font-family: 'Inter', sans-serif;
+}
 
 .container-fluid {
     padding: 0;
     margin: 0;
 }
+
 .footer {
     position: fixed;
     bottom: 0;

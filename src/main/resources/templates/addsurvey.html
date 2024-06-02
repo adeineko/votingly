@@ -4,30 +4,32 @@
 <head>
     <thymeleaf th:replace="~{header :: meta_script_link}"/>
     <title>Survey Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="/js/addSurvey.js" type="module" defer></script>
 </head>
 <body>
+<header th:replace="~{header :: header}"></header>
 <div class="container-fluid">
-    <header th:replace="~{header :: header}"></header>
 
     <form id="surveyForm">
         <div class="mb-3">
-            <label for="surveyName" class="form-label">Survey Name</label>
+            <label for="surveyName" class="h3">Survey Name</label>
             <input type="text" class="form-control" id="surveyName" name="surveyName" required
                    placeholder="Enter the name of your survey">
         </div>
         <div class="mb-3">
-            <label for="surveyType" class="form-label">Survey Type</label>
+            <label for="surveyType" class="h3">Survey Type</label>
             <select class="form-select" id="surveyType" name="surveyType" required>
                 <option value="LINEAR">Linear</option>
                 <option value="CIRCULAR">Circular</option>
             </select>
         </div>
         <div id="questionContainer"></div>
-        <button type="button" class="btn btn-primary" id="addQuestionBtn">Add Question</button>
-        <button type="submit" class="btn btn-success mt-3">Submit Survey</button>
+        <div class="button-group ">
+            <button type="button" class="btn btn-outline-primary" id="addQuestionBtn">Add Question</button>
+            <button type="submit" class="btn btn-outline-success">Submit Survey</button>
+        </div>
     </form>
-
 
 </div>
 <div th:replace="~{footer :: footer}"></div>

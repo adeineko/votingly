@@ -48,7 +48,7 @@ function removeQuestion(questionNumber) {
 function addRemoveButton(questionDiv, questionNumber) {
     const removeButton = document.createElement("button");
     removeButton.type = "button";
-    removeButton.className = "btn btn-danger btn-sm remove-question-btn";
+    removeButton.className = "btn btn-outline-danger remove-question-btn";
     removeButton.textContent = "Remove Question";
     removeButton.dataset.questionId = questionNumber;
     removeButton.addEventListener('click', () => removeQuestion(questionNumber));
@@ -66,7 +66,7 @@ function createQuestion() {
 
     questionDiv.innerHTML = `
         <div class="d-flex justify-content-between align-items-center">
-            <label for="question${questionCount}" class="form-label">Question ${questionCount}</label>
+            <label for="question${questionCount}" class="h3">Question ${questionCount}</label>
         </div>
         <input type="text" class="form-control" id="question${questionCount}" name="questions[${questionCount}][name]" required>
         <select class="form-select mt-2" id="questionType${questionCount}" name="questions[${questionCount}][type]">
