@@ -128,8 +128,7 @@ public class SurveysController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(surveyDto);
     }
-
-
+    
     @GetMapping("/{id}/details")
     public ResponseEntity<SurveyDto> getSurveyDetails(@PathVariable("id") long id) {
         Survey survey = surveyService.getSurvey(id);
@@ -138,8 +137,6 @@ public class SurveysController {
                 .map(questionDtoConverter::convert)
                 .toList();
 
-
-//        survey.setQuestions(questions);
         SurveyDto surveyDto = new SurveyDto(
                 survey.getSurveyId(),
                 survey.getSurveyName(),
@@ -158,6 +155,4 @@ public class SurveysController {
         surveyService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }

@@ -1,11 +1,10 @@
-package be.kdg.team9.integration4.viewmodel;
+package be.kdg.team9.integration4.controller.mvc.viewmodel;
 
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.SurveyType;
 import be.kdg.team9.integration4.model.question.Question;
 
 import java.util.List;
-import java.util.Optional;
 
 public class SurveyViewModel {
     private Long id;
