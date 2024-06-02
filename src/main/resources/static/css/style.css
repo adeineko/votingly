@@ -7,13 +7,20 @@
 body {
     font-family: 'Inter', sans-serif;
     overflow-y: scroll;
-    min-height: 400px;
-    margin-bottom: 100px;
-    clear: both;
+    padding-bottom: 70px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .h1 {
     font-family: 'Syne', sans-serif;
+}
+.h3{
+    font-family: 'Syne', sans-serif;
+}
+.select{
+    font-family: 'Inter', sans-serif;
 }
 
 .container-fluid {
@@ -21,17 +28,16 @@ body {
     margin: 0;
 }
 
-.content {
-    padding-bottom: 70px; /* Adjust based on your footer height */
-}
-
 .footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 70px; /* Adjust based on your footer height */
-    background-color: #0909e3;
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
 }
+
 
 /*End Global Styles*/
 

@@ -56,10 +56,6 @@ public class QuestionService {
             }
         }
     }
-    
-    public void addQuestion(Question question) {
-        questionsRepository.save(question);
-    }
 
     public List<Question> getQuestionsBySurvey(Survey survey) {
         return questionsRepository.getQuestionsBySurvey(survey);

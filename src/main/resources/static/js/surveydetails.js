@@ -1,4 +1,4 @@
-import { token, header } from "./util/csrf.js";
+import {token, header} from "./util/csrf.js";
 
 let surveyIdInput = document.getElementById("surveyId");
 
@@ -8,15 +8,15 @@ let questionCount = 0;
 let questions = []; // Variable to store all questions
 
 // Sample survey data
-const sampleSurvey = {
-    surveyName: "Sample Survey",
-    surveyType: "CIRCULAR",
-    questions: [
-        { text: "Sample question 1", type: "open" },
-        { text: "Sample question 2", type: "multipleChoice", choices: ["Option 1", "Option 2"] },
-        { text: "Sample question 3", type: "open" }
-    ]
-};
+// const sampleSurvey = {
+//     surveyName: "Sample Survey",
+//     surveyType: "CIRCULAR",
+//     questions: [
+//         { text: "Sample question 1", type: "open" },
+//         { text: "Sample question 2", type: "multipleChoice", choices: ["Option 1", "Option 2"] },
+//         { text: "Sample question 3", type: "open" }
+//     ]
+// };
 
 const surveyNameInput = document.getElementById("surveyName");
 const surveyTypeInput = document.getElementById("surveyType");
@@ -59,7 +59,7 @@ async function getSurveyDetails() {
 }
 
 // Function to create a new question block
-function createQuestion(question = { text: "", type: "open", choices: [] }) {
+function createQuestion(question = {text: "", type: "open", choices: []}) {
     questionCount++;
     const questionDiv = document.createElement("div");
     questionDiv.setAttribute('id', `questionBlock${questionCount}`);

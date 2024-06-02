@@ -5,10 +5,11 @@
 
     <title>Home</title>
     <script src="/js/surveys.js" type="module"></script>
+
 </head>
 <body>
+<header th:replace="~{header :: header}"></header>
 <div class="container-fluid">
-    <header th:replace="~{header :: header}"></header>
 
     <div class="container">
         <p class="h1 text-center" style="font-family: 'Syne', sans-serif">Available Surveys</p>
@@ -19,9 +20,8 @@
 </div>
 
 <div sec:authorize="isAuthenticated()" class="position-fixed bottom-0 end-0 p-3">
-    <a th:href="@{/surveys/add}" class="btn btn-primary">Add Survey</a>
+    <a th:href="@{/surveys/add}" class="btn btn-primary"><i class="bi bi-plus-lg"></i>Add </a>
 </div>
-<!--<div th:replace="~{footer :: footer}"></div>-->
 
 </body>
 </html>
