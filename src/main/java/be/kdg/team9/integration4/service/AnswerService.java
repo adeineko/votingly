@@ -8,6 +8,8 @@ import be.kdg.team9.integration4.model.answers.OpenAnswer;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.model.answers.RangeAnswer;
 import be.kdg.team9.integration4.repositories.AnswerRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,9 @@ import java.util.List;
 @Transactional
 public class AnswerService {
     private final AnswerRepository answerRepository;
+    // private final OptionService optionService;
 
+    @Autowired
     public AnswerService(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
@@ -36,8 +40,10 @@ public class AnswerService {
         return answerRepository.save(rangeAnswerEntity);
     }
 
-    public Answer saveChoice(long surveyId, long userId, Question question, List<Option> options, LocalDateTime answerTime) {
-        var choiceAnswerEntity = new ChoiceAnswer(surveyId, userId, question, options, answerTime);
+    public Answer saveChoice(long surveyId, long userId, Question question, long optionId, LocalDateTime answerTime) {
+        // Option option = optionService.getOption(optionId);
+        var option = new Option(optionId, "option");
+        var choiceAnswerEntity = new ChoiceAnswer(surveyId, userId, question, option, answerTime);
 
         return answerRepository.save(choiceAnswerEntity);
     }
