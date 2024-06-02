@@ -43,7 +43,12 @@ public class SecurityConfig {
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
+                                // .permitAll() // for development
                 )
+                // for development
+                // .csrf(csrf -> csrf.ignoringRequestMatchers(
+                //         antMatcher(HttpMethod.POST, "/api/**") 
+                // ))
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")

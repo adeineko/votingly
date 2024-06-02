@@ -1,9 +1,7 @@
 package be.kdg.team9.integration4.controller.api.dto.answer;
 
-import be.kdg.team9.integration4.model.Option;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class NewAnswerDto {
 
@@ -13,14 +11,14 @@ public class NewAnswerDto {
 
     private int range_answer;
 
-    private List<Option> options_answer;
+    private long[] options_answer;
 
     private LocalDateTime answerTime;
 
     public NewAnswerDto() {
     }
 
-    public NewAnswerDto(String answer, int range_answer, List<Option> options_answer, LocalDateTime answerTime) {
+    public NewAnswerDto(String answer, int range_answer, long[] options_answer, LocalDateTime answerTime) {
         this.answer = answer;
         this.range_answer = range_answer;
         this.options_answer = options_answer;
@@ -43,11 +41,11 @@ public class NewAnswerDto {
         this.answer = answer;
     }
 
-    public List<Option> getOptions_answer() {
+    public long[] getOptions_answer() {
         return options_answer;
     }
 
-    public void setOptions_answer(List<Option> options_answer) {
+    public void setOptions_answer(long[] options_answer) {
         this.options_answer = options_answer;
     }
 

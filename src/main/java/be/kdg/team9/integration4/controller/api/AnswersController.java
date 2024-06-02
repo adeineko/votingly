@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/answers")
@@ -47,9 +48,9 @@ public class AnswersController {
 
     @PostMapping("/{questionId}")
     public ResponseEntity<AnswerDto> saveAnswerForQuestion(@RequestBody
-                                                           @Valid NewAnswerDto newAnswerDto,
-                                                           @PathVariable Question questionId,
-                                                           @AuthenticationPrincipal CustomUserDetails user) {
+                @Valid NewAnswerDto newAnswerDto,
+                @PathVariable Question questionId,
+                @AuthenticationPrincipal CustomUserDetails user) {
         var question = questionService.getQuestion(questionId.getId());
         long userId = (user != null) ? user.getUserId() : 0;
 
@@ -78,15 +79,19 @@ public class AnswersController {
                 );
             }
             case CHOICE -> {
-                var createdChoiceAnswer = answerService.saveChoice(
-                        question.getSurvey().getSurveyId(),
-                        userId,
-                        questionId,
-                        newAnswerDto.getOptions_answer(),
-                        LocalDateTime.now()
-                );
+                List<AnswerDto> createdChoiceAnswers = new ArrayList<>();
+                for (int i = 0; i < newAnswerDto.getOptions_answer().length; i++) {
+                    var createdChoiceAnswer = answerService.saveChoice(
+                            question.getSurvey().getSurveyId(),
+                            userId,
+                            questionId,
+                            newAnswerDto.getOptions_answer()[i],
+                            LocalDateTime.now()
+                    );
+                    createdChoiceAnswers.add(modelMapper.map(createdChoiceAnswer,AnswerDto.class));
+                }
                 yield new ResponseEntity<>(
-                        modelMapper.map(createdChoiceAnswer, AnswerDto.class),
+                        createdChoiceAnswers.get(0),
                         HttpStatus.CREATED
                 );
             }
