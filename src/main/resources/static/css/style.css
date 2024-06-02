@@ -2,27 +2,72 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Syne&display=swap');
 
-/*Account Page*/
-.containerAccount {
-    position: absolute;
-    left: 50%;
-    transform: translate(-55%, 40%);
+
+/* Global styles */
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-y: scroll;
+    min-height: 400px;
+    margin-bottom: 100px;
+    clear: both;
 }
 
-.bodyAccount {
-    font-family: 'Syne', sans-serif !important;
-    background-color: #0171d3;
-    padding-top: 50px;
-    position: relative;
+.h1 {
+    font-family: 'Syne', sans-serif;
+}
+
+.container-fluid {
+    padding: 0;
+    margin: 0;
+}
+
+.content {
+    padding-bottom: 70px; /* Adjust based on your footer height */
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 70px; /* Adjust based on your footer height */
+    background-color: #0909e3;
+}
+
+/*End Global Styles*/
+
+/*Account Page*/
+
+.header-account {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: 'Syne', sans-serif;
+}
+
+.header-account h1, .header-account p {
+    margin: 0;
+}
+
+.header-account p {
+    font-size: 1.2em;
+}
+
+.container-account {
+    max-width: 600px;
+    margin-top: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
 .btn-go-back {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #6c757d;
+    color: white;
+    margin-right: 10px;
 }
 
-.btn-go-back:hover {
-    background-color: #0056b3;
+.button-group {
+    display: flex;
+    gap: 10px; /* Adds space between the buttons */
 }
 
 /*End Account Page*/
@@ -163,24 +208,6 @@ button:hover {
 
 /*End Pop Up Subscribe*/
 
-/*Header Element*/
-.navbar-brand .heart-icon {
-    color: black;
-}
-
-/*End Header Element*/
-
-/*Global*/
-.h1 {
-    font-family: 'Syne', sans-serif !important;
-}
-
-.container-fluid {
-    padding: 0;
-    margin: 0;
-}
-
-/*End Global*/
 
 img {
     max-width: 100%;
@@ -310,19 +337,6 @@ img {
     background: #FFF;
 }
 
-/*.form.signup{*/
-/*    opacity: 0;*/
-/*    pointer-events: none;*/
-/*}*/
-/*!*.forms.show-signup .form.signup{*!*/
-/*!*    opacity: 1;*!*/
-/*!*    pointer-events: auto;*!*/
-/*!*}*!*/
-/*!*.forms.show-signup .form.login{*!*/
-/*!*    opacity: 0;*!*/
-/*!*    pointer-events: none;*!*/
-/*!*}*!*/
-
 .form .field {
     position: relative;
     height: 50px;
@@ -413,3 +427,26 @@ img {
 }
 
 /*End Surveys Page - button view for admins*/
+
+
+/*Header*/
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav .authentication {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav .nav-link {
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+}
+
+.navbar-nav .btn {
+    white-space: nowrap;
+}
+
+/*Header End*/

@@ -32,7 +32,7 @@ public class AccountController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         var oneUser = userService.getUserById(id);
         var mav = new ModelAndView();
-        mav.setViewName("navbar");
+        mav.setViewName("header");
         mav.addObject("account", new UserDto(
                 oneUser.getId(),
                 oneUser.getFirstName(),

@@ -117,12 +117,15 @@ public class SurveysController {
     @GetMapping("/{id}/details")
     public ResponseEntity<SurveyDto> getSurveyDetails(@PathVariable("id") long id) {
         Survey survey = surveyService.getSurvey(id);
-        List<Question> questions = questionService.getQuestionsBySurvey(survey);
+        List<Question> questions = questionService.findAllQuestionById(id);
         List<QuestionDto> questionDtos = questions.stream()
-                .map(question -> modelMapper.map(question, QuestionDto.class))
+                .map(questionDtoConverter::convert)
                 .toList();
+
+
 //        survey.setQuestions(questions);
         SurveyDto surveyDto = new SurveyDto(
+                survey.getSurveyId(),
                 survey.getSurveyName(),
                 survey.getSurveyType(),
                 questionDtos

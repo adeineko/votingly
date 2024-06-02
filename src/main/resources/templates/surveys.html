@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div th:replace="~{navbar::navbar}"></div>
+    <header th:replace="~{header :: header}"></header>
 
     <div class="container">
         <p class="h1 text-center" style="font-family: 'Syne', sans-serif">Available Surveys</p>
@@ -21,3 +21,7 @@
 <div sec:authorize="isAuthenticated()" class="position-fixed bottom-0 end-0 p-3">
     <a th:href="@{/surveys/add}" class="btn btn-primary">Add Survey</a>
 </div>
+<!--<div th:replace="~{footer :: footer}"></div>-->
+
+</body>
+</html>

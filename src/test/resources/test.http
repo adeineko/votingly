@@ -112,3 +112,11 @@ X-CSRF-TOKEN: lfM98Y4ou7JW0pZedsp4u4ygo2jla2_vzXp8j65TZ2qOfQ3S8ZYJwb4d3YV7tPdmE-
         }
     ]
 }
+
+### API: Details test
+
+GET http://localhost:8080/api/surveys/3/details
+Content-Type: application/json
+Cookie: JSESSIONID=03033768F19FBCD737927F51B7E08AD6
+X-Csrf-Token: DnJUcWBZtK7ZrZvW_qU4u7dJfvzkhDrrJaxlBYTstiP4wbqUPkptFFNo0pn0nqLgzIgM2o97U8TXsgPGEchTZOaP00XL-Yus
+

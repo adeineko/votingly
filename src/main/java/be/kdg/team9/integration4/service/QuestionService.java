@@ -65,7 +65,6 @@ public class QuestionService {
         return questionsRepository.getQuestionsBySurvey(survey);
     }
 
-
     public void deleteQuestionsBySurvey(Survey survey) {
         List<Question> questions = questionsRepository.getQuestionsBySurvey(survey);
         for (Question question : questions) {
