@@ -135,6 +135,31 @@ function handleTypeChange(questionNumber) {
         choicesContainer.appendChild(checkIsMultiLabel);
 
         addChoiceInput(questionNumber); // Add first choice input immediately
+    } else if (typeValue === 'range') {
+        const minInput = document.createElement("input");
+        minInput.type = "number";
+        minInput.className = "form-control mt-2";
+        minInput.placeholder = "Minimum value";
+        minInput.id = "minInput";
+        minInput.name = `questions[${questionNumber}][min]`;
+
+        const maxInput = document.createElement("input");
+        maxInput.type = "number";
+        maxInput.className = "form-control mt-2";
+        maxInput.placeholder = "Maximum value";
+        maxInput.id = "maxInput";
+        maxInput.name = `questions[${questionNumber}][max]`;
+
+        const stepInput = document.createElement("input");
+        stepInput.type = "number";
+        stepInput.className = "form-control mt-2";
+        stepInput.placeholder = "Step value";
+        stepInput.id = "stepInput";
+        stepInput.name = `questions[${questionNumber}][step]`;
+
+        choicesContainer.appendChild(minInput);
+        choicesContainer.appendChild(maxInput);
+        choicesContainer.appendChild(stepInput);
     }
 }
 
@@ -211,6 +236,12 @@ async function submitSurvey(event) {
 
             question.options = choices.map(choice => ({optionText: choice}));
         } else if (questionType === 'RANGE') {
+            const minInputValue = document.getElementById(`minInput`);
+            const maxInputValue = document.getElementById(`maxInput`);
+            const stepInputValue = document.getElementById(`stepInput`);
+            question.min = minInputValue.value;
+            question.max = maxInputValue.value;
+            question.step = stepInputValue.value;
         }
 
         survey.questions.push(question);
