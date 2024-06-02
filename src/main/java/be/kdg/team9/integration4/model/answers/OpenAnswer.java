@@ -1,11 +1,10 @@
 package be.kdg.team9.integration4.model.answers;
 
 import be.kdg.team9.integration4.model.question.Question;
-import jakarta.persistence.Entity;
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @DiscriminatorValue("OPEN")

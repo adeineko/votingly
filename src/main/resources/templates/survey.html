@@ -23,9 +23,29 @@
             transition: width 0.5s linear;
         }
 
+        #qrcode-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*margin-top: 10px;*/
+            margin-bottom: 20px;
+        }
+
+        #qrcode {
+            width: 100px;
+            height: 100px;
+        }
+
+        #qrcode img {
+            max-width: 100%;
+            height: auto;
+        }
+
     </style>
 
     <script src="/js/survey.js" type="module"></script>
+    <script src="/js/qrcode.min.js"></script>
+
 
 </head>
 <body>
@@ -55,9 +75,21 @@
 <div id="progress-bar-container">
     <div id="progress-bar"></div>
 </div> <!-- Progress bar container -->
+<div class="container m-2">
+    <button id="pauseButton">Pause</button>
+    <button id="resumeButton">Resume</button>
+</div>
+<div class="container">
+    <div id="qrcode-container">
+        <div id="qrcode"></div>
+    </div>
+</div>
 
-<button id="pauseButton">Pause</button>
-<button id="resumeButton">Resume</button>
+<!-- JavaScript for generating QR code -->
+<script type="text/javascript">
+    const surveyURL = "votingly.tech";
+    new QRCode(document.getElementById("qrcode"), surveyURL);
+</script>
 
 
 </body>
