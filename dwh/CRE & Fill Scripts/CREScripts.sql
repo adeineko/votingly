@@ -34,14 +34,5 @@ CREATE TABLE fact_survey (
                              FOREIGN KEY (survey_id) REFERENCES dim_survey(survey_id)
 );
 
-CREATE TABLE test_user_table(
-    id BIGINT,
-    org_id BIGINT,
-    user_type VARCHAR(31),
-    email VARCHAR(255),
-    first_name VARCHAR(255),
-    last_name VARCHAR(255),
-    notes_taken VARCHAR(255),
-    password VARCHAR(255)
-);
+
 
