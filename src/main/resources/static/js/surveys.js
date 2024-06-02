@@ -33,15 +33,17 @@ async function getSurveys() {
             innerDiv.addEventListener('click', () => {
                 window.location.href = `/surveys/${survey.surveyId}/questions`;
             });
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add('button-container');
 
             const viewDetailsButton = document.createElement('div');
-            viewDetailsButton.classList.add('btn', 'btn-primary');
+            viewDetailsButton.classList.add('btn', 'btn-primary', 'button-spacing');
             viewDetailsButton.innerText = 'View Details';
             viewDetailsButton.addEventListener('click', () => {
                 window.location.href = `/surveys/${survey.surveyId}/details`;
             });
             const exportDataCsvDataButton = document.createElement('div');
-            exportDataCsvDataButton.classList.add('btn', 'btn-primary');
+            exportDataCsvDataButton.classList.add('btn', 'btn-primary', 'button-spacing');
             exportDataCsvDataButton.innerText = 'Export CSV';
             exportDataCsvDataButton.addEventListener('click', async () => {
                 const response = await fetch(`/api/answers/${survey.surveyId}/export-csv`, {
@@ -63,8 +65,13 @@ async function getSurveys() {
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
+                } else if (response.status === 204){
+
                 }
             });
+            buttonContainer.appendChild(viewDetailsButton);
+            buttonContainer.appendChild(exportDataCsvDataButton);
+            document.getElementById('buttonContainer').appendChild(buttonContainer);
 
             innerDiv.appendChild(titleElement);
             innerDiv.appendChild(descriptionElement);

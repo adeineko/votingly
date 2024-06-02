@@ -1,4 +1,4 @@
-import { header, token } from "./util/csrf.js";
+import {header, token} from "./util/csrf.js";
 
 const questionsContainer = document.getElementById("questionsContainer");
 const nameContainer = document.getElementById("nameContainer");
@@ -158,7 +158,6 @@ function createChoiceQuestion(question, isMultiChoice) {
     return questionDiv;
 }
 
-//TODO: change innerHTML to createElement()
 function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
@@ -280,3 +279,7 @@ pauseButton?.addEventListener("click", pauseCircularFlow);
 resumeButton?.addEventListener("click", resumeCircularFlow);
 
 window.addEventListener('load', fetchFirstQuestion);
+
+
+const surveyURL = `https://votingly.tech/surveys/${surveyIdInput.value}/questions`;
+new QRCode(document.getElementById("qrcode"), surveyURL);

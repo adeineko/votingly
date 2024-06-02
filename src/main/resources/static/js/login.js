@@ -22,7 +22,7 @@ function redirectToIndex() {
     window.location.href = "/";
 }
 
-function redirectToSignUp(){
+function redirectToSignUp() {
     window.location.href = "/signup"
 }
 

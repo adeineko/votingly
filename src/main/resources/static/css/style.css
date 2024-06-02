@@ -8,23 +8,27 @@
     left: 50%;
     transform: translate(-55%, 40%);
 }
+
 .bodyAccount {
     font-family: 'Syne', sans-serif !important;
     background-color: #0171d3;
     padding-top: 50px;
     position: relative;
 }
+
 .btn-go-back {
     background-color: #007bff;
     color: #fff;
 }
+
 .btn-go-back:hover {
     background-color: #0056b3;
 }
+
 /*End Account Page*/
 
 /*Login Page*/
-.containerLogin{
+.containerLogin {
     height: 100vh;
     width: 100%;
     display: flex;
@@ -34,7 +38,7 @@
     column-gap: 30px;
 }
 
-.bodyLogin{
+.bodyLogin {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -42,21 +46,22 @@
     background-color: #4070f4;
 }
 
-.headerLogin{
+.headerLogin {
     font-size: 28px;
     font-weight: 600;
     color: #232836;
     text-align: center;
 }
 
-.formLogin{
+.formLogin {
     margin-top: 30px;
 
 }
+
 /*End Login Page*/
 
 /*SignUp Page*/
-.bodySign{
+.bodySign {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -74,7 +79,7 @@
     column-gap: 30px;
 }
 
-.headerSign{
+.headerSign {
     font-size: 28px;
     font-weight: 600;
     color: #232836;
@@ -84,6 +89,7 @@
 .formSign {
     margin-top: 30px;
 }
+
 /*End SignUp Page*/
 
 /*Surveys Page*/
@@ -95,6 +101,7 @@
     border-radius: 5px;
     background-color: #f8f9fa;
 }
+
 /*End Surveys Page*/
 
 /*Pop Up Subscribe*/
@@ -393,3 +400,16 @@ img {
     }
 
 }
+
+/*Surveys Page - button view for admins*/
+.button-container {
+    display: flex;
+
+    justify-content: flex-start;
+}
+
+.button-spacing {
+    margin-right: 10px;
+}
+
+/*End Surveys Page - button view for admins*/
