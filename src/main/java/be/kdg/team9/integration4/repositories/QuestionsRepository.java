@@ -17,11 +17,18 @@ public interface QuestionsRepository extends JpaRepository<Question, Long>, Find
 
     List<Question> getQuestionsBySurvey(Survey survey);
 
+    @Modifying
+    @Query(value = "INSERT INTO question(question_name, question_type, survey_id) VALUES (:questionName, :questionType, :surveyId)", nativeQuery = true)
+    void insertQuestions(String questionName, String questionType, Long surveyId);
 
     @Modifying
-    @Transactional
-    @Query(value = "INSERT INTO question(question_name, question_type, survey_id, is_multi_choice) VALUES (:questionName, :questionType, :surveyId, 'false')", nativeQuery = true)
-    void insertQuestion(String questionName, String questionType, Long surveyId);
+    @Query(value = "INSERT INTO question(question_name, question_type, survey_id, min, max, step) VALUES (:questionName, :questionType, :surveyId, :min, :max, :step)", nativeQuery = true)
+    void insertRangeQuestion(String questionName, String questionType, Long surveyId, Integer min, Integer max, Integer step);
+
+    @Modifying
+    @Query(value = "INSERT INTO question(question_name, question_type, survey_id, is_multi_choice) VALUES (:questionName, :questionType, :surveyId, :isMultiChoice)", nativeQuery = true)
+    void insertChoiceQuestion(String questionName, String questionType, Long surveyId, Boolean isMultiChoice);
+
 
     @Transactional
     void deleteQuestionsBySurvey(Survey survey);

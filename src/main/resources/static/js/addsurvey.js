@@ -1,4 +1,4 @@
-import { token, header } from "./util/csrf.js";
+import {token, header} from "./util/csrf.js";
 
 let questionCount = 0;
 
@@ -56,8 +56,10 @@ function createQuestion() {
         </div>
         <input type="text" class="form-control" id="question${questionCount}" name="questions[${questionCount}][name]" required>
         <select class="form-select mt-2" id="questionType${questionCount}" name="questions[${questionCount}][type]">
-            <option value="open">Open</option>
+            <option value="open">Open question</option>
             <option value="multipleChoice">Multiple Choice</option>
+            <option value="singleChoice">Single Choice</option>
+            <option value="range">Range question</option>
         </select>
         <div id="choicesContainer${questionCount}" class="choices-container mt-2"></div>
     `;
@@ -126,7 +128,9 @@ function addChoiceInput(questionNumber) {
     document.getElementById(`choicesContainer${questionNumber}`).appendChild(choiceContainer);
 }
 
-// Adds global event listeners on document ready
+/**
+ *  Adds global event listeners on document
+ **/
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("addQuestionBtn").addEventListener("click", createQuestion);
     document.getElementById("surveyForm").addEventListener("submit", submitSurvey);
@@ -137,45 +141,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Submits the survey data to the server
+/**
+ * Submits the survey data to the server
+ **/
 async function submitSurvey(event) {
     event.preventDefault();
 
     const survey = {
-        surveyName: document.getElementById("surveyName").value, // Assuming you have an input field with id "surveyName"
-        surveyType: document.getElementById("surveyType").value, // Assuming you have an input field with id "surveyType"
-        questions: []
+        surveyName: document.getElementById("surveyName").value,
+        surveyType: document.getElementById("surveyType").value,
     };
 
-    let count = 1;
+    // let count = 1;
 
     // Iterate over each question block
     document.querySelectorAll('.question-block').forEach(questionBlock => {
+        // const questionName = questionBlock.querySelector('input[type="text"]').value;
+        // const questionType = document.getElementById("questionType" + count).value.toUpperCase();
+        // const choices = [];
+        // count++;
         const questionName = questionBlock.querySelector('input[type="text"]').value;
-        const questionType = document.getElementById("questionType" + count).value.toUpperCase();
+        const questionType = questionBlock.querySelector('select').value.toUpperCase();
         const choices = [];
-        count++;
 
+        let question = {
+            questionName: questionName,
+            questionType: questionType,
+        };
         // If question type is "multipleChoice", gather choices
-        if (questionType === 'multipleChoice') {
+        if (questionType === 'MULTIPLECHOICE') {
             questionBlock.querySelectorAll('input[name^="questions"]').forEach(choiceInput => {
                 choices.push(choiceInput.value);
             });
+            question = {
+                ...question,
+                isMultiChoice: true,
+                options: choices
+            };
+        } else if (questionType === 'SINGLECHOICE') {
+            questionBlock.querySelectorAll('input[name^="questions"]').forEach(choiceInput => {
+                choices.push(choiceInput.value);
+            });
+            question = {
+                ...question,
+                isMultiChoice: false,
+                options: choices
+            };
+        } else if (questionType === 'RANGE') {
+
         }
 
-        // Add question object to survey.questions array
-        survey.questions.push({
-            questionName: questionName,
-            questionType: questionType,
-            options: choices
-        });
+        survey.questions.push(question);
     });
 
     console.log(survey);
     console.log(survey.questions);
-
-    // Ensure CSRF token inclusion
-    survey[header] = token;
 
     const response = await fetch('/api/surveys', {
         method: 'POST',
@@ -186,10 +206,7 @@ async function submitSurvey(event) {
         },
         body: JSON.stringify(survey)
     });
-
-    console.log(response.status);
-    console.log(JSON.stringify(survey))
-
+//TODO: add validation
     if (response.status === 201) {
         alert('Survey created successfully!');
         window.location.href = '/surveys';

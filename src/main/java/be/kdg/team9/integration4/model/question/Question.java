@@ -24,9 +24,6 @@ public class Question {
     @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
 
-//    @OneToMany(mappedBy = "question")
-//    private List<Answer> answers;
-
     public Question() {
     }
 
@@ -40,6 +37,8 @@ public class Question {
         this.questionName = questionName;
         this.questionType = questionType;
     }
+
+
 
     public long getId() {
         return id;

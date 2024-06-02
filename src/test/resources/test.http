@@ -89,3 +89,44 @@ X-CSRF-TOKEN: 2x6mixvLJrGhC4K44RTSzNqq6h864qvp2GvpCTkzAFthuSVL4yeVs37yEImMabKBhD
   "userId": 1,
   "answerType": "RANGE"
 }
+
+### API: Add Survey
+POST http://localhost:8080/api/surveys
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=A0056AEC13FA53406FBCEC4B4DDCD86E
+X-CSRF-TOKEN: lfM98Y4ou7JW0pZedsp4u4ygo2jla2_vzXp8j65TZ2qOfQ3S8ZYJwb4d3YV7tPdmE-dM3ejBjgrRUl3C-E8dtspmAQm9TT63
+
+{
+    "surveyName": "Customer Satisfaction Survey",
+    "surveyType": "CIRCULAR",
+    "questions": [
+        {
+            "id": 1,
+            "questionName": "Rate our service",
+            "questionType": "RANGE",
+            "surveyId": 4,
+            "min": 1,
+            "max": 5,
+            "step": 1
+        },
+        {
+            "id": 2,
+            "questionName": "What did you like the most?",
+            "questionType": "OPEN",
+            "surveyId": 4
+        },
+        {
+            "id": 3,
+            "questionName": "Which features do you use?",
+            "questionType": "CHOICE",
+            "surveyId": 4,
+            "isMultiChoice": true,
+            "options": [
+                {"optionId": 1, "optionText": "Feature A"},
+                {"optionId": 2, "optionText": "Feature B"},
+                {"optionId": 3, "optionText": "Feature C"}
+            ]
+        }
+    ]
+}

@@ -158,7 +158,7 @@ function createChoiceQuestion(question, isMultiChoice) {
     return questionDiv;
 }
 
-function createRangeQuestion(question) {
+export function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
     let optionsHTML = '';
