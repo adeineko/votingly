@@ -2,37 +2,43 @@ package be.kdg.team9.integration4.model.answers;
 
 import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.question.Question;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @DiscriminatorValue("CHOICE")
 public class ChoiceAnswer extends Answer {
-
-    @OneToMany(mappedBy = "answer")
-    private List<Option> options_answer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    // @MapsId
+    @JoinColumn(name = "option_id")
+    @Nullable
+    private Option option;
 
     public ChoiceAnswer() {
     }
 
-    public ChoiceAnswer(List<Option> options_answer) {
-        this.options_answer = options_answer;
+    public ChoiceAnswer(Option option) {
+        this.option = option;
     }
 
-    public ChoiceAnswer(long surveyId, long userId, Question question, List<Option> options_answer, LocalDateTime answerTime) {
+    public ChoiceAnswer(long surveyId, long userId, Question question, Option option, LocalDateTime answerTime) {
         super(surveyId, userId, question, answerTime);
-        this.options_answer = options_answer;
+        this.option = option;
     }
 
-    public List<Option> getOptions_answer() {
-        return options_answer;
+    public Option getoption() {
+        return option;
     }
 
-    public void setOptions_answer(List<Option> options) {
-        this.options_answer = options;
+    public void setoption(Option options) {
+        this.option = options;
     }
 }

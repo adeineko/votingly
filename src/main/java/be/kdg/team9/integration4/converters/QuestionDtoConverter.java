@@ -1,33 +1,14 @@
 package be.kdg.team9.integration4.converters;
 
-import be.kdg.team9.integration4.controller.api.dto.questions.OptionDto;
-import be.kdg.team9.integration4.controller.api.dto.questions.ChoiceDto;
-import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
-import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDtoIn;
-import be.kdg.team9.integration4.controller.api.dto.questions.RangeDto;
+import be.kdg.team9.integration4.controller.api.dto.questions.*;
 import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.Survey;
-import be.kdg.team9.integration4.model.question.ChoiceQuestion;
-import be.kdg.team9.integration4.model.question.OpenQuestion;
-import be.kdg.team9.integration4.model.question.Question;
-import be.kdg.team9.integration4.model.question.QuestionType;
-import be.kdg.team9.integration4.model.question.RangeQuestion;
-import be.kdg.team9.integration4.service.OptionService;
+import be.kdg.team9.integration4.model.question.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class QuestionDtoConverter {
-    // private final OptionService optionService;
-
-    // @Autowired
-    // public QuestionDtoConverter(OptionService optionService) {
-    //     this.optionService = optionService;
-    // }
 
     public QuestionDto convert(Question question) {
 

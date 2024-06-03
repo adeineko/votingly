@@ -4,7 +4,7 @@ import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.service.SurveyService;
 import be.kdg.team9.integration4.service.QuestionService;
-import be.kdg.team9.integration4.viewmodel.SurveyViewModel;
+import be.kdg.team9.integration4.controller.mvc.viewmodel.SurveyViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

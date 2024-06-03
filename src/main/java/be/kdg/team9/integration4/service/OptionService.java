@@ -14,8 +14,8 @@ public class OptionService {
     private final OptionRepository optionRepository;
 
     @Autowired
-    public OptionService(OptionRepository optionRepository, OptionRepository optionRepository1) {
-        this.optionRepository = optionRepository1;
+    public OptionService(OptionRepository optionRepository) {
+        this.optionRepository = optionRepository;
     }
 
 //    public List<Question> getOptionsOfQuestion(long questionId) {
@@ -28,5 +28,9 @@ public class OptionService {
 
     public void addOptions(List<Option> options) {
         optionRepository.saveAll(options);
+    }
+
+    public Option getOption(long optionId) {
+        return optionRepository.findById(optionId).orElse(null);
     }
 }
