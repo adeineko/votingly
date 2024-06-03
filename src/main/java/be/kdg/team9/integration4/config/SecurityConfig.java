@@ -36,8 +36,9 @@ public class SecurityConfig {
                                         antMatcher(HttpMethod.GET, "/signup/**"),
                                         antMatcher(HttpMethod.POST, "/api/signup/**"),
                                         regexMatcher(HttpMethod.GET, "^/login\\?.*"),
-                                        antMatcher(HttpMethod.GET, "/thank-you-page/**")
-                                )
+                                        antMatcher(HttpMethod.GET, "/thank-you-page/**"),
+                                        antMatcher(HttpMethod.GET, "/features")
+                                        )
                                 .permitAll()
                                 .requestMatchers(antMatcher(HttpMethod.GET, "/"))
                                 .permitAll()
