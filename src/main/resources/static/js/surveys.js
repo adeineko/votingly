@@ -1,6 +1,12 @@
 import {header, token} from "./util/csrf.js";
 
-const userType = document.getElementById('userType').value.toString();
+const userTypeElement = document.getElementById('userType');
+let userType = '';
+if (userTypeElement) {
+    userType = userTypeElement.value.toString();
+} else {
+    console.log('User is not logged in');
+}
 
 async function getSurveys() {
     const response = await fetch('/api/surveys', {
@@ -10,6 +16,7 @@ async function getSurveys() {
             [header]: token
         }
     });
+
 
     if (response.status === 200) {
         const data = await response.json();
