@@ -16,10 +16,12 @@ body {
 .h1 {
     font-family: 'Syne', sans-serif;
 }
-.h3{
+
+.h3 {
     font-family: 'Syne', sans-serif;
 }
-.select{
+
+.select {
     font-family: 'Inter', sans-serif;
 }
 
@@ -73,7 +75,7 @@ body {
 
 .button-group {
     display: flex;
-    gap: 10px; /* Adds space between the buttons */
+    gap: 10px;
 }
 
 /*End Account Page*/
