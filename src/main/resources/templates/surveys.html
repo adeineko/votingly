@@ -11,6 +11,8 @@
 <header th:replace="~{header :: header}"></header>
 <div class="container-fluid">
 
+    <input type="hidden" id="userType" th:value="${#authentication.principal.userType}"/>
+
     <div class="container">
         <p class="h1 text-center" style="font-family: 'Syne', sans-serif">Available Surveys</p>
         <div class="row" id="surveys-list"></div>
