@@ -76,8 +76,8 @@ X-CSRF-TOKEN: 2x6mixvLJrGhC4K44RTSzNqq6h864qvp2GvpCTkzAFthuSVL4yeVs37yEImMabKBhD
 POST http://localhost:8080/api/surveys
 Accept: application/json
 Content-Type: application/json
-Cookie: JSESSIONID=A0056AEC13FA53406FBCEC4B4DDCD86E
-X-CSRF-TOKEN: lfM98Y4ou7JW0pZedsp4u4ygo2jla2_vzXp8j65TZ2qOfQ3S8ZYJwb4d3YV7tPdmE-dM3ejBjgrRUl3C-E8dtspmAQm9TT63
+Cookie: JSESSIONID=7AEBDCE7A32653B216899039F34B3D4B
+X-CSRF-TOKEN: 6udJCYKlY-XtcoLr7R3ux08wgEts4XlcBkbgD9KV86mSnp3MidYvPeGRUIPAEbDd2TDapS0ErSkN1hpxM3OENufwxpGnpqj5
 
 {
     "surveyName": "Customer Satisfaction Survey",
@@ -120,3 +120,70 @@ Content-Type: application/json
 Cookie: JSESSIONID=03033768F19FBCD737927F51B7E08AD6
 X-Csrf-Token: DnJUcWBZtK7ZrZvW_qU4u7dJfvzkhDrrJaxlBYTstiP4wbqUPkptFFNo0pn0nqLgzIgM2o97U8TXsgPGEchTZOaP00XL-Yus
 
+### API: Change survey info
+
+PATCH http://localhost:8080/api/surveys/2
+Content-Type: application/json
+Cookie: JSESSIONID=794C3C10BB7955141D1BF5E4E228C746
+X-Csrf-Token: DIP9xOtYetvzEKU3Khur2CAocRCnebhCWGwoisqfUGAisSlRbbLJoo1vGO3eJ8BTTjafuhQcXHGRHY5vPVhKuv2nNlcbgEpk
+
+{
+  "surveyName": "Customer Satisfaction Survey",
+  "surveyType": "LINEAR",
+  "questions": [
+    {
+      "id": 2,
+      "questionName": "What did you like the most?",
+      "questionType": "OPEN",
+      "survey_id": 2
+    },
+    {
+      "id": 1,
+      "questionName": "Rate our service",
+      "questionType": "RANGE",
+      "survey_id": 2,
+      "min": 1,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "id": 3,
+      "questionName": "Which features do you use?",
+      "questionType": "CHOICE",
+      "survey_id": 2,
+      "isMultiChoice": true,
+      "options": [
+        {"optionId": 1, "optionText": "Feature A"},
+        {"optionId": 2, "optionText": "Feature B"},
+        {"optionId": 3, "optionText": "Feature C"}
+      ]
+    },
+    {
+      "id": 4,
+      "questionName": "Rate our service",
+      "questionType": "RANGE",
+      "survey_id": 2,
+      "min": 1,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "id": 5,
+      "questionName": "Rate our service",
+      "questionType": "RANGE",
+      "survey_id": 2,
+      "min": 1,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "id": 6,
+      "questionName": "Rate our service",
+      "questionType": "RANGE",
+      "survey_id": 2,
+      "min": 1,
+      "max": 5,
+      "step": 1
+    }
+  ]
+}

@@ -46,7 +46,8 @@ async function getSurveyDetails() {
         }
 
         const data = await response.json();
-        console.log(data); // Log data to see what is actually being returned.
+        console.log(data);
+        console.log(surveyIdInput.value)
         questions = data.questions
         // Populate survey details on page load
         populateSurveyDetails(data.surveyName, data.surveyType);
@@ -71,8 +72,8 @@ function createQuestion(question = {text: "", type: "open", choices: []}) {
         </div>
         <input type="text" class="form-control" id="question${questionCount}" name="questions[${questionCount}][text]" value="${question.questionName}" required>
         <select class="form-select mt-2" id="questionType${questionCount}" name="questions[${questionCount}][type]">
-            <option value="open" ${question.questionType === 'open' ? 'selected' : ''}>Open</option>
-            <option value="multipleChoice" ${question.questionType === 'multipleChoice' ? 'selected' : ''}>Multiple Choice</option>
+            <option value="OPEN" ${question.questionType === 'open' ? 'selected' : ''}>Open</option>
+            <option value="CHOICE" ${question.questionType === 'multipleChoice' ? 'selected' : ''}>Multiple Choice</option>
         </select>
         <div id="choicesContainer${questionCount}" class="choices-container mt-2"></div>
     `;
@@ -245,5 +246,60 @@ function saveChanges() {
     // After saving changes, you may want to disable the save button again
     document.getElementById("saveChangesBtn").disabled = true;
 }
+
+
+/**
+ * @type {HTMLButtonElement}
+ */
+const updateButton = document.getElementById("saveChangesBtn");
+const surveyId = document.getElementById("surveyId");
+
+async function changeSurvey() {
+    // Prepare the questions data
+    const questionsData = Array.from(document.querySelectorAll(".question-block")).map(questionBlock => {
+        const questionId = questionBlock.id.replace("questionBlock", "");
+        const questionName = document.getElementById(`question${questionId}`).value;
+        const questionType = document.getElementById(`questionType${questionId}`).value;
+
+        let question = {
+            questionName,
+            questionType,
+            options: []
+        };
+
+        if (questionType === 'CHOICE') {
+            question.options = Array.from(document.querySelectorAll(`#choicesContainer${questionId} input`)).map(choiceInput => ({
+                optionName: choiceInput.value
+            }));
+        }
+
+        return question;
+    });
+
+    // Prepare the request body
+    const requestBody = {
+        surveyName: surveyNameInput.value,
+        surveyType: surveyTypeInput.value,
+        questions: questionsData
+    };
+
+    const response = await fetch(`/api/surveys/${surveyId.value}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            [header]: token
+        },
+        body: JSON.stringify(requestBody)
+    });
+
+    if (response.status === 204) {
+        updateButton.disabled = true;
+        alert("Survey updated successfully!");
+    } else {
+        alert("Something went wrong!");
+    }
+}
+
+updateButton?.addEventListener("click", changeSurvey);
 
 window.addEventListener('load', getSurveyDetails);

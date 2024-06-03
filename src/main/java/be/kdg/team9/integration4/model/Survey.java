@@ -3,6 +3,7 @@ package be.kdg.team9.integration4.model;
 import be.kdg.team9.integration4.model.question.Question;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class Survey {
     }
 
     public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+        this.questions = new ArrayList<>(questions);
     }
 
     public Date getStartDate() {

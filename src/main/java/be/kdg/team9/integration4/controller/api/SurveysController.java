@@ -9,6 +9,7 @@ import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.service.QuestionService;
 import be.kdg.team9.integration4.service.SurveyService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,19 @@ public class SurveysController {
         questionService.addQuestions(questions);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(surveyDto);
+    }
+
+    @PatchMapping("{id}")
+    ResponseEntity<Void> changeSurvey(@PathVariable("id") long surveyId,
+                                      @RequestBody @Valid SurveyDtoIn updatedSurveyDto) {
+        Survey survey = modelMapper.map(surveyId, Survey.class);
+        List<Question> questions = updatedSurveyDto.getQuestions().stream()
+                .map(questionDtoIn -> questionDtoConverter.convertFromDtoIn(questionDtoIn, survey)).toList();
+
+        questionService.updateQuestions(surveyId, questions, updatedSurveyDto.getSurveyName());
+        surveyService.changeSurveyInfo(surveyId, updatedSurveyDto.getSurveyName(), updatedSurveyDto.getSurveyType());
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}/details")

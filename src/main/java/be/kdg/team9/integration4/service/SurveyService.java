@@ -1,6 +1,13 @@
 package be.kdg.team9.integration4.service;
 
+import be.kdg.team9.integration4.controller.api.dto.UpdatedSurveyDto;
+import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDtoIn;
+import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.Survey;
+import be.kdg.team9.integration4.model.SurveyType;
+import be.kdg.team9.integration4.model.question.ChoiceQuestion;
+import be.kdg.team9.integration4.model.question.Question;
+import be.kdg.team9.integration4.model.question.QuestionType;
 import be.kdg.team9.integration4.repositories.FindAllQuestionBySurveyId;
 import be.kdg.team9.integration4.repositories.SurveyRepository;
 import org.apache.commons.csv.CSVFormat;
@@ -15,6 +22,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -52,4 +60,15 @@ public class SurveyService {
         surveyRepository.deleteById(id);
     }
 
+    public boolean changeSurveyInfo(long surveyid, String name, SurveyType type) {
+        var survey = surveyRepository.findById(surveyid).orElse(null);
+        if (survey == null) {
+            return false;
+        }
+        survey.setSurveyName(name);
+        survey.setSurveyType(type);
+
+        surveyRepository.save(survey);
+        return true;
+    }
 }
