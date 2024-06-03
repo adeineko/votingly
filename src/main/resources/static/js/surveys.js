@@ -8,6 +8,13 @@ if (userTypeElement) {
     console.log('User is not logged in');
 }
 
+const addButton = document.getElementById('addButton');
+if (userType !== 'P_ADMIN') {
+    addButton.hidden = true;
+}
+
+
+
 async function getSurveys() {
     const response = await fetch('/api/surveys', {
         method: 'GET',
@@ -93,6 +100,7 @@ async function getSurveys() {
             surveyItem.appendChild(viewDetailsButton);
             surveyItem.appendChild(exportDataCsvDataButton);
             surveysList.appendChild(surveyItem);
+
         });
     }
 }
