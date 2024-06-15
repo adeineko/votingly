@@ -10,7 +10,7 @@ services:
             DOMAINS:  "votingly.tech -> http://web-app:80"
             STAGE:  "production"
             # STAGE: local
-#             FORCE_RENEW:  "false"
+            # FORCE_RENEW:  "false"
         networks:
             - bridged
         depends_on:
@@ -19,11 +19,6 @@ services:
             - https-portal-data:/var/lib/https-portal
             - /home/admin/https-portal/log:/var/log/nginx/
             - /home/admin/https-portal/logrotate:/var/lib/logrotate/
-
-    # web-app:
-    #     image: httpd:2.4
-    #     networks:
-    #         - bridged
 
     web-app:
         image: registry.gitlab.com/kdg-ti/integration-4/2023-2024/team-9/int4t9:latest

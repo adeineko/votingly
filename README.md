@@ -16,7 +16,7 @@
 
 ### Local
 ```
-./gradlew clean bootJar
+./gradlew clean build
 docker compose up -d
 java -jar -Dspring.profiles.active=dev build/libs/Integration4-17.0.10.jar
 ```
@@ -38,7 +38,7 @@ docker run -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=devcontainer" int4t9:latest
 
 ## Infrastructure as Code
 
-### [Wiki](https://gitlab.com/kdg-ti/integration-4/2023-2024/team-9/int4t9/-/wikis/home/Infrastructure-as-Code-(Iac)-Terraform-to-Google-Cloud)
+### [Documentation](https://docs.google.com/document/d/1ln7VSWr5J5QCrjL_6ltrYKLsqeg2uPohHJbpUnN5FcE/edit?usp=sharing)
 
 ### Instructions
 - Open this project
