@@ -47,7 +47,6 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				// "cweijan.vscode-postgresql-client2",
 				"vmware.vscode-spring-boot",
 				"vscjava.vscode-spring-initializr",
 				"vscjava.vscode-spring-boot-dashboard",
@@ -62,18 +61,16 @@
 				"oderwat.indent-rainbow",
 				"yzhang.markdown-all-in-one",
 				"esbenp.prettier-vscode",
-				// "chrmarti.regex",
-				// "Larrito.status-bar-permission-bits",
 				"Gruntfuggly.todo-tree",
 				"redhat.vscode-xml",
 				"redhat.vscode-yaml",
 				"matheusq94.TFS",
-				// "GoogleCloudTools.cloudcode",
 				"naco-siren.gradle-language",
 				"GitHub.copilot",
 				"GitHub.copilot-chat",
-				// "GitLab.gitlab-workflow",
-				"eamodio.gitlens"
+				"eamodio.gitlens",
+				"mtxr.sqltools",
+				"mtxr.sqltools-driver-pg"
 			]
 		}
 	},

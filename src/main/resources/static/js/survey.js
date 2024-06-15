@@ -1,4 +1,4 @@
-import {header, token} from "./util/csrf.js";
+import { header, token } from "./util/csrf.js";
 
 const questionsContainer = document.getElementById("questionsContainer");
 const nameContainer = document.getElementById("nameContainer");
@@ -10,7 +10,7 @@ const resumeButton = document.getElementById("resumeButton");
 const progressBarContainer = document.getElementById("progress-bar-container");
 resumeButton.hidden = true;
 
-if (surveyTypeInput.value === 'LINEAR') {
+if (surveyTypeInput.value === "LINEAR") {
     pauseButton.hidden = true;
     resumeButton.hidden = true;
     progressBarContainer.hidden = true;
@@ -24,17 +24,20 @@ let isPaused = false;
 nameContainer.innerHTML = surveyNameInput.value;
 
 async function fetchFirstQuestion() {
-    const response = await fetch(`/api/surveys/${surveyIdInput.value}/questions`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            [header]: token
+    const response = await fetch(
+        `/api/surveys/${surveyIdInput.value}/questions`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                [header]: token,
+            },
         }
-    });
+    );
     if (response.status === 200) {
         questions = await response.json();
         displayQuestion(questions[currentQuestionIndex]);
-        if (surveyTypeInput.value === 'CIRCULAR') {
+        if (surveyTypeInput.value === "CIRCULAR") {
             startCircularFlow();
             resetProgressBar(); // Start the progress bar immediately
         }
@@ -83,78 +86,79 @@ function resumeCircularFlow() {
 }
 
 function pauseTransition() {
-    const progressBar = document.getElementById('progress-bar');
-    progressBar.style.transition = 'none'; // Pause the transition by setting it to 'none'
+    const progressBar = document.getElementById("progress-bar");
+    progressBar.style.transition = "none"; // Pause the transition by setting it to 'none'
     progressBar.style.width = `${progressBarWidth}px`; // Set the width to the current width
 }
 
 function resumeTransition() {
-    const progressBar = document.getElementById('progress-bar');
-    progressBar.style.transition = 'width 8s linear'; // Resume the transition
-    progressBar.style.width = '100%'; // Reset the width to 100% to resume the animation
+    const progressBar = document.getElementById("progress-bar");
+    progressBar.style.transition = "width 8s linear"; // Resume the transition
+    progressBar.style.width = "100%"; // Reset the width to 100% to resume the animation
 }
 
 function getCurrentProgressBarWidth() {
-    const progressBar = document.getElementById('progress-bar');
+    const progressBar = document.getElementById("progress-bar");
     return progressBar.offsetWidth; // Return the current width of the progress bar
 }
 
 function resetProgressBar() {
-    const progressBar = document.getElementById('progress-bar');
-    progressBar.style.transition = 'none';
-    progressBar.style.width = '0';
+    const progressBar = document.getElementById("progress-bar");
+    progressBar.style.transition = "none";
+    progressBar.style.width = "0";
     setTimeout(() => {
-        progressBar.style.transition = 'width 8s linear';
-        progressBar.style.width = '100%';
+        progressBar.style.transition = "width 8s linear";
+        progressBar.style.width = "100%";
     }, 10); // Small delay to allow the DOM to update
 }
 
 function createOpenQuestion(question) {
-    const questionDiv = document.createElement('div');
-    questionDiv.classList.add('col-lg-10');
+    const questionDiv = document.createElement("div");
+    questionDiv.classList.add("col-lg-10");
 
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
     questionDiv.appendChild(cardBody);
 
-    const cardTitle = document.createElement('h5');
-    cardTitle.classList.add('card-title');
+    const cardTitle = document.createElement("h5");
+    cardTitle.classList.add("card-title");
     cardTitle.textContent = question.questionName;
     cardBody.appendChild(cardTitle);
 
-    const input = document.createElement('input');
-    input.setAttribute('type', 'text');
-    input.classList.add('form-control');
-    input.setAttribute('id', 'openQuestionInput');
+    const input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.classList.add("form-control");
+    input.setAttribute("id", "openQuestionInput");
     cardBody.appendChild(input);
 
     return questionDiv;
 }
 
 function createChoiceQuestion(question, isMultiChoice) {
-    const questionDiv = document.createElement('div');
-    questionDiv.classList.add('col-lg-10');
+    const questionDiv = document.createElement("div");
+    questionDiv.classList.add("col-lg-10");
 
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
     questionDiv.appendChild(cardBody);
 
-    const cardTitle = document.createElement('h5');
-    cardTitle.classList.add('card-title');
+    const cardTitle = document.createElement("h5");
+    cardTitle.classList.add("card-title");
     cardTitle.textContent = question.questionName;
     cardBody.appendChild(cardTitle);
 
-    question.options.forEach(option => {
-        const optionDiv = document.createElement('div');
+    question.options.forEach((option) => {
+        const optionDiv = document.createElement("div");
 
-        const input = document.createElement('input');
+        const input = document.createElement("input");
 
-        input.setAttribute('type', isMultiChoice ? 'checkbox' : 'radio');
-        input.setAttribute('name', isMultiChoice ? `options_${question.id}[]` : `options_${question.id}`);
-        input.setAttribute('value', option.optionText);
-        input.setAttribute('data-option-id', option.optionId);
+        input.setAttribute("type", isMultiChoice ? "checkbox" : "radio");
+        // input.setAttribute('name', isMultiChoice ? `options_${question.id}[]` : `options_${question.id}`);
+        input.setAttribute("name", `options_${question.id}`);
+        input.setAttribute("value", option.optionText);
+        input.setAttribute("data-option-id", option.optionId);
 
-        const optionLabel = document.createElement('label');
+        const optionLabel = document.createElement("label");
         optionLabel.textContent = option.optionText;
 
         optionDiv.appendChild(input);
@@ -167,9 +171,9 @@ function createChoiceQuestion(question, isMultiChoice) {
 }
 
 export function createRangeQuestion(question) {
-    const questionDiv = document.createElement('div');
-    questionDiv.classList.add('col-lg-10');
-    let optionsHTML = '';
+    const questionDiv = document.createElement("div");
+    questionDiv.classList.add("col-lg-10");
+    let optionsHTML = "";
     for (let i = question.min; i <= question.max; i += question.step) {
         optionsHTML += `<option value="${i}" label="${i}"></option>`;
     }
@@ -212,42 +216,55 @@ async function saveAnswer() {
             answer = document.getElementById("openQuestionInput").value;
             break;
         case "CHOICE":
-            if (currentQuestion.multiChoice) {
-                answer = document.querySelector("input[name='options_" + currentQuestion.id + "']:checked")?.value || null;
-            } else {
-                const selectedOptions = document.querySelectorAll("input[name='options_" + currentQuestion.id + "']:checked");
-                options = Array.from(selectedOptions).map(input => input.value);
-            }
+            const selectedOptions = document.querySelectorAll(
+                "input[name='options_" + currentQuestion.id + "']:checked"
+            );
+            // console.log("Selected options:", selectedOptions);
+            options = Array.from(selectedOptions).map((input) =>
+                parseInt(input.getAttribute("data-option-id"))
+            );
+            // console.log("Selected options:", options);
             break;
         case "RANGE":
             range = document.getElementById("rangeInput").value;
             break;
         default:
-            console.error("Unsupported question type:", currentQuestion.questionType);
+            console.error(
+                "Unsupported question type:",
+                currentQuestion.questionType
+            );
             return;
     }
 
     const answerData = {
-        answer: currentQuestion.questionType === 'OPEN' ? answer : null,
-        options_answer: currentQuestion.questionType === 'CHOICE' ? options : null,
-        range_answer: currentQuestion.questionType === 'RANGE' ? parseInt(range) : null,
+        surveyId: surveyIdInput.value,
         questionId: currentQuestion.id,
-        surveyId: surveyIdInput.value
+        // Answer to Open question
+        // String
+        answer: currentQuestion.questionType === "OPEN" ? answer : null,
+        // Answer to Choice and Multichoice question
+        // float[] - array of selected option ids
+        options_answer:
+            currentQuestion.questionType === "CHOICE" ? options : null,
+        // Answer to Range question
+        // int - selected range value
+        range_answer:
+            currentQuestion.questionType === "RANGE" ? parseInt(range) : null,
     };
 
     const response = await fetch(`/api/answers/${currentQuestion.id}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-            "Accept": "application/json",
+            Accept: "application/json",
             "Content-Type": "application/json",
-            [header]: token
+            [header]: token,
         },
-        body: JSON.stringify(answerData)
+        body: JSON.stringify(answerData),
     });
 
     if (response.status === 201) {
-        const savedAnswer = await response.json();
-        console.log("Successfully saved answer:", savedAnswer);
+        // const savedAnswer = await response.json();
+        // console.log("Successfully saved answer:", savedAnswer);
     } else {
         console.error("Failed to save answer:", response.status);
         alert("Failed to save answer. Please try again.");
@@ -255,7 +272,7 @@ async function saveAnswer() {
 }
 
 function displayQuestion(question) {
-    questionsContainer.innerHTML = '';
+    questionsContainer.innerHTML = "";
     let questionElement;
     switch (question.questionType) {
         case "CHOICE":
@@ -272,8 +289,9 @@ function displayQuestion(question) {
             questionElement = createRangeQuestion(question);
             break;
         default:
-            questionElement = document.createElement('div');
-            questionElement.textContent = 'Unsupported question type: ' + question.questionType;
+            questionElement = document.createElement("div");
+            questionElement.textContent =
+                "Unsupported question type: " + question.questionType;
     }
     questionsContainer.appendChild(questionElement);
 }
@@ -286,7 +304,7 @@ submitAnswerButton?.addEventListener("click", async () => {
 pauseButton?.addEventListener("click", pauseCircularFlow);
 resumeButton?.addEventListener("click", resumeCircularFlow);
 
-window.addEventListener('load', fetchFirstQuestion);
+window.addEventListener("load", fetchFirstQuestion);
 
 const surveyURL = `https://votingly.tech/surveys/${surveyIdInput.value}/questions`;
 new QRCode(document.getElementById("qrcode"), surveyURL);
