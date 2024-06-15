@@ -11,6 +11,10 @@
 <header th:replace="~{header :: header}"></header>
 <div class="container-fluid">
 
+    <div sec:authorize="isAuthenticated()">
+        <input type="hidden" id="userType" th:value="${#authentication.principal.userType}"/>
+    </div>
+
     <div class="container">
         <p class="h1 text-center" style="font-family: 'Syne', sans-serif">Available Surveys</p>
         <div class="row" id="surveys-list"></div>
@@ -19,8 +23,12 @@
 
 </div>
 
-<div sec:authorize="isAuthenticated()" class="position-fixed bottom-0 end-0 p-3">
-    <a th:href="@{/surveys/add}" class="btn btn-primary"><i class="bi bi-plus-lg"></i>Add </a>
+<div id="addButton" class="position-fixed bottom-0 end-0 p-3">
+    <a th:href="@{/surveys/add}" class="btn btn-primary"><i class="bi bi-plus-lg"></i>Add</a>
+</div>
+
+<div id="supervisorButton" class="position-fixed bottom-0 end-5 p-3">
+    <a th:href="@{/surveys/1/supervisor}" class="btn btn-primary">Hub</a>
 </div>
 
 </body>

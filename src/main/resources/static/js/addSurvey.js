@@ -117,22 +117,26 @@ function handleTypeChange(questionNumber) {
         const addChoiceBtn = document.createElement("button");
         addChoiceBtn.textContent = "Add Choice";
         addChoiceBtn.type = "button";
-        addChoiceBtn.className = "btn btn-info btn-sm mt-2";
+        addChoiceBtn.className = "btn btn-info btn-sm mt-2 col-12 col-sm-auto";
         addChoiceBtn.onclick = () => addChoiceInput(questionNumber);
         choicesContainer.appendChild(addChoiceBtn);
 
         const checkIsMultiLabel = document.createElement("label");
         checkIsMultiLabel.textContent = "Multiple choice";
-        checkIsMultiLabel.className = "mt-2 d-column";
-
+        checkIsMultiLabel.className = "mt-2 d-block";
         const checkIsMulti = document.createElement("input");
         checkIsMulti.type = "checkbox";
         checkIsMulti.className = "form-check-input";
         checkIsMulti.id = `checkBoxInput${questionNumber}`;
         checkIsMulti.name = `questions[${questionNumber}][isMultiple]`;
 
-        choicesContainer.appendChild(checkIsMulti);
-        choicesContainer.appendChild(checkIsMultiLabel);
+        const checkboxDiv = document.createElement("div");
+        checkboxDiv.className = "col-12 col-sm-auto";
+        s
+        checkboxDiv.appendChild(checkIsMulti);
+        checkboxDiv.appendChild(checkIsMultiLabel);
+
+        choicesContainer.appendChild(checkboxDiv);
 
         addChoiceInput(questionNumber); // Add first choice input immediately
     } else if (typeValue === 'range') {

@@ -87,4 +87,10 @@ public class Question {
 //    public void setAnswers(List<Answer> answers) {
 //        this.answers = answers;
 //    }
+
+    public void updateFrom(Question source) {
+        this.setQuestionName(source.getQuestionName());
+        this.setQuestionType(source.getQuestionType());
+    }
+
 }

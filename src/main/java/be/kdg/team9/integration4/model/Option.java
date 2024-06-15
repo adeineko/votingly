@@ -37,6 +37,11 @@ public class Option {
         this.question = question;
     }
 
+    public Option(String optionText, ChoiceQuestion question) {
+        this.optionText = optionText;
+        this.question = question;
+    }
+
     public Option(long optionId, String optionText) {
         this.optionText = optionText;
         this.optionId = optionId;

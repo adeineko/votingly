@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supervisor Dashboard</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <thymeleaf th:replace="~{header :: meta_script_link}"/>
+
+    <title>Home</title>
+    <script src="/js/supervisor.js" type="module"></script>
+
     <style>
         /* Custom CSS */
         .survey-name {
@@ -22,49 +22,36 @@
 
 <header th:replace="~{header :: header}"></header>
 
+<input type="hidden" id="surveyId" th:value="${surveyId}">
+
 <div class="container">
     <!-- Survey Name -->
     <div class="row justify-content-center">
         <div class="col-12 text-center mt-4">
-            <h2 class="survey-name">Active Survey Name</h2>
+            <h2 id="surveyName" class="survey-name"></h2>
         </div>
     </div>
-
-        <!-- Play, Stop, Pause Buttons -->
-        <div class="row justify-content-center">
-            <div class="col-12 text-center">
-                <button type="button" class="btn btn-primary mr-2">Play</button>
-                <button type="button" class="btn btn-danger mr-2">Stop</button>
-                <button type="button" class="btn btn-warning">Pause</button>
-            </div>
-        </div>
-
-
-        <!-- Other Existing Surveys -->
-        <div class="row mt-4">
-            <div class="col-md-6 offset-md-6">
-                <h4>Other Existing Surveys</h4>
-                <ul class="list-group">
-                    <li class="list-group-item">Survey 1</li>
-                    <li class="list-group-item">Survey 2</li>
-                    <li class="list-group-item">Survey 3</li>
-                    <li class="list-group-item">Survey 4</li>
-                </ul>
-            </div>
-        </div>
-
 
     <!-- Notes Section -->
-    <div class="row mt-4">
+    <div class="row justify-content-center">
         <div class="col-12">
             <h4>Notes</h4>
-            <textarea class="form-control notes-textarea" placeholder="Write your notes here..."></textarea>
+            <textarea id="note" class="form-control notes-textarea" placeholder="Write your notes here..."></textarea>
+            <button onclick="saveNote()" id="saveNote" class="btn btn-primary mt-2">Save Note</button>
         </div>
     </div>
+
+    <!-- Other Existing Surveys -->
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-6">
+            <h4>All Surveys</h4>
+            <ul id="otherSurveys" class="list-group">
+            </ul>
+        </div>
+    </div>
+
 </div>
 <div th:replace="~{footer :: footer}"></div>
 
-<!-- Bootstrap JS (optional, if needed) -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

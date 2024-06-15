@@ -45,6 +45,7 @@ function fetchNextQuestion() {
     currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
     displayQuestion(questions[currentQuestionIndex]);
     resetProgressBar(); // Reset progress bar on fetching next question
+    restartCircularFlow(); // Restart the circular flow on fetching next question
 }
 
 function startCircularFlow() {
@@ -53,6 +54,13 @@ function startCircularFlow() {
             fetchNextQuestion();
         }
     }, 8000);
+}
+
+function restartCircularFlow() {
+    clearInterval(circularFlowInterval);
+    if (!isPaused) {
+        startCircularFlow();
+    }
 }
 
 let progressBarWidth = 0; // Variable to store the current width of the progress bar
@@ -98,7 +106,7 @@ function resetProgressBar() {
     setTimeout(() => {
         progressBar.style.transition = 'width 8s linear';
         progressBar.style.width = '100%';
-    }, 50); // Timeout to ensure the width reset takes effect
+    }, 10); // Small delay to allow the DOM to update
 }
 
 function createOpenQuestion(question) {
@@ -279,7 +287,6 @@ pauseButton?.addEventListener("click", pauseCircularFlow);
 resumeButton?.addEventListener("click", resumeCircularFlow);
 
 window.addEventListener('load', fetchFirstQuestion);
-
 
 const surveyURL = `https://votingly.tech/surveys/${surveyIdInput.value}/questions`;
 new QRCode(document.getElementById("qrcode"), surveyURL);

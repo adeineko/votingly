@@ -11,27 +11,42 @@
     <div class="page-content">
         <div class="jumbotron rounded d-flex align-items-end justify-content-start py-5">
             <div class="row">
-                <p class="h1 text-white" style="font-family: 'Syne', sans-serif">Votingly Features</p>
+                <p class="h1 text-white">Votingly Features</p>
                 <p class="text-white" style="font-family: 'Work sans', sans-serif">Discover what sets Votingly apart
                     from other voting platforms.</p>
             </div>
-<!--            <div class="col-md-6 d-flex align-items-end justify-content-end">-->
-<!--                <img src="/images/features.png" class="img-fluid float-right" alt="Features Image">-->
-<!--            </div>-->
         </div>
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h2>Feature 1</h2>
-                    <p>Description of feature 1.</p>
+            <div class="row feature-row mt-3">
+                <div class="col-md-6 feature-text">
+                    <h3>Drive Engagement</h3>
+                    <p>Make use of a comprehensive set of features designed to enhance user interaction and feedback
+                        collection. Create surveys with various question types that can be distributed across multiple
+                        channels, including email, social media, websites, and with integrated QR codes access easily
+                        via smartphones.</p>
                 </div>
-                <div class="col-md-4">
-                    <h2>Feature 2</h2>
-                    <p>Description of feature 2.</p>
+                <div class="col-md-6 feature-image">
+                    <img th:src="@{/images/engagement.jpg}" alt="Engagement Image" class="small-image" />
                 </div>
-                <div class="col-md-4">
-                    <h2>Feature 3</h2>
-                    <p>Description of feature 3.</p>
+            </div>
+            <div class="row feature-row mt-3">
+                <div class="col-md-6 order-md-2 feature-text">
+                    <h3>Customization</h3>
+                    <p>Creation process offers surveys and questions that can be highly customized to fit specific needs
+                        and requirements. With different types providing flexibility in how feedback is collected.</p>
+                </div>
+                <div class="col-md-6 order-md-1 feature-image">
+                    <img th:src="@{/images/customizability.png}" alt="Customizable Image" class="small-image" />
+                </div>
+            </div>
+            <div class="row feature-row mt-3">
+                <div class="col-md-6 feature-text">
+                    <h3>Analytics</h3>
+                    <p>Flexible survey flows, collection of user data and a dedicated data warehouse allows for advanced
+                        analytics and projections. Featuring your personal analytics dashboard, to monitor and analyze your engagement data.</p>
+                </div>
+                <div class="col-md-6 feature-image">
+                    <img th:src="@{/images/dashboard.png}" alt="Analytics Image" class="small-image" />
                 </div>
             </div>
         </div>

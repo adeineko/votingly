@@ -4,6 +4,7 @@ import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.service.SurveyService;
 import be.kdg.team9.integration4.service.QuestionService;
+
 import be.kdg.team9.integration4.controller.mvc.viewmodel.SurveyViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,9 +56,15 @@ public class SurveyController {
     public String surveyDetails(@PathVariable("id") long id, Model model) {
         final Survey survey = surveyService.getSurvey(id);
         final List<Question> questions = questionService.getQuestionsBySurvey(survey);
-        survey.setQuestions(questions);
+//        survey.setQuestions(questions);
         final SurveyViewModel viewModel = SurveyViewModel.fromDomain(survey);
         model.addAttribute("survey", viewModel);
         return "surveydetails";
+    }
+
+    @GetMapping("/{id}/supervisor")
+    public String surveySupervisor(@PathVariable("id") long id, Model model) {
+        model.addAttribute("surveyId", id);
+        return "supervisorprojects";
     }
 }

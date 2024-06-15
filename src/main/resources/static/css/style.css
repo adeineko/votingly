@@ -16,10 +16,12 @@ body {
 .h1 {
     font-family: 'Syne', sans-serif;
 }
-.h3{
+
+.h3 {
     font-family: 'Syne', sans-serif;
 }
-.select{
+
+.select {
     font-family: 'Inter', sans-serif;
 }
 
@@ -73,7 +75,7 @@ body {
 
 .button-group {
     display: flex;
-    gap: 10px; /* Adds space between the buttons */
+    gap: 10px;
 }
 
 /*End Account Page*/
@@ -456,3 +458,80 @@ img {
 }
 
 /*Header End*/
+
+/* Features page layout */
+.page-content {
+    padding: 20px;
+}
+
+.feature-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 60px; /* Add margin between rows */
+}
+
+.feature-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content at the start */
+    flex: 1; /* Ensure text takes up remaining space */
+    z-index: 1; /* Ensure text is above the overlay */
+    padding: 20px; /* Padding to create space for overlay */
+}
+
+.feature-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.small-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px; /* Example maximum height */
+    padding: 20px;
+    transform: none;
+}
+
+/* Overlay style */
+.feature-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(248, 249, 250, 1.0);
+   /* background-color: rgba(46, 126, 247, 0.1); */
+    z-index: -1; /* Behind text and image */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+    opacity: 0; /* Initially invisible */
+    border: 1px solid #dee2e6; /* Border properties */
+    box-sizing: border-box; /* Ensure border is included in the element's dimensions */
+}
+
+.feature-row:hover::before {
+    opacity: 1; /* Show overlay on hover */
+}
+
+.feature-row:hover .feature-text,
+.feature-row:hover .feature-image img {
+    z-index: 2; /* Bring text and image above the overlay */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
