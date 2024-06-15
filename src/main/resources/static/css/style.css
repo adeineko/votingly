@@ -7,10 +7,11 @@
 body {
     font-family: 'Inter', sans-serif;
     overflow-y: scroll;
-    padding-bottom: 70px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
 .h1 {
@@ -157,6 +158,69 @@ body {
 
 /*End Surveys Page*/
 
+
+img {
+    max-width: 100%;
+    height: auto;
+    transform: scaleX(-1);
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+    img {
+        max-width: 80%;
+    }
+}
+
+/* Responsive styles for larger screens */
+@media screen and (min-width: 1200px) {
+    img {
+        max-width: 1200px;
+    }
+}
+
+.authentication {
+    color: #000000A6;
+}
+
+/*Thank You Page*/
+.cont {
+    position: relative;
+    margin: 2em auto;
+    justify-content: center;
+    justify-items: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #f3f3f3;
+
+    border-radius: 5em;
+
+    width: 55em;
+    height: 30em;
+
+    box-shadow: 0 0 20px 26px rgba(0, 0, 0, 0.19)
+}
+
+.goodJob {
+    font-size: 2em;
+    padding: 0.3em;
+    font-weight: lighter;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.text {
+    padding: 1em 10em 1em 10em;
+    text-align: center;
+    color: #76756C;
+    font-size: 1.1em;
+}
+
+/*End Thank You Page*/
+
 /*Pop Up Subscribe*/
 .thankYouPage {
     background-color: #0C6EFD;
@@ -200,88 +264,8 @@ input[type="email"] {
     margin-bottom: 10px;
     box-sizing: border-box;
 }
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
 /*End Pop Up Subscribe*/
 
-
-img {
-    max-width: 100%;
-    height: auto;
-    transform: scaleX(-1);
-}
-
-/* Responsive styles for smaller screens */
-@media screen and (max-width: 768px) {
-    img {
-        max-width: 80%;
-    }
-}
-
-/* Responsive styles for larger screens */
-@media screen and (min-width: 1200px) {
-    img {
-        max-width: 1200px;
-    }
-}
-
-.authentication {
-    color: #000000A6;
-}
-
-/*Thank You Page*/
-.cont {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    justify-content: center;
-    justify-items: center;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    background-color: #f3f3f3;
-
-    border-radius: 5em;
-
-    width: 55em;
-    height: 30em;
-
-    box-shadow: 0 0 20px 26px rgba(0, 0, 0, 0.19)
-}
-
-.goodJob {
-    font-size: 2em;
-    padding: 0.3em;
-    font-weight: lighter;
-}
-
-.name {
-    font-weight: bold;
-}
-
-
-.text {
-    padding: 1em 10em 1em 10em;
-    text-align: center;
-    color: #76756C;
-    font-size: 1.1em;
-}
-
-/*End Thank You Page*/
 
 /*Index Page*/
 .jumbotron {
@@ -506,7 +490,7 @@ img {
     width: 100%;
     height: 100%;
     background-color: rgba(248, 249, 250, 1.0);
-   /* background-color: rgba(46, 126, 247, 0.1); */
+    /* background-color: rgba(46, 126, 247, 0.1); */
     z-index: -1; /* Behind text and image */
     transition: opacity 0.3s ease; /* Smooth transition for opacity */
     opacity: 0; /* Initially invisible */

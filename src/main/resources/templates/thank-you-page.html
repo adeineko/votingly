@@ -14,7 +14,8 @@
     <div class="cont">
         <div class="gg-check-o"></div>
         <div class="goodJob">
-            <a class="goodJob">Good Job <span sec:authorize="isAuthenticated()" th:text="${#authentication.principal.firstName}"
+            <a class="goodJob">Good Job <span sec:authorize="isAuthenticated()"
+                                              th:text="${#authentication.principal.firstName}"
                                               class="name"></span>!</a>
         </div>
         <div>
@@ -25,7 +26,7 @@
         </div>
 
         <div class="button">
-            <button id="subscribeBtn" type="button">Subscribe</button>
+            <button id="subscribeBtn" class="btn primary-outline">Subscribe</button>
         </div>
 
         <div id="popup" class="popup">
@@ -37,6 +38,7 @@
             </div>
         </div>
     </div>
+    <div th:replace="~{footer :: footer}"></div>
 </div>
 
 </body>
