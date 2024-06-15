@@ -230,7 +230,6 @@ async function submitSurvey(event) {
             questionType: questionType,
         };
 
-        // If question type is "CHOICE", gather choices and define isMultiple
         if (questionType === 'CHOICE') {
             const checkBoxInput = document.getElementById(`checkBoxInput${count}`);
             question.isMultipleChoice = checkBoxInput.checked;
