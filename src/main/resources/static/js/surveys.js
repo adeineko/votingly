@@ -9,8 +9,10 @@ if (userTypeElement) {
 }
 
 const addButton = document.getElementById('addButton');
+const supervisorButton = document.getElementById('supervisorButton');
 if (userType !== 'P_ADMIN') {
     addButton.hidden = true;
+    supervisorButton.hidden = true;
 }
 
 

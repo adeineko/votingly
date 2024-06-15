@@ -25,6 +25,9 @@ public class Survey {
     @OneToMany(mappedBy = "survey", fetch = FetchType.EAGER)
     private List<Question> questions;
 
+    @OneToMany(mappedBy = "survey", fetch = FetchType.LAZY)
+    private List<Note> notes;
+
     private Date startDate;
     private Date endDate;
 
@@ -85,5 +88,13 @@ public class Survey {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 }

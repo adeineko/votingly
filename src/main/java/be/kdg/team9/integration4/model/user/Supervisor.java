@@ -8,23 +8,11 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("SUPERVISOR")
 public class Supervisor extends User {
 
-    @Column(name = "notes_taken")
-    private String notesTaken;
-
-    public Supervisor(long id, String firstName, String lastName, String email, String password, String userType, String notesTaken) {
+    public Supervisor(long id, String firstName, String lastName, String email, String password, String userType) {
         super(id, firstName, lastName, email, password, userType);
-        this.notesTaken = notesTaken;
     }
 
     public Supervisor() {
-    }
-
-    public String getNotesTaken() {
-        return notesTaken;
-    }
-
-    public void setNotesTaken(String notesTaken) {
-        this.notesTaken = notesTaken;
     }
 
     @Override

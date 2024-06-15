@@ -61,4 +61,10 @@ public class SurveyController {
         model.addAttribute("survey", viewModel);
         return "surveydetails";
     }
+
+    @GetMapping("/{id}/supervisor")
+    public String surveySupervisor(@PathVariable("id") long id, Model model) {
+        model.addAttribute("surveyId", id);
+        return "supervisorprojects";
+    }
 }

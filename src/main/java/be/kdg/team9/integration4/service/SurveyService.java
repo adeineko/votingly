@@ -2,6 +2,7 @@ package be.kdg.team9.integration4.service;
 
 import be.kdg.team9.integration4.controller.api.dto.UpdatedSurveyDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDtoIn;
+import be.kdg.team9.integration4.model.Note;
 import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.SurveyType;
@@ -9,6 +10,7 @@ import be.kdg.team9.integration4.model.question.ChoiceQuestion;
 import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.model.question.QuestionType;
 import be.kdg.team9.integration4.repositories.FindAllQuestionBySurveyId;
+import be.kdg.team9.integration4.repositories.NoteRepository;
 import be.kdg.team9.integration4.repositories.SurveyRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -29,10 +31,12 @@ import java.util.stream.Collectors;
 public class SurveyService {
 
     private final SurveyRepository surveyRepository;
+    private final NoteRepository noteRepository;
 
     @Autowired
-    public SurveyService(SurveyRepository surveyRepository) {
+    public SurveyService(SurveyRepository surveyRepository, NoteRepository noteRepository) {
         this.surveyRepository = surveyRepository;
+        this.noteRepository = noteRepository;
     }
 
     public List<Survey> getAllSurveys() {
@@ -70,5 +74,13 @@ public class SurveyService {
 
         surveyRepository.save(survey);
         return true;
+    }
+
+    public void addNoteToSurvey(Long id, String content) {
+        Note note = new Note();
+        Survey survey = surveyRepository.findBySurveyId(id);
+        note.setSurvey(survey);
+        note.setContent(content);
+        noteRepository.save(note);
     }
 }

@@ -114,4 +114,12 @@ public class SurveysController {
         surveyService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{id}/supervisor")
+    public String saveNote(@RequestBody String note, @PathVariable("id") long id) {
+        logger.info(note);
+        surveyService.addNoteToSurvey(id, note);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).toString();
+    }
+
 }
