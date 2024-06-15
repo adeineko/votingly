@@ -19,16 +19,6 @@ cache:
     - ${TF_ROOT}/.terraform/
     - ${CI_PROJECT_DIR}/deploy/.creds/
 
-# cache:
-#   - key: .gradle
-#     paths:
-#       - ${CI_PROJECT_DIR}/.gradle/wrapper
-#       - ${CI_PROJECT_DIR}/.gradle/caches
-#   - key: "${TF_ROOT}"
-#     paths:
-#       - ${TF_ROOT}/.terraform/
-#       - ${CI_PROJECT_DIR}/deploy/.creds/
-
 workflow:
   rules:
     # Run the pipeline only on merge request to prod branch
@@ -40,9 +30,8 @@ workflow:
 
 stages:
   - infrastructure
-  - cicd-test
-  - test
   - build
+  - test
   - dockerize
   - deploy
   - cleanup
@@ -59,28 +48,6 @@ destroy:
     include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-destroy.yml
   when: manual
 
-# cicd-test:
-#   stage: cicd-test
-#   allow_failure: true
-#   script:
-#     - pwd
-#     - echo ${CI_BUILDS_DIR}
-#     - ls -al ${CI_BUILDS_DIR}
-#     - echo ${CI_PROJECT_DIR}
-#     - ls -al ${CI_PROJECT_DIR}
-#     - mkdir -p ${CI_PROJECT_DIR}/deploy/.creds
-#     - ls -al ${CI_PROJECT_DIR}/deploy/.creds
-
-test-job:
-  image: ${JAVA_CONTAINER_IMAGE}
-  services:
-    - postgres:15.5-alpine3.17
-  stage: test
-  script:
-    - echo "Running tests.."
-    - echo "$SPRING_PROFILES_ACTIVE"
-    - ./gradlew -PspringProfilesActiveTests=$SPRING_PROFILES_ACTIVE check
-
 gradle-build:
   image: ${JAVA_CONTAINER_IMAGE}
   stage: build
@@ -92,6 +59,18 @@ gradle-build:
   artifacts:
     paths:
       - "build/libs/*.jar"
+
+test-job:
+  image: ${JAVA_CONTAINER_IMAGE}
+  services:
+    - postgres:15.5-alpine3.17
+  stage: test
+  script:
+    - echo "Running tests.."
+    - echo "$SPRING_PROFILES_ACTIVE"
+    - ./gradlew -PspringProfilesActiveTests=$SPRING_PROFILES_ACTIVE check
+  dependencies:
+    - gradle-build
 
 dockerize-job:
   image: docker:latest
@@ -105,6 +84,7 @@ dockerize-job:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
     - docker push $CI_REGISTRY_IMAGE:latest
   dependencies:
+    - test-job
     - gradle-build
 
 # TODO check if VM's docker is logged in to gitlab registry 
@@ -114,11 +94,12 @@ deploy-job:
   stage: deploy
   script:
     - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
+    - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/docker-compose.yml admin@votingly-testing-vm:/home/admin --zone "europe-west1-b" --project "int4t9"
     - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/deploy.sh admin@votingly-testing-vm:/tmp --zone "europe-west1-b" --project "int4t9" --strict-host-key-checking=no
     - gcloud -q compute ssh admin@votingly-testing-vm --zone "europe-west1-b" --project "int4t9" --command='bash /tmp/deploy.sh'
   # when: manual
   dependencies:
-    - "dockerize-job"
+    - dockerize-job
 
 cleanup-job:
   image: ${JAVA_CONTAINER_IMAGE}
