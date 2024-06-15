@@ -8,6 +8,9 @@ const surveyTypeInput = document.getElementById("surveyType");
 const pauseButton = document.getElementById("pauseButton");
 const resumeButton = document.getElementById("resumeButton");
 const progressBarContainer = document.getElementById("progress-bar-container");
+const qrCode = document.getElementById("qrcode");
+const source = getURLParameter('source');
+
 resumeButton.hidden = true;
 
 if (surveyTypeInput.value === 'LINEAR') {
@@ -20,6 +23,19 @@ let currentQuestionIndex = 0;
 let questions = [];
 let circularFlowInterval;
 let isPaused = false;
+
+function getURLParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+function checkRedirection() {
+    if (source === 'qr') {
+        pauseButton.hidden = true;
+        progressBarContainer.hidden = true;
+        qrCode.hidden = true;
+    }
+}
 
 nameContainer.innerHTML = surveyNameInput.value;
 
@@ -34,7 +50,7 @@ async function fetchFirstQuestion() {
     if (response.status === 200) {
         questions = await response.json();
         displayQuestion(questions[currentQuestionIndex]);
-        if (surveyTypeInput.value === 'CIRCULAR') {
+        if (surveyTypeInput.value === 'CIRCULAR' && source !== 'qr') {
             startCircularFlow();
             resetProgressBar(); // Start the progress bar immediately
         }
@@ -42,7 +58,13 @@ async function fetchFirstQuestion() {
 }
 
 function fetchNextQuestion() {
-    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+    currentQuestionIndex++;
+    if (source === 'qr' && currentQuestionIndex >= questions.length) {
+        window.location.href = `/thank-you-page`;
+        return;
+    }
+
+    currentQuestionIndex = currentQuestionIndex % questions.length;
     displayQuestion(questions[currentQuestionIndex]);
     resetProgressBar(); // Reset progress bar on fetching next question
     restartCircularFlow(); // Restart the circular flow on fetching next question
@@ -166,7 +188,7 @@ function createChoiceQuestion(question, isMultiChoice) {
     return questionDiv;
 }
 
-export function createRangeQuestion(question) {
+function createRangeQuestion(question) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('col-lg-10');
     let optionsHTML = '';
@@ -254,7 +276,7 @@ async function saveAnswer() {
     }
 }
 
-function displayQuestion(question) {
+export function displayQuestion(question) {
     questionsContainer.innerHTML = '';
     let questionElement;
     switch (question.questionType) {
@@ -286,7 +308,10 @@ submitAnswerButton?.addEventListener("click", async () => {
 pauseButton?.addEventListener("click", pauseCircularFlow);
 resumeButton?.addEventListener("click", resumeCircularFlow);
 
-window.addEventListener('load', fetchFirstQuestion);
+window.addEventListener('load', () => {
+    checkRedirection();
+    fetchFirstQuestion();
+})
 
-const surveyURL = `https://votingly.tech/surveys/${surveyIdInput.value}/questions`;
+const surveyURL = `https://votingly.tech/surveys/${surveyIdInput.value}/questions?source=qr`;
 new QRCode(document.getElementById("qrcode"), surveyURL);
