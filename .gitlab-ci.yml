@@ -60,7 +60,7 @@ cicd-test:
     - ls -al ${CI_BUILDS_DIR}
     - echo ${CI_PROJECT_DIR}
     - ls -al ${CI_PROJECT_DIR}
-    - ls -al ${CI_PROJECT_DIR}/deploy/.creds
+    # - ls -al ${CI_PROJECT_DIR}/deploy/.creds
     - echo ${SA_GCP_FILE}
 
 gradle-build:
@@ -110,10 +110,10 @@ deploy-job:
   script:
     # Download Gitlab secure files in project
     # https://docs.gitlab.com/ee/ci/secure_files/index.html
-    # - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
+    - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
     # Login to Google Cloud
-    # - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
-    - gcloud auth login --cred-file=${SA_GCP_FILE}
+    - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
+    # - gcloud auth login --cred-file=${SA_GCP_FILE}
     # Copy the docker-compose file to the VM
     - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/docker-compose.yml admin@votingly-testing-vm:/home/admin --zone "europe-west1-b" --project "int4t9"
     # Copy the deploy script to the VM
