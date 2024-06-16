@@ -133,8 +133,8 @@ X-Csrf-Token: g-8YjGve_QR0dIASUbfGq4H7z7zt_GKHmDbGJkgXZKQAbprotot7uVi6m2FZFeMnM5
 
 PATCH http://localhost:8080/api/surveys/2
 Content-Type: application/json
-Cookie: JSESSIONID=80FDA813A3642B02C852019D6E72D080
-X-Csrf-Token: TFCnBxORQh1qKGdz9o3tEeiBNTmSjFUz85a2D4tt0ekri1YwLmCQYir3cipHHFMWxaDZI465GAH06jMexPCDbOgPsosYsmQJ
+Cookie: JSESSIONID=6899A113D316C3E8E564051987F7EA57
+X-Csrf-Token: 38aRdDzLPJ8JTNpMRRW1bVQyscbvpumnrTaMlbSe4dBq5CUBufCiRQ3_DackKrl7cjiBXzIBnKTekYiKyQe4pYOo2eYL0UNk
 
 {
   "surveyId": 2,
@@ -265,13 +265,13 @@ X-Csrf-Token: s3z4qJzahqrQjPoZffvzyP3ER8ElulorHsM1lmM-HZtq9CTfgx7Mzf24tZz9up8pGN
 ### API: Change questions of one survey (RANGE)
 POST http://localhost:8080/api/surveys/2/questions
 Content-Type: application/json
-Cookie: JSESSIONID=5EE44D89C3799FEF745391E0B642EDE3
-X-Csrf-Token: s3z4qJzahqrQjPoZffvzyP3ER8ElulorHsM1lmM-HZtq9CTfgx7Mzf24tZz9up8pGNbH8M6mavhDi2IGf6cFogUPKKtdkBW7
+Cookie: JSESSIONID=6899A113D316C3E8E564051987F7EA57
+X-Csrf-Token: 38aRdDzLPJ8JTNpMRRW1bVQyscbvpumnrTaMlbSe4dBq5CUBufCiRQ3_DackKrl7cjiBXzIBnKTekYiKyQe4pYOo2eYL0UNk
 
 {
   "questionName": "Adj sajdal?",
   "questionType": "RANGE",
-  "max": 10,
+  "max": 5,
   "min": 0,
   "step": 1
 }
