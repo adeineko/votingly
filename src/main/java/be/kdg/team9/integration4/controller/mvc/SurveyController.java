@@ -56,7 +56,7 @@ public class SurveyController {
     public String surveyDetails(@PathVariable("id") long id, Model model) {
         final Survey survey = surveyService.getSurvey(id);
         final List<Question> questions = questionService.getQuestionsBySurvey(survey);
-//        survey.setQuestions(questions);
+        survey.setQuestions(questions);
         final SurveyViewModel viewModel = SurveyViewModel.fromDomain(survey);
         model.addAttribute("survey", viewModel);
         return "surveydetails";

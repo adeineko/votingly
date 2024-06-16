@@ -2,6 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <thymeleaf th:replace="~{header :: meta_script_link}"/>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container-fluid {
+            padding: 2rem;
+        }
+        .question-block {
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            background-color: #ffffff;
+        }
+        .question-block:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+        .btn-info {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 
@@ -33,6 +53,6 @@
 <div th:replace="~{footer :: footer}"></div>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="/js/surveydetails.js" type="module" defer></script>
+<script src="/js/surveydetails.js" type="module"></script>
 </body>
 </html>

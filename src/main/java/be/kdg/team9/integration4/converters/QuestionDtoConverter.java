@@ -40,6 +40,22 @@ public class QuestionDtoConverter {
         return question;
     }
 
+    public Question convertFromDtoIn(UpdateQuestionDto dto, Survey survey) {
+        Question question;
+        if (dto.getQuestionType().equals(QuestionType.CHOICE)) {
+            List<Option> options = dto.getOptions().stream()
+                    .map(this::convertOptionFromDto)
+                    .toList();
+            question = new ChoiceQuestion(dto.getQuestionName(), dto.getQuestionType(), dto.isMultiChoice(), options);
+        } else if (dto.getQuestionType().equals(QuestionType.RANGE)) {
+            question = new RangeQuestion(dto.getQuestionName(), dto.getQuestionType(), dto.getMin(), dto.getMax(), dto.getStep());
+        } else {
+            question = new OpenQuestion(dto.getQuestionName(), dto.getQuestionType());
+        }
+        question.setSurvey(survey);
+        return question;
+    }
+
     private ChoiceDto convertChoiceQuestion(ChoiceQuestion question) {
         ChoiceDto choiceDto = new ChoiceDto(question);
         choiceDto.setOptions(question.getOptions().stream()

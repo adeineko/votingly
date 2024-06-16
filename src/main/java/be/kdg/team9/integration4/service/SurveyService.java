@@ -4,6 +4,8 @@ import be.kdg.team9.integration4.controller.api.dto.UpdatedSurveyDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDtoIn;
 import be.kdg.team9.integration4.model.Note;
 import be.kdg.team9.integration4.model.Option;
+import be.kdg.team9.integration4.controller.api.dto.questions.UpdateQuestionDto;
+import be.kdg.team9.integration4.converters.QuestionDtoConverter;
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.SurveyType;
 import be.kdg.team9.integration4.model.question.ChoiceQuestion;
@@ -12,9 +14,7 @@ import be.kdg.team9.integration4.model.question.QuestionType;
 import be.kdg.team9.integration4.repositories.FindAllQuestionBySurveyId;
 import be.kdg.team9.integration4.repositories.NoteRepository;
 import be.kdg.team9.integration4.repositories.SurveyRepository;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,16 +64,16 @@ public class SurveyService {
         surveyRepository.deleteById(id);
     }
 
-    public boolean changeSurveyInfo(long surveyid, String name, SurveyType type) {
-        var survey = surveyRepository.findById(surveyid).orElse(null);
-        if (survey == null) {
-            return false;
+    public Survey changeSurveyInfo(long surveyid, Survey survey) {
+        var surveyPresent = surveyRepository.findById(surveyid).orElse(null);
+        if (surveyPresent == null) {
+            return null;
         }
-        survey.setSurveyName(name);
-        survey.setSurveyType(type);
+        surveyPresent.setSurveyName(survey.getSurveyName());
+        surveyPresent.setSurveyType(survey.getSurveyType());
 
-        surveyRepository.save(survey);
-        return true;
+        surveyRepository.save(surveyPresent);
+        return surveyPresent;
     }
 
     public void addNoteToSurvey(Long id, String content) {
