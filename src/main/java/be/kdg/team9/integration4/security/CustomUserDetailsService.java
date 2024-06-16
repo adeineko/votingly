@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -32,8 +34,9 @@ public class CustomUserDetailsService implements UserDetailsService {
                     user.getFirstName(),
                     user.getLastName(),
                     user.getUserType());
-        }else {
+        } else {
             throw new UsernameNotFoundException("User with email " + username + " was not found.");
         }
     }
+
 }
