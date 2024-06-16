@@ -72,14 +72,6 @@ public class SurveysController {
         return ResponseEntity.ok(questionDtos);
     }
 
-    @PostMapping("/{id}/questions")
-    ResponseEntity<QuestionDto> changeQuestionsInForm(@PathVariable long id, @RequestBody @Valid UpdateQuestionDto questionDtoIn) {
-        var survey = surveyService.getSurvey(id);
-        Question question = questionDtoConverter.convertFromDtoIn(questionDtoIn, survey);
-        Question savedQuestions = questionService.saveQuestion(question);
-        return ResponseEntity.ok(questionDtoConverter.convert(savedQuestions));
-    }
-
     @PostMapping
     public ResponseEntity<SurveyDtoIn> addSurvey(@RequestBody SurveyDtoIn surveyDto) {
         logger.info(surveyDto.toString());
@@ -93,14 +85,6 @@ public class SurveysController {
         return ResponseEntity.status(HttpStatus.CREATED).body(surveyDto);
     }
 
-//    @PatchMapping("{id}")
-//    ResponseEntity<SurveyDto> changeSurvey(@PathVariable("id") long surveyId,
-//                                           @RequestBody @Valid SurveyDto updatedSurveyDto) {
-//        Survey survey = surveyDtoConverter.convertFromDto(updatedSurveyDto);
-//
-//        Survey updatedSurvey = surveyService.changeSurveyInfo(surveyId, survey);
-//        return ResponseEntity.ok(surveyDtoConverter.convertToDto(updatedSurvey));
-//    }
 
     @PatchMapping("{id}")
     ResponseEntity<Void> updateSurvey(@PathVariable("id") long surveyId,
