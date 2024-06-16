@@ -31,7 +31,7 @@ workflow:
 
 stages:
   - infrastructure
-  - cicd-test
+  # - cicd-test
   - build
   - test
   - dockerize
@@ -51,17 +51,17 @@ destroy:
   when: manual
 
 # Test the CI/CD pipeline
-cicd-test:
-  stage: cicd-test
-  allow_failure: true
-  script:
-    - pwd
-    - echo ${CI_BUILDS_DIR}
-    - ls -al ${CI_BUILDS_DIR}
-    - echo ${CI_PROJECT_DIR}
-    - ls -al ${CI_PROJECT_DIR}
-    # - ls -al ${CI_PROJECT_DIR}/deploy/.creds
-    - echo ${SA_GCP_FILE}
+# cicd-test:
+#   stage: cicd-test
+#   allow_failure: true
+#   script:
+#     - pwd
+#     - echo ${CI_BUILDS_DIR}
+#     - ls -al ${CI_BUILDS_DIR}
+#     - echo ${CI_PROJECT_DIR}
+#     - ls -al ${CI_PROJECT_DIR}
+#     # - ls -al ${CI_PROJECT_DIR}/deploy/.creds
+#     - echo ${SA_GCP_FILE}
 
 gradle-build:
   image: ${JAVA_CONTAINER_IMAGE}
