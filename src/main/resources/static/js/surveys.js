@@ -12,8 +12,11 @@ const addButton = document.getElementById('addButton');
 const supervisorButton = document.getElementById('supervisorButton');
 if (userType !== 'P_ADMIN') {
     addButton.hidden = true;
+}
+if (userType !== 'SUPERVISOR') {
     supervisorButton.hidden = true;
 }
+
 
 
 async function getSurveys() {

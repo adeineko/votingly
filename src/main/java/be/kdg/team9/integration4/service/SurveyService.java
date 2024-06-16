@@ -1,6 +1,5 @@
 package be.kdg.team9.integration4.service;
 
-import be.kdg.team9.integration4.controller.api.dto.UpdatedSurveyDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDtoIn;
 import be.kdg.team9.integration4.model.Note;
 import be.kdg.team9.integration4.model.Option;
