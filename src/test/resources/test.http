@@ -263,15 +263,25 @@ X-Csrf-Token: s3z4qJzahqrQjPoZffvzyP3ER8ElulorHsM1lmM-HZtq9CTfgx7Mzf24tZz9up8pGN
 }
 
 ### API: Change questions of one survey (RANGE)
-POST http://localhost:8080/api/surveys/2/questions
+PATCH http://localhost:8080/api/surveys/2
 Content-Type: application/json
-Cookie: JSESSIONID=6899A113D316C3E8E564051987F7EA57
-X-Csrf-Token: 38aRdDzLPJ8JTNpMRRW1bVQyscbvpumnrTaMlbSe4dBq5CUBufCiRQ3_DackKrl7cjiBXzIBnKTekYiKyQe4pYOo2eYL0UNk
+Cookie: JSESSIONID=BB0D73A27C17692623C3196CB9CC0E87
+X-Csrf-Token: AEP7sHOGWYcQ0PU7LeH3CM-bK35iEX2Ifpski1RO28tcj5dqZHPDhBayYeU95pQOFMzDOP76BkYEdx-lH_gVvjEt4q0-u6Jd
 
 {
-  "questionName": "Adj sajdal?",
-  "questionType": "RANGE",
-  "max": 5,
-  "min": 0,
-  "step": 1
+  "surveyName": "Adj sajdal?",
+  "surveyType": "CIRCULAR",
+  "questions": [
+    {
+      "id": 1,
+      "questionName": "Test",
+      "questionType": "OPEN"
+    },
+    {
+      "id": 2,
+      "questionName": "TEST",
+      "questionType": "OPEN"
+    }
+  ]
 }
+

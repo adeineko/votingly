@@ -47,7 +47,7 @@ async function getSurveys() {
 
             const timeElement = document.createElement('p');
             // timeElement.innerText = `Estimated Time: ${survey.estimatedTime} mins`;
-            timeElement.innerText = `Estimated Time: 10 minutes`;
+            timeElement.innerText = `Estimated Time: 3 minutes`;
 
             innerDiv.addEventListener('click', () => {
                 window.location.href = `/surveys/${survey.surveyId}/questions`;
@@ -75,7 +75,6 @@ async function getSurveys() {
                         'Content-Type': 'text/csv',
                         [header]: token
                     },
-
                 });
 
                 if (response.status === 200) {
@@ -99,6 +98,7 @@ async function getSurveys() {
             statisticsButton.addEventListener('click', () => {
                 window.location.href = `/surveys/${survey.surveyId}/statistics`;
             });
+
             buttonContainer.appendChild(viewDetailsButton);
             buttonContainer.appendChild(exportDataCsvDataButton);
             buttonContainer.appendChild(statisticsButton);

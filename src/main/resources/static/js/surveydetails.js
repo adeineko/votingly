@@ -1,4 +1,5 @@
-import { token, header } from "./util/csrf.js";
+import {token, header} from "./util/csrf.js";
+const handleUpdateButton = document.getElementById("saveChangesBtn");
 
 let surveyIdInput = document.getElementById("surveyId");
 
@@ -40,7 +41,7 @@ async function getSurveyDetails() {
     }
 }
 
-function createQuestion(question = { questionName: "", questionType: "OPEN", options: [] }, questionNumber) {
+function createQuestion(question = {questionName: "", questionType: "OPEN", options: []}, questionNumber) {
     questionCount++;
     const questionDiv = document.createElement("div");
     questionDiv.setAttribute('id', `questionBlock${questionNumber}`);
@@ -220,10 +221,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById("removeSurveyBtn").addEventListener("click", removeSurvey);
-    document.getElementById("saveChangesBtn").addEventListener("click", changeSurvey);
+    // handleUpdateButton.addEventListener("click", changeSurvey);
+    handleUpdateButton?.addEventListener('click', handleUpdate)
 
     getSurveyDetails();
 });
+
+const surveyNameTextArea = document.getElementById("surveyName");
+const surveyType = document.getElementById("surveyType");
+async function handleUpdate() {
+    const response = await fetch(`/api/surveys/${surveyIdInput.value}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-type': 'application/json',
+            [header]: token
+        },
+        body: JSON.stringify({
+            surveyName: surveyNameTextArea.value,
+            surveyType: surveyType.value,
+            questions:
+                {
+                    id: 1,
+                    questionName: Test,
+                    questionType: OPEN
+                }
+        })
+    })
+    if (response.status === 204) {
+        handleUpdateButton.disabled = true
+    } else {
+        alert('Something went wrong!')
+    }
+}
 
 
 async function changeSurvey(event) {
@@ -240,8 +269,14 @@ async function changeSurvey(event) {
                 [header]: token
             },
             body: JSON.stringify({
-                surveyName,
-                surveyType
+                surveyName: surveyName,
+                surveyType: surveyType,
+                questions:
+                    {
+                        id: 1,
+                        questionName: Test,
+                        questionType: OPEN
+                    }
             })
         });
 
@@ -261,11 +296,11 @@ async function changeSurvey(event) {
         const questionName = document.getElementById(`question${i}`).value;
         const questionType = document.getElementById(`questionType${i}`).value;
 
-        let question = { questionName, questionType };
+        let question = {questionName, questionType};
 
         if (questionType === 'CHOICE') {
             const choiceInputs = document.querySelectorAll(`#choicesContainer${i} input[name='questions[${i}][choices][]']`);
-            question.choices = Array.from(choiceInputs).map(input => ({ optionText: input.value }));
+            question.choices = Array.from(choiceInputs).map(input => ({optionText: input.value}));
         } else if (questionType === 'RANGE') {
             question.min = document.getElementById(`minInput${i}`).value;
             question.max = document.getElementById(`maxInput${i}`).value;
@@ -275,7 +310,7 @@ async function changeSurvey(event) {
         questions.push(question);
     }
 
-    try{
+    try {
         const response = await fetch(`/api/surveys/${surveyId}/questions`, {
             method: 'POST',
             headers: {

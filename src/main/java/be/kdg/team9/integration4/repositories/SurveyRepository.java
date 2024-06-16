@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SurveyRepository extends JpaRepository<Survey, Long> {
+public interface SurveyRepository extends JpaRepository<Survey, Long>, FindAllQuestionBySurveyId {
     Survey findBySurveyId(long surveyId);
 
     @Query("""   
