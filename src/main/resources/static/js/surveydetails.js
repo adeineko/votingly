@@ -53,7 +53,7 @@ function createQuestion(question = {questionName: "", questionType: "OPEN", opti
             <label for="question${questionNumber}" class="form-label">Question ${questionNumber}</label>
         </div>
         <input type="text" class="form-control" id="question${questionNumber}" name="questions[${questionNumber}][questionName]" value="${question.questionName}" required>
-        <select class="form-select mt-2" id="questionType${questionNumber}" name="questions[${questionNumber}][questionType]">
+        <select class="form-select mt-2" id="questionType${questionNumber}" name="questions[${questionNumber}][questionType]" disabled>
             <option value="OPEN" ${question.questionType === 'OPEN' ? 'selected' : ''}>Open</option>
             <option value="CHOICE" ${question.questionType === 'CHOICE' ? 'selected' : ''}>Choice</option>
             <option value="RANGE" ${question.questionType === 'RANGE' ? 'selected' : ''}>Range</option>
@@ -227,7 +227,6 @@ async function handleUpdate() {
         updatedQuestions.push({
             id: questionNumber,
             questionName: questionNameTextArea.value,
-            questionType: questionType.value
         });
     });
 
