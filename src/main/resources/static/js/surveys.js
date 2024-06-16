@@ -16,7 +16,6 @@ if (userType !== 'P_ADMIN') {
 }
 
 
-
 async function getSurveys() {
     const response = await fetch('/api/surveys', {
         method: 'GET',
@@ -86,7 +85,7 @@ async function getSurveys() {
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
-                } else if (response.status === 204){
+                } else if (response.status === 204) {
 
                 }
             });

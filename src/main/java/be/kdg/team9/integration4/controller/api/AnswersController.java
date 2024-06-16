@@ -4,6 +4,7 @@ import be.kdg.team9.integration4.controller.api.dto.answer.AnswerDto;
 import be.kdg.team9.integration4.controller.api.dto.answer.NewAnswerDto;
 import be.kdg.team9.integration4.converters.ChoiceAnswerDtoConverter;
 import be.kdg.team9.integration4.model.answers.Answer;
+import be.kdg.team9.integration4.model.answers.ChoiceAnswer;
 import be.kdg.team9.integration4.model.answers.OpenAnswer;
 import be.kdg.team9.integration4.model.answers.RangeAnswer;
 import be.kdg.team9.integration4.model.question.Question;
@@ -123,6 +124,9 @@ public class AnswersController {
                         RangeAnswer rangeAnswer = (RangeAnswer) answer;
                         csvPrinter.printRecord(rangeAnswer.getAnswerId(), rangeAnswer.getSurveyId(), rangeAnswer.getUserId(), answerType, rangeAnswer.getRange_answer(), rangeAnswer.getAnswerTime());
                         break;
+                    case "ChoiceAnswer":
+                        ChoiceAnswer choiceAnswer = (ChoiceAnswer) answer;
+                        csvPrinter.printRecord(choiceAnswer.getAnswerId(), choiceAnswer.getSurveyId(), choiceAnswer.getoption().getOptionText());
                     // TODO: Add more cases for other types of answers
                     default:
                         break;
