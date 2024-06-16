@@ -31,16 +31,21 @@ body {
     margin: 0;
 }
 
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #333;
+#alert-container {
     color: white;
-    padding: 20px 0;
-    text-align: center;
+    background-color: red;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 
+#successContainer {
+    color: white;
+    background-color: green;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
 
 /*End Global Styles*/
 

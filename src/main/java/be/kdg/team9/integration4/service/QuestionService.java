@@ -23,15 +23,13 @@ public class QuestionService {
     private final QuestionsRepository questionsRepository;
     private final OptionRepository optionRepository;
     private final OptionService optionService;
-    private final Logger logger;
     private final SurveyRepository surveyRepository;
 
     @Autowired
-    public QuestionService(QuestionsRepository questionsRepository, OptionRepository optionRepository, OptionService optionService, Logger logger, SurveyRepository surveyRepository) {
+    public QuestionService(QuestionsRepository questionsRepository, OptionRepository optionRepository, OptionService optionService, SurveyRepository surveyRepository) {
         this.questionsRepository = questionsRepository;
         this.optionRepository = optionRepository;
         this.optionService = optionService;
-        this.logger = logger;
         this.surveyRepository = surveyRepository;
     }
 

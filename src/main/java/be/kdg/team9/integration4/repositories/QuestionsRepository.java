@@ -17,10 +17,10 @@ public interface QuestionsRepository extends JpaRepository<Question, Long>, Find
 
     List<Question> getQuestionsBySurvey(Survey survey);
 
-    @Transactional
-    void deleteQuestionsBySurvey(Survey survey);
+//    @Transactional
+//    void deleteQuestionsBySurvey(Survey survey);
 
-    @Transactional
+//    @Transactional
     void delete(Question question);
 
 }

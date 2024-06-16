@@ -2,7 +2,6 @@ package be.kdg.team9.integration4.controller.api;
 
 import be.kdg.team9.integration4.controller.api.dto.answer.AnswerDto;
 import be.kdg.team9.integration4.controller.api.dto.answer.NewAnswerDto;
-import be.kdg.team9.integration4.converters.ChoiceAnswerDtoConverter;
 import be.kdg.team9.integration4.model.answers.Answer;
 import be.kdg.team9.integration4.model.answers.ChoiceAnswer;
 import be.kdg.team9.integration4.model.answers.OpenAnswer;
@@ -24,34 +23,31 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/answers")
 public class AnswersController {
     private final AnswerService answerService;
     private final QuestionService questionService;
-    private final ChoiceAnswerDtoConverter choiceAnswerDtoConverter;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public AnswersController(AnswerService answerService, QuestionService questionService, ChoiceAnswerDtoConverter choiceAnswerDtoConverter, ModelMapper modelMapper) {
+    public AnswersController(AnswerService answerService, QuestionService questionService, ModelMapper modelMapper) {
         this.answerService = answerService;
         this.questionService = questionService;
-        this.choiceAnswerDtoConverter = choiceAnswerDtoConverter;
         this.modelMapper = modelMapper;
     }
 
     @PostMapping("/{questionId}")
     public ResponseEntity<AnswerDto> saveAnswerForQuestion(@RequestBody
-                @Valid NewAnswerDto newAnswerDto,
-                @PathVariable Question questionId,
-                @AuthenticationPrincipal CustomUserDetails user) {
+                                                           @Valid NewAnswerDto newAnswerDto,
+                                                           @PathVariable Question questionId,
+                                                           @AuthenticationPrincipal CustomUserDetails user) {
         var question = questionService.getQuestion(questionId.getId());
         long userId = (user != null) ? user.getUserId() : 0;
 
@@ -89,7 +85,7 @@ public class AnswersController {
                             newAnswerDto.getOptions_answer()[i],
                             LocalDateTime.now()
                     );
-                    createdChoiceAnswers.add(modelMapper.map(createdChoiceAnswer,AnswerDto.class));
+                    createdChoiceAnswers.add(modelMapper.map(createdChoiceAnswer, AnswerDto.class));
                 }
                 yield new ResponseEntity<>(
                         createdChoiceAnswers.get(0),
@@ -103,18 +99,15 @@ public class AnswersController {
 
     @GetMapping(value = "/{surveyId}/export-csv", produces = "text/csv")
     public ResponseEntity<byte[]> exportAnswersToCSV(@PathVariable("surveyId") long surveyId) {
-        List<Answer> answers = answerService.getAllSurveys(surveyId);
-
-        if (answers.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+        List<Answer> answersList = answerService.findAllAnswersBySurveyId(surveyId);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        try (CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), CSVFormat.DEFAULT.withHeader("AnswerID", "SurveyID", "UserID", "QuestionType", "AnswerValue", "AnswerTime"))) {
-            for (Answer answer : answers) {
-                String answerType = answer.getClass().getSimpleName();
 
+        try (CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), CSVFormat.DEFAULT.withHeader("AnswerID", "SurveyID", "UserID", "QuestionType", "AnswerValue", "AnswerTime"))) {
+            for (Answer answer : answersList) {
+
+                String answerType = answer.getClass().getSimpleName();
                 switch (answerType) {
                     case "OpenAnswer":
                         OpenAnswer openAnswer = (OpenAnswer) answer;
@@ -126,8 +119,7 @@ public class AnswersController {
                         break;
                     case "ChoiceAnswer":
                         ChoiceAnswer choiceAnswer = (ChoiceAnswer) answer;
-                        csvPrinter.printRecord(choiceAnswer.getAnswerId(), choiceAnswer.getSurveyId(), choiceAnswer.getoption().getOptionText());
-                    // TODO: Add more cases for other types of answers
+                        csvPrinter.printRecord(choiceAnswer.getAnswerId(), choiceAnswer.getSurveyId(), choiceAnswer.getUserId(), answerType, choiceAnswer.getoption().getOptionText(), choiceAnswer.getAnswerTime());
                     default:
                         break;
                 }
@@ -148,7 +140,6 @@ public class AnswersController {
                 .contentType(MediaType.parseMediaType("text/csv"))
                 .body(csvBytes);
     }
-
 
 
 }
