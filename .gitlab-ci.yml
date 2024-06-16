@@ -11,6 +11,7 @@ variables:
   TF_CONTAINER_IMAGE: "registry.gitlab.com/gitlab-org/terraform-images/branches/v1-8-0-1.5:f61b9582b11027bd80fb52ce44d266dc1d75e2dd"
   # java alt image: eclipse-temurin:17.0.10_7-jdk-alpine
   JAVA_CONTAINER_IMAGE: "gradle:8.7-jdk17-alpine"
+  SECURE_FILES_DOWNLOAD_PATH: '${CI_PROJECT_DIR}/deploy/.creds/'
 
 cache:
   paths:
@@ -30,6 +31,7 @@ workflow:
 
 stages:
   - infrastructure
+  - cicd-test
   - build
   - test
   - dockerize
@@ -47,6 +49,19 @@ destroy:
   trigger:
     include: ${CI_PROJECT_DIR}/deploy/.gitlab-ci-destroy.yml
   when: manual
+
+# Test the CI/CD pipeline
+cicd-test:
+  stage: cicd-test
+  allow_failure: true
+  script:
+    - pwd
+    - echo ${CI_BUILDS_DIR}
+    - ls -al ${CI_BUILDS_DIR}
+    - echo ${CI_PROJECT_DIR}
+    - ls -al ${CI_PROJECT_DIR}
+    - ls -al ${CI_PROJECT_DIR}/deploy/.creds
+    - echo ${SA_GCP_FILE}
 
 gradle-build:
   image: ${JAVA_CONTAINER_IMAGE}
@@ -93,11 +108,18 @@ deploy-job:
   image: google/cloud-sdk:latest
   stage: deploy
   script:
-    - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
+    # Download Gitlab secure files in project
+    # https://docs.gitlab.com/ee/ci/secure_files/index.html
+    # - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
+    # Login to Google Cloud
+    # - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
+    - gcloud auth login --cred-file=${SA_GCP_FILE}
+    # Copy the docker-compose file to the VM
     - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/docker-compose.yml admin@votingly-testing-vm:/home/admin --zone "europe-west1-b" --project "int4t9"
+    # Copy the deploy script to the VM
     - gcloud -q compute scp ${CI_PROJECT_DIR}/deploy/vm_res/deploy.sh admin@votingly-testing-vm:/tmp --zone "europe-west1-b" --project "int4t9" --strict-host-key-checking=no
+    # Run the deploy script on the VM
     - gcloud -q compute ssh admin@votingly-testing-vm --zone "europe-west1-b" --project "int4t9" --command='bash /tmp/deploy.sh'
-  # when: manual
   dependencies:
     - dockerize-job
 
