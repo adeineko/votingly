@@ -31,7 +31,7 @@ body {
     margin: 0;
 }
 
-#alert-container {
+#alertContainer {
     color: white;
     background-color: red;
     padding: 10px;
