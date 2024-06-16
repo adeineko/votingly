@@ -110,7 +110,10 @@ deploy-job:
   script:
     # Download Gitlab secure files in project
     # https://docs.gitlab.com/ee/ci/secure_files/index.html
-    - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
+    # - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
+    - mkdir -p ${CI_PROJECT_DIR}/deploy/.creds
+    - cd ${CI_PROJECT_DIR}/deploy/.creds
+    - echo $SA_GCP | base64 -d > ${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json && echo "Service account successfully decoded"
     # Login to Google Cloud
     - gcloud auth login --cred-file=${CI_PROJECT_DIR}/deploy/.creds/gcloud_sa_compute_admin.json
     # - gcloud auth login --cred-file=${SA_GCP_FILE}
