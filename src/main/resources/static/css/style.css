@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Syne&display=swap');
 
-
 /* Global styles */
 body {
     font-family: 'Inter', sans-serif;
@@ -46,6 +45,7 @@ body {
     margin-bottom: 10px;
     border-radius: 5px;
 }
+
 #color_canvas {
     display: none;
     position: absolute;
@@ -56,9 +56,9 @@ body {
     border: 1px solid #ccc;
 }
 
-/*End Global Styles*/
+/* End Global Styles */
 
-/*Account Page*/
+/* Account Page */
 
 .header-account {
     background-color: #007bff;
@@ -93,9 +93,9 @@ body {
     gap: 10px;
 }
 
-/*End Account Page*/
+/* End Account Page */
 
-/*Login Page*/
+/* Login Page */
 .containerLogin {
     height: 100vh;
     width: 100%;
@@ -123,12 +123,11 @@ body {
 
 .formLogin {
     margin-top: 30px;
-
 }
 
-/*End Login Page*/
+/* End Login Page */
 
-/*SignUp Page*/
+/* SignUp Page */
 .bodySign {
     margin: 0;
     padding: 0;
@@ -158,9 +157,9 @@ body {
     margin-top: 30px;
 }
 
-/*End SignUp Page*/
+/* End SignUp Page */
 
-/*Surveys Page*/
+/* Surveys Page */
 .survey-item {
     cursor: pointer;
     margin-bottom: 20px;
@@ -170,8 +169,7 @@ body {
     background-color: #f8f9fa;
 }
 
-/*End Surveys Page*/
-
+/* End Surveys Page */
 
 img {
     max-width: 100%;
@@ -197,7 +195,7 @@ img {
     color: #000000A6;
 }
 
-/*Thank You Page*/
+/* Thank You Page */
 .cont {
     position: relative;
     margin: 2em auto;
@@ -207,12 +205,10 @@ img {
     align-items: center;
     flex-direction: column;
     background-color: #f3f3f3;
-
     border-radius: 5em;
     padding: 2em;
     max-width: 80%;
     max-height: 60%;
-
     box-shadow: 0 0 20px 26px rgba(0, 0, 0, 0.19)
 }
 
@@ -233,9 +229,9 @@ img {
     font-size: 1.5vw;
 }
 
-/*End Thank You Page*/
+/* End Thank You Page */
 
-/*Pop Up Subscribe*/
+/* Pop Up Subscribe */
 .thankYouPage {
     background-color: #0C6EFD;
     font-family: 'Syne', sans-serif;
@@ -279,10 +275,9 @@ input[type="email"] {
     box-sizing: border-box;
 }
 
-/*End Pop Up Subscribe*/
+/* End Pop Up Subscribe */
 
-
-/*Index Page*/
+/* Index Page */
 .jumbotron {
     background-color: #007bff;
     color: #fff;
@@ -294,8 +289,7 @@ input[type="email"] {
     padding: 20px;
 }
 
-/*End Index Page*/
-
+/* End Index Page */
 
 .button button {
     border-radius: 0.7em;
@@ -422,10 +416,9 @@ input[type="email"] {
 
 }
 
-/*Surveys Page - button view for admins*/
+/* Surveys Page - button view for admins */
 .button-container {
     display: flex;
-
     justify-content: flex-start;
 }
 
@@ -433,10 +426,9 @@ input[type="email"] {
     margin-right: 10px;
 }
 
-/*End Surveys Page - button view for admins*/
+/* End Surveys Page - button view for admins */
 
-
-/*Header*/
+/* Header */
 .navbar-nav {
     display: flex;
     align-items: center;
@@ -456,7 +448,7 @@ input[type="email"] {
     white-space: nowrap;
 }
 
-/*Header End*/
+/* Header End */
 
 /* Features page layout */
 .page-content {
@@ -485,7 +477,6 @@ input[type="email"] {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .small-image {
@@ -522,15 +513,25 @@ input[type="email"] {
     z-index: 2; /* Bring text and image above the overlay */
 }
 
+.button-spacing {
+    margin: 4px; /* Optional: Adds margin between buttons */
+}
 
+/* Footer */
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+}
 
+footer .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-
-
-
-
-
-
-
-
-
+/* End Footer */

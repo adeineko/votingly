@@ -283,8 +283,8 @@ async function saveAnswer() {
     });
 
     if (response.status === 201) {
-        // const savedAnswer = await response.json();
-        // console.log("Successfully saved answer:", savedAnswer);
+        const savedAnswer = await response.json();
+        console.log("Successfully saved answer:", savedAnswer);
     } else {
         console.error("Failed to save answer:", response.status);
         alert("Failed to save answer. Please try again.");
