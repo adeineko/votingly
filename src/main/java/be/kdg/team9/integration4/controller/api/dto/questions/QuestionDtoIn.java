@@ -12,7 +12,7 @@ public class QuestionDtoIn {
     @NotBlank
     private String questionName;
 
-    @NotBlank
+    @NotNull
     private QuestionType questionType;
 
     @NotNull

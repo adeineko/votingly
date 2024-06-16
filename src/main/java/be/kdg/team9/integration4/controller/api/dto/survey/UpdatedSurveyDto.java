@@ -1,11 +1,7 @@
-package be.kdg.team9.integration4.controller.api.dto;
+package be.kdg.team9.integration4.controller.api.dto.survey;
 
-import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDtoIn;
 import be.kdg.team9.integration4.model.SurveyType;
-import be.kdg.team9.integration4.model.question.Question;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 

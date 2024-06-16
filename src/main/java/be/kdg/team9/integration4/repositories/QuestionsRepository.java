@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface QuestionsRepository extends JpaRepository<Question, Long>, FindAllQuestionBySurveyId {
@@ -22,5 +23,9 @@ public interface QuestionsRepository extends JpaRepository<Question, Long>, Find
 
 //    @Transactional
     void delete(Question question);
+
+    Optional<Question> findBySurveySurveyId(long id);
+
+    Question findByIdAndSurveySurveyId(long id, long surveyId);
 
 }

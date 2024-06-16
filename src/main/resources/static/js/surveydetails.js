@@ -1,33 +1,19 @@
-import {token, header} from "./util/csrf.js";
+import { token, header } from "./util/csrf.js";
 
 let surveyIdInput = document.getElementById("surveyId");
 
-console.log("surveyIdInput", surveyIdInput);
-
 let questionCount = 0;
-let questions = []; // Variable to store all questions
-
-// Sample survey data
-// const sampleSurvey = {
-//     surveyName: "Sample Survey",
-//     surveyType: "CIRCULAR",
-//     questions: [
-//         { text: "Sample question 1", type: "open" },
-//         { text: "Sample question 2", type: "multipleChoice", choices: ["Option 1", "Option 2"] },
-//         { text: "Sample question 3", type: "open" }
-//     ]
-// };
+let questions = [];
 
 const surveyNameInput = document.getElementById("surveyName");
 const surveyTypeInput = document.getElementById("surveyType");
 
-// Function to populate survey details
-function populateSurveyDetails(surveyName, surveyType) {
+function populateSurveyDetails(surveyName, surveyType, questionsData) {
     surveyNameInput.value = surveyName;
     surveyTypeInput.value = surveyType;
 
-    questions.forEach(question => {
-        createQuestion(question);
+    questionsData.forEach((question, index) => {
+        createQuestion(question, index + 1);
     });
 }
 
@@ -46,85 +32,75 @@ async function getSurveyDetails() {
         }
 
         const data = await response.json();
-        console.log(data);
-        console.log(surveyIdInput.value)
-        questions = data.questions
-        // Populate survey details on page load
-        populateSurveyDetails(data.surveyName, data.surveyType);
-        return data;
+        questions = data.questions;
+        populateSurveyDetails(data.surveyName, data.surveyType, questions);
     } catch (error) {
         console.error("Failed to fetch survey details:", error);
         alert("Failed to fetch survey details. Please check the console for more details.");
     }
-
 }
 
-// Function to create a new question block
-function createQuestion(question = {text: "", type: "open", choices: []}) {
+function createQuestion(question = { questionName: "", questionType: "OPEN", options: [] }, questionNumber) {
     questionCount++;
     const questionDiv = document.createElement("div");
-    questionDiv.setAttribute('id', `questionBlock${questionCount}`);
+    questionDiv.setAttribute('id', `questionBlock${questionNumber}`);
     questionDiv.classList.add("mb-3", "question-block");
 
     questionDiv.innerHTML = `
         <div class="d-flex justify-content-between align-items-center">
-            <label for="question${questionCount}" class="form-label">Question ${questionCount}</label>
+            <label for="question${questionNumber}" class="form-label">Question ${questionNumber}</label>
         </div>
-        <input type="text" class="form-control" id="question${questionCount}" name="questions[${questionCount}][text]" value="${question.questionName}" required>
-        <select class="form-select mt-2" id="questionType${questionCount}" name="questions[${questionCount}][type]">
-            <option value="OPEN" ${question.questionType === 'open' ? 'selected' : ''}>Open</option>
-            <option value="CHOICE" ${question.questionType === 'multipleChoice' ? 'selected' : ''}>Multiple Choice</option>
+        <input type="text" class="form-control" id="question${questionNumber}" name="questions[${questionNumber}][questionName]" value="${question.questionName}" required>
+        <select class="form-select mt-2" id="questionType${questionNumber}" name="questions[${questionNumber}][questionType]">
+            <option value="OPEN" ${question.questionType === 'OPEN' ? 'selected' : ''}>Open</option>
+            <option value="CHOICE" ${question.questionType === 'CHOICE' ? 'selected' : ''}>Choice</option>
+            <option value="RANGE" ${question.questionType === 'RANGE' ? 'selected' : ''}>Range</option>
         </select>
-        <div id="choicesContainer${questionCount}" class="choices-container mt-2"></div>
+        <div id="choicesContainer${questionNumber}" class="choices-container mt-2"></div>
     `;
 
     document.getElementById("questionContainer").appendChild(questionDiv);
-    addTypeChangeListener(questionCount, question.questionType);
+    addTypeChangeListener(questionNumber, question.questionType);
 
-    // Add "Remove" button to the new last question
-    if (questionCount > 1) {
-        addRemoveButton(questionDiv, questionCount);
+    if (question.questionType === 'CHOICE') {
+        question.options.forEach(choice => {
+            addChoiceInput(questionNumber, choice.optionText);
+        });
+    } else if (question.questionType === 'RANGE') {
+        addRangeInputs(questionNumber, question);
     }
 
-    // Populate choices if question type is multipleChoice
-    if (question.questionType === 'multipleChoice') {
-        question.options.forEach(choice => {
-            addChoiceInput(questionCount, choice);
-        });
+    if (questionCount > 1) {
+        addRemoveButton(questionDiv, questionNumber);
     }
 }
 
-// Adds change listener to question type selector
 function addTypeChangeListener(count, type) {
     const typeSelect = document.getElementById(`questionType${count}`);
     typeSelect.addEventListener('change', () => handleTypeChange(count));
-    handleTypeChange(count, type); // Initialize choices container visibility
+    handleTypeChange(count, type);
 }
 
-// Handles changes to question type
 function handleTypeChange(questionNumber, type) {
     const typeValue = type || document.getElementById(`questionType${questionNumber}`).value;
     const choicesContainer = document.getElementById(`choicesContainer${questionNumber}`);
+    choicesContainer.innerHTML = '';
 
-    if (typeValue === 'multipleChoice') {
-        choicesContainer.innerHTML = ''; // Clear previous choices
+    if (typeValue === 'CHOICE') {
         const addChoiceBtn = document.createElement("button");
         addChoiceBtn.textContent = "Add Choice";
         addChoiceBtn.type = "button";
         addChoiceBtn.className = "btn btn-info btn-sm mt-2";
         addChoiceBtn.onclick = () => addChoiceInput(questionNumber);
         choicesContainer.appendChild(addChoiceBtn);
-        if (type !== 'multipleChoice') {
-            addChoiceInput(questionNumber); // Add first choice input immediately
+        if (!type) {
+            addChoiceInput(questionNumber);
         }
-        choicesContainer.style.display = 'block';
-    } else {
-        choicesContainer.innerHTML = ''; // Clear choices
-        choicesContainer.style.display = 'none';
+    } else if (typeValue === 'RANGE') {
+        addRangeInputs(questionNumber);
     }
 }
 
-// Adds a new choice input for a multiple choice question
 function addChoiceInput(questionNumber, value = "") {
     const choiceContainer = document.createElement("div");
     choiceContainer.className = "input-group mb-2";
@@ -148,22 +124,50 @@ function addChoiceInput(questionNumber, value = "") {
     document.getElementById(`choicesContainer${questionNumber}`).appendChild(choiceContainer);
 }
 
-// Function to remove a question block
+function addRangeInputs(questionNumber, question = {}) {
+    const choicesContainer = document.getElementById(`choicesContainer${questionNumber}`);
+
+    const minInput = document.createElement("input");
+    minInput.type = "number";
+    minInput.className = "form-control mt-2";
+    minInput.placeholder = "Minimum value";
+    minInput.id = `minInput${questionNumber}`;
+    minInput.name = `questions[${questionNumber}][min]`;
+    minInput.value = question.min || "";
+
+    const maxInput = document.createElement("input");
+    maxInput.type = "number";
+    maxInput.className = "form-control mt-2";
+    maxInput.placeholder = "Maximum value";
+    maxInput.id = `maxInput${questionNumber}`;
+    maxInput.name = `questions[${questionNumber}][max]`;
+    maxInput.value = question.max || "";
+
+    const stepInput = document.createElement("input");
+    stepInput.type = "number";
+    stepInput.className = "form-control mt-2";
+    stepInput.placeholder = "Step value";
+    stepInput.id = `stepInput${questionNumber}`;
+    stepInput.name = `questions[${questionNumber}][step]`;
+    stepInput.value = question.step || "";
+
+    choicesContainer.appendChild(minInput);
+    choicesContainer.appendChild(maxInput);
+    choicesContainer.appendChild(stepInput);
+}
+
 function removeQuestion(questionNumber) {
     const questionDiv = document.getElementById(`questionBlock${questionNumber}`);
     if (questionDiv) {
         questionDiv.parentNode.removeChild(questionDiv);
 
-        // Update IDs of remaining questions
         const remainingQuestions = document.querySelectorAll('.question-block');
         remainingQuestions.forEach((question, index) => {
-            const oldQuestionNumber = parseInt(question.id.replace('questionBlock', ''));
             question.id = `questionBlock${index + 1}`;
             question.querySelector('.remove-question-btn').dataset.questionId = index + 1;
             question.querySelector('label').textContent = `Question ${index + 1}`;
         });
 
-        // Add "Remove" button to new last question, if it exists
         const lastQuestionDiv = document.querySelector('.question-block:last-child');
         if (lastQuestionDiv && questionCount > 1) {
             const removeButton = lastQuestionDiv.querySelector('.remove-question-btn');
@@ -175,7 +179,6 @@ function removeQuestion(questionNumber) {
     questionCount--;
 }
 
-// Function to add "Remove" button to a question
 function addRemoveButton(questionDiv, questionNumber) {
     const removeButton = document.createElement("button");
     removeButton.type = "button";
@@ -186,7 +189,6 @@ function addRemoveButton(questionDiv, questionNumber) {
     questionDiv.querySelector('.d-flex').appendChild(removeButton);
 }
 
-// Function to remove the survey
 async function removeSurvey() {
     const surveyId = surveyIdInput.value;
     try {
@@ -202,8 +204,7 @@ async function removeSurvey() {
             throw new Error('Network response was not ok.');
         }
 
-        console.log("Survey deleted successfully!");
-        alert("Survey deleted successfully!")
+        alert("Survey deleted successfully!");
         window.location.href = '/surveys';
     } catch (error) {
         console.error("Failed to delete survey:", error);
@@ -211,16 +212,12 @@ async function removeSurvey() {
     }
 }
 
-// Adds global event listeners on document ready
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("addQuestionBtn").addEventListener("click", createQuestion);
 
-    // Edit survey name
-    document.getElementById("surveyName").addEventListener("click", enableEdit("surveyName"));
-    // Edit survey type
-    document.getElementById("surveyType").addEventListener("click", enableEdit("surveyType"));
+    document.getElementById("surveyName").addEventListener("click", () => enableEdit("surveyName"));
+    document.getElementById("surveyType").addEventListener("click", () => enableEdit("surveyType"));
 
-    // Enable save changes button when any input changes
     document.querySelectorAll('input, select').forEach(input => {
         input.addEventListener('input', () => {
             document.getElementById("saveChangesBtn").disabled = false;
@@ -228,78 +225,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById("removeSurveyBtn").addEventListener("click", removeSurvey);
+    document.getElementById("saveChangesBtn").addEventListener("click", changeSurvey);
 
-    // Save changes
-    document.getElementById("saveChangesBtn").addEventListener("click", saveChanges);
+    getSurveyDetails();
 });
 
-// Function to enable editing of survey details
-function enableEdit(elementId) {
-    const element = document.getElementById(elementId);
-    element.disabled = !element.disabled;
-}
+async function changeSurvey(event) {
+    event.preventDefault();
+    const surveyId = surveyIdInput.value;
+    const surveyName = document.getElementById("surveyName").value;
+    const surveyType = document.getElementById("surveyType").value;
 
-// Function to save changes
-function saveChanges() {
-    // You can implement the logic to save changes to the server here
-    console.log("Changes saved!");
-    // After saving changes, you may want to disable the save button again
-    document.getElementById("saveChangesBtn").disabled = true;
-}
+    const questions = [];
+    for (let i = 1; i <= questionCount; i++) {
+        const questionName = document.getElementById(`question${i}`).value;
+        const questionType = document.getElementById(`questionType${i}`).value;
 
-
-/**
- * @type {HTMLButtonElement}
- */
-const updateButton = document.getElementById("saveChangesBtn");
-const surveyId = document.getElementById("surveyId");
-
-async function changeSurvey() {
-    // Prepare the questions data
-    const questionsData = Array.from(document.querySelectorAll(".question-block")).map(questionBlock => {
-        const questionId = questionBlock.id.replace("questionBlock", "");
-        const questionName = document.getElementById(`question${questionId}`).value;
-        const questionType = document.getElementById(`questionType${questionId}`).value;
-
-        let question = {
-            questionName,
-            questionType,
-            options: []
-        };
+        let question = { questionName, questionType };
 
         if (questionType === 'CHOICE') {
-            question.options = Array.from(document.querySelectorAll(`#choicesContainer${questionId} input`)).map(choiceInput => ({
-                optionName: choiceInput.value
-            }));
+            const choiceInputs = document.querySelectorAll(`#choicesContainer${i} input[name='questions[${i}][choices][]']`);
+            question.choices = Array.from(choiceInputs).map(input => ({ optionText: input.value }));
+        } else if (questionType === 'RANGE') {
+            question.min = document.getElementById(`minInput${i}`).value;
+            question.max = document.getElementById(`maxInput${i}`).value;
+            question.step = document.getElementById(`stepInput${i}`).value;
         }
 
-        return question;
-    });
+        questions.push(question);
+    }
 
-    // Prepare the request body
-    const requestBody = {
-        surveyName: surveyNameInput.value,
-        surveyType: surveyTypeInput.value,
-        questions: questionsData
-    };
+    try {
+        const response = await fetch(`/api/surveys/${surveyId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                [header]: token
+            },
+            body: JSON.stringify({
+                surveyName,
+                surveyType,
+                questions
+            })
+        });
 
-    const response = await fetch(`/api/surveys/${surveyId.value}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-            [header]: token
-        },
-        body: JSON.stringify(requestBody)
-    });
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
+        }
 
-    if (response.status === 204) {
-        updateButton.disabled = true;
         alert("Survey updated successfully!");
-    } else {
-        alert("Something went wrong!");
+        window.location.href = '/surveys';
+    } catch (error) {
+        console.error("Failed to update survey:", error);
+        alert("Failed to update survey. Please check the console for more details.");
     }
 }
-
-updateButton?.addEventListener("click", changeSurvey);
-
-window.addEventListener('load', getSurveyDetails);
