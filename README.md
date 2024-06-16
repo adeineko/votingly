@@ -71,3 +71,8 @@ Run Tests (specify spring active profile)
 ```
 ./gradlew -PspringProfilesActiveTests=<profile_name> check
 ```
+
+Continuously rebuild on code changes
+```
+./gradlew -t classes
+```
