@@ -132,7 +132,7 @@ function handleTypeChange(questionNumber) {
 
         const checkboxDiv = document.createElement("div");
         checkboxDiv.className = "col-12 col-sm-auto";
-        s
+
         checkboxDiv.appendChild(checkIsMulti);
         checkboxDiv.appendChild(checkIsMultiLabel);
 
