@@ -1,4 +1,5 @@
 import {token, header} from "./util/csrf.js";
+
 const handleUpdateButton = document.getElementById("saveChangesBtn");
 
 let surveyIdInput = document.getElementById("surveyId");
@@ -203,33 +204,33 @@ async function removeSurvey() {
             throw new Error('Network response was not ok.');
         }
 
-        alert("Survey deleted successfully!");
-        window.location.href = '/surveys';
+        const successContainer = document.getElementById('successContainer')
+        successContainer.innerHTML = 'Deleted successfully!'
+        successContainer.style.display = 'block'
+        setTimeout(() => {
+            window.location.href = '/surveys';
+        }, 1000);
     } catch (error) {
         console.error("Failed to delete survey:", error);
         alert("Failed to delete survey. Please check the console for more details.");
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("addQuestionBtn").addEventListener("click", createQuestion);
+async function handleUpdate() {
+    const updatedQuestions = [];
 
-    document.querySelectorAll('input, select').forEach(input => {
-        input.addEventListener('input', () => {
-            document.getElementById("saveChangesBtn").disabled = false;
+    document.querySelectorAll('.question-block').forEach((questionBlock, index) => {
+        const questionNumber = index + 1;
+        const questionNameTextArea = questionBlock.querySelector(`#question${questionNumber}`);
+        const questionType = questionBlock.querySelector(`#questionType${questionNumber}`);
+
+        updatedQuestions.push({
+            id: questionNumber,
+            questionName: questionNameTextArea.value,
+            questionType: questionType.value
         });
     });
 
-    document.getElementById("removeSurveyBtn").addEventListener("click", removeSurvey);
-    // handleUpdateButton.addEventListener("click", changeSurvey);
-    handleUpdateButton?.addEventListener('click', handleUpdate)
-
-    getSurveyDetails();
-});
-
-const surveyNameTextArea = document.getElementById("surveyName");
-const surveyType = document.getElementById("surveyType");
-async function handleUpdate() {
     const response = await fetch(`/api/surveys/${surveyIdInput.value}`, {
         method: 'PATCH',
         headers: {
@@ -237,99 +238,31 @@ async function handleUpdate() {
             [header]: token
         },
         body: JSON.stringify({
-            surveyName: surveyNameTextArea.value,
-            surveyType: surveyType.value,
-            questions:
-                {
-                    id: 1,
-                    questionName: Test,
-                    questionType: OPEN
-                }
+            surveyName: surveyNameInput.value,
+            surveyType: surveyTypeInput.value,
+            questions: updatedQuestions
         })
     })
     if (response.status === 204) {
         handleUpdateButton.disabled = true
     } else {
-        alert('Something went wrong!')
+        alert('Something went wrong!' + response.status)
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("addQuestionBtn").addEventListener("click", createQuestion);
 
-async function changeSurvey(event) {
-    event.preventDefault();
-    const surveyId = surveyIdInput.value;
-    const surveyName = document.getElementById("surveyName").value;
-    const surveyType = document.getElementById("surveyType").value;
-
-    try {
-        const response = await fetch(`/api/surveys/${surveyId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                [header]: token
-            },
-            body: JSON.stringify({
-                surveyName: surveyName,
-                surveyType: surveyType,
-                questions:
-                    {
-                        id: 1,
-                        questionName: Test,
-                        questionType: OPEN
-                    }
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok.');
+    document.addEventListener('input', (event) => {
+        const target = event.target;
+        if (target.matches('input, select')) {
+            handleUpdateButton.disabled = false;
         }
+    });
 
-        alert("Survey updated successfully!");
-        window.location.href = '/surveys';
-    } catch (error) {
-        console.error("Failed to update survey:", error);
-        alert("Failed to update survey. Please check the console for more details.");
-    }
+    document.getElementById("removeSurveyBtn").addEventListener("click", removeSurvey);
 
-    const questions = [];
-    for (let i = 1; i <= questionCount; i++) {
-        const questionName = document.getElementById(`question${i}`).value;
-        const questionType = document.getElementById(`questionType${i}`).value;
+    getSurveyDetails();
+});
 
-        let question = {questionName, questionType};
-
-        if (questionType === 'CHOICE') {
-            const choiceInputs = document.querySelectorAll(`#choicesContainer${i} input[name='questions[${i}][choices][]']`);
-            question.choices = Array.from(choiceInputs).map(input => ({optionText: input.value}));
-        } else if (questionType === 'RANGE') {
-            question.min = document.getElementById(`minInput${i}`).value;
-            question.max = document.getElementById(`maxInput${i}`).value;
-            question.step = document.getElementById(`stepInput${i}`).value;
-        }
-
-        questions.push(question);
-    }
-
-    try {
-        const response = await fetch(`/api/surveys/${surveyId}/questions`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                [header]: token
-            },
-            body: JSON.stringify({
-                questions
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok.');
-        }
-
-        alert("Questions updated successfully!");
-        window.location.href = '/surveys';
-    } catch (error) {
-        console.error("Failed to update question:", error);
-        alert("Failed to update question. Please check the console for more details.");
-    }
-}
+handleUpdateButton?.addEventListener('click', handleUpdate)

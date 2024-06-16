@@ -29,12 +29,17 @@
     </div>
     <div id="questionContainer">
     </div>
+    <div class="mb-3">
+        <div id="alertContainer" style="display: none"></div>
+        <div id="successContainer" style="display: none;"></div>
+    </div>
     <div class="button-group">
         <button type="button" class="btn btn-outline-primary" id="addQuestionBtn">Add Question</button>
         <button type="button" class="btn btn-success" id="saveChangesBtn" disabled>Save Changes</button>
         <button id="removeSurveyBtn" class="btn btn-outline-danger">Remove Survey</button>
     </div>
 </div>
+
 <div th:replace="~{footer :: footer}"></div>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
