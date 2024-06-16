@@ -2,6 +2,7 @@ package be.kdg.team9.integration4.controller.api;
 
 import be.kdg.team9.integration4.controller.api.dto.answer.AnswerDto;
 import be.kdg.team9.integration4.controller.api.dto.answer.NewAnswerDto;
+import be.kdg.team9.integration4.controller.api.dto.answer.UserAnswerStatisticsDto;
 import be.kdg.team9.integration4.model.answers.Answer;
 import be.kdg.team9.integration4.model.answers.ChoiceAnswer;
 import be.kdg.team9.integration4.model.answers.OpenAnswer;
@@ -25,9 +26,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/answers")
@@ -141,5 +145,24 @@ public class AnswersController {
                 .body(csvBytes);
     }
 
+    @GetMapping("/{surveyId}/statistics")
+    public List<UserAnswerStatisticsDto> answerStatistics(@PathVariable("surveyId") long id) {
+        List<AnswerDto> answers = answerService.findAllAnswersBySurveyId(id)
+                .stream()
+                .map(answer -> modelMapper.map(answer, AnswerDto.class))
+                .toList();
 
+        Map<LocalDate, Long> answerCountsByDate = answers.stream()
+                .collect(Collectors.groupingBy(
+                        answer -> answer.getAnswerTime().toLocalDate(),
+                        Collectors.counting()
+                ));
+
+        List<UserAnswerStatisticsDto> statistics = new ArrayList<>();
+        for (Map.Entry<LocalDate, Long> entry : answerCountsByDate.entrySet()) {
+            statistics.add(new UserAnswerStatisticsDto(entry.getKey(), entry.getValue()));
+        }
+
+        return statistics;
+    }
 }

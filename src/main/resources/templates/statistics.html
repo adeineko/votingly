@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Statistics</title>
+    <thymeleaf th:replace="~{header :: meta_script_link}"/>
+    <script src="/js/statistics.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
+
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+    </style>
+</head>
+<body>
+<header th:replace="~{header :: header}"></header>
+
+<input type="hidden" id="surveyId" th:value="${survey.surveyId}">
+<div class="container-fluid">
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
+<div th:replace="~{footer :: footer}"></div>
+</body>
+</html>

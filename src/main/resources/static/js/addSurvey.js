@@ -232,11 +232,7 @@ async function submitSurvey(event) {
 
         if (questionType === 'CHOICE') {
             const checkBoxInput = document.getElementById(`checkBoxInput${count}`);
-            if (checkBoxInput.checked) {
-                question.multiChoice = true
-            } else {
-                question.multiChoice = false
-            }
+            question.multiChoice = !!checkBoxInput.checked;
             questionBlock.querySelectorAll(`input[name="questions[${count}][choices][]"]`).forEach(choiceInput => {
                 choices.push(choiceInput.value);
             });

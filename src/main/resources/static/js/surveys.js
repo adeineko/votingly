@@ -18,7 +18,6 @@ if (userType !== 'SUPERVISOR') {
 }
 
 
-
 async function getSurveys() {
     const response = await fetch('/api/surveys', {
         method: 'GET',
@@ -92,8 +91,17 @@ async function getSurveys() {
 
                 }
             });
+
+            const statisticsButton = document.createElement('div');
+            statisticsButton.hidden = userType !== 'P_ADMIN';
+            statisticsButton.classList.add('btn', 'btn-primary', 'button-spacing');
+            statisticsButton.innerText = 'View Statistics';
+            statisticsButton.addEventListener('click', () => {
+                window.location.href = `/surveys/${survey.surveyId}/statistics`;
+            });
             buttonContainer.appendChild(viewDetailsButton);
             buttonContainer.appendChild(exportDataCsvDataButton);
+            buttonContainer.appendChild(statisticsButton);
             document.getElementById('buttonContainer').appendChild(buttonContainer);
 
             innerDiv.appendChild(titleElement);

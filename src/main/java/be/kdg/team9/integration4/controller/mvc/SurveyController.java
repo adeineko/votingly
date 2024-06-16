@@ -67,4 +67,11 @@ public class SurveyController {
         model.addAttribute("surveyId", id);
         return "supervisorprojects";
     }
+
+    @GetMapping("/{surveyId}/statistics")
+    public String statistics(@PathVariable("surveyId") long id, Model model) {
+        Survey survey = surveyService.getSurvey(id);
+        model.addAttribute("survey", survey);
+        return "statistics";
+    }
 }
