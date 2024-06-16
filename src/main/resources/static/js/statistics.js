@@ -29,7 +29,7 @@ function renderChart(data) {
 
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
-        type: 'line', // Line chart to show count of answers over time
+        type: 'line',
         data: {
             labels: labels,
             datasets: [{
@@ -38,7 +38,7 @@ function renderChart(data) {
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
-                fill: false // To have a line chart without filling the area under the line
+                fill: false
             }]
         },
         options: {
@@ -46,9 +46,9 @@ function renderChart(data) {
             maintainAspectRatio: false,
             scales: {
                 x: {
-                    type: 'time', // X axis type as time
+                    type: 'time',
                     time: {
-                        unit: 'day' // Display by day, adjust as needed (e.g., 'month', 'year')
+                        unit: 'day'
                     },
                     title: {
                         display: true,
@@ -67,5 +67,4 @@ function renderChart(data) {
     });
 }
 
-// Fetch data and render chart when the page is loaded
 document.addEventListener('DOMContentLoaded', fetchDataAndRender);

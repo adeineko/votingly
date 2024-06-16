@@ -1,12 +1,9 @@
 package be.kdg.team9.integration4.security;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
-import java.util.Set;
 
 public class CustomUserDetails extends User {
     private final long userId;
@@ -41,11 +38,5 @@ public class CustomUserDetails extends User {
 
     public String getUserType() {
         return userType;
-    }
-    public static boolean hasRole(String role) {
-        Collection<? extends GrantedAuthority> authorities =
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-
-        return authorities.contains(new SimpleGrantedAuthority(role));
     }
 }
