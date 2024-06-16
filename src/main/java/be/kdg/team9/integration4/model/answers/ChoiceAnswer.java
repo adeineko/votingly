@@ -8,8 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +15,6 @@ import java.time.LocalDateTime;
 @DiscriminatorValue("CHOICE")
 public class ChoiceAnswer extends Answer {
     @ManyToOne(fetch = FetchType.LAZY)
-    // @MapsId
     @JoinColumn(name = "option_id")
     @Nullable
     private Option option;

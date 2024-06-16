@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AnswerRepository extends JpaRepository<Answer, Long> {
-    Answer save(OpenAnswer openAnswerEntity);
-
-    Answer save(RangeAnswer rangeAnswerEntity);
+public interface AnswerRepository extends JpaRepository<Answer, Long>, FindAllAnswersBySurveyId {
+//    Answer save(OpenAnswer openAnswerEntity);
+//
+//    Answer save(RangeAnswer rangeAnswerEntity);
 
     @Query("SELECT a FROM Answer a JOIN FETCH a.question WHERE a.surveyId = :surveyId")
     List<Answer> findBySurveyId(long surveyId);

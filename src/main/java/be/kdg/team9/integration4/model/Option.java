@@ -20,9 +20,6 @@ public class Option {
     @JoinColumn(name = "question", nullable = false)
     private ChoiceQuestion question;
 
-    // @OneToOne(mappedBy = "option")
-    // @PrimaryKeyJoinColumn
-    // private ChoiceAnswer answer;
 
     public Option() {
     }

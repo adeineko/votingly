@@ -132,7 +132,7 @@ function handleTypeChange(questionNumber) {
 
         const checkboxDiv = document.createElement("div");
         checkboxDiv.className = "col-12 col-sm-auto";
-        s
+
         checkboxDiv.appendChild(checkIsMulti);
         checkboxDiv.appendChild(checkIsMultiLabel);
 
@@ -232,7 +232,7 @@ async function submitSurvey(event) {
 
         if (questionType === 'CHOICE') {
             const checkBoxInput = document.getElementById(`checkBoxInput${count}`);
-            question.isMultipleChoice = checkBoxInput.checked;
+            question.multiChoice = !!checkBoxInput.checked;
             questionBlock.querySelectorAll(`input[name="questions[${count}][choices][]"]`).forEach(choiceInput => {
                 choices.push(choiceInput.value);
             });
@@ -264,9 +264,16 @@ async function submitSurvey(event) {
     });
 
     if (response.status === 201) {
-        alert('Survey created successfully!');
-        window.location.href = '/surveys';
+        const successContainer = document.getElementById('successContainer')
+        successContainer.innerHTML = 'Survey added successfully!'
+        successContainer.style.display = 'block'
+        setTimeout(() => {
+            window.location.href = '/surveys';
+        }, 1000);
     } else {
-        alert('Something went wrong. Please try again.' + ' ' + response.status);
+        const successContainer = document.getElementById('successContainer')
+        successContainer.style.display = 'none'
+        const errorContainer = document.getElementById('alertContainer')
+        errorContainer.innerHTML = 'Error: ' + response.status
     }
 }

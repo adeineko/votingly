@@ -56,7 +56,7 @@ public class SurveyController {
     public String surveyDetails(@PathVariable("id") long id, Model model) {
         final Survey survey = surveyService.getSurvey(id);
         final List<Question> questions = questionService.getQuestionsBySurvey(survey);
-//        survey.setQuestions(questions);
+        survey.setQuestions(questions);
         final SurveyViewModel viewModel = SurveyViewModel.fromDomain(survey);
         model.addAttribute("survey", viewModel);
         return "surveydetails";
@@ -66,5 +66,12 @@ public class SurveyController {
     public String surveySupervisor(@PathVariable("id") long id, Model model) {
         model.addAttribute("surveyId", id);
         return "supervisorprojects";
+    }
+
+    @GetMapping("/{surveyId}/statistics")
+    public String statistics(@PathVariable("surveyId") long id, Model model) {
+        Survey survey = surveyService.getSurvey(id);
+        model.addAttribute("survey", survey);
+        return "statistics";
     }
 }

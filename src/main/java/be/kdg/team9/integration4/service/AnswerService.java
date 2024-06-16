@@ -1,31 +1,31 @@
 package be.kdg.team9.integration4.service;
 
-import be.kdg.team9.integration4.controller.api.dto.questions.OptionDto;
 import be.kdg.team9.integration4.model.Option;
 import be.kdg.team9.integration4.model.answers.Answer;
 import be.kdg.team9.integration4.model.answers.ChoiceAnswer;
 import be.kdg.team9.integration4.model.answers.OpenAnswer;
-import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.model.answers.RangeAnswer;
+import be.kdg.team9.integration4.model.question.Question;
 import be.kdg.team9.integration4.repositories.AnswerRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
 @Transactional
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    // private final OptionService optionService;
 
     @Autowired
     public AnswerService(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
+    }
+
+    public List<Answer> findAllAnswersBySurveyId(long id) {
+        return answerRepository.findAllBySurveyIds(id);
     }
 
     public Answer saveOpen(long surveyId, long userId, Question question, String answer, LocalDateTime answerTime) {
@@ -41,7 +41,6 @@ public class AnswerService {
     }
 
     public Answer saveChoice(long surveyId, long userId, Question question, long optionId, LocalDateTime answerTime) {
-        // Option option = optionService.getOption(optionId);
         var option = new Option(optionId, "option");
         var choiceAnswerEntity = new ChoiceAnswer(surveyId, userId, question, option, answerTime);
 

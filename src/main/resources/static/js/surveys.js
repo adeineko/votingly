@@ -12,9 +12,10 @@ const addButton = document.getElementById('addButton');
 const supervisorButton = document.getElementById('supervisorButton');
 if (userType !== 'P_ADMIN') {
     addButton.hidden = true;
+}
+if (userType !== 'SUPERVISOR') {
     supervisorButton.hidden = true;
 }
-
 
 
 async function getSurveys() {
@@ -86,12 +87,21 @@ async function getSurveys() {
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
-                } else if (response.status === 204){
+                } else if (response.status === 204) {
 
                 }
             });
+
+            const statisticsButton = document.createElement('div');
+            statisticsButton.hidden = userType !== 'P_ADMIN';
+            statisticsButton.classList.add('btn', 'btn-primary', 'button-spacing');
+            statisticsButton.innerText = 'View Statistics';
+            statisticsButton.addEventListener('click', () => {
+                window.location.href = `/surveys/${survey.surveyId}/statistics`;
+            });
             buttonContainer.appendChild(viewDetailsButton);
             buttonContainer.appendChild(exportDataCsvDataButton);
+            buttonContainer.appendChild(statisticsButton);
             document.getElementById('buttonContainer').appendChild(buttonContainer);
 
             innerDiv.appendChild(titleElement);

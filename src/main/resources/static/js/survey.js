@@ -131,7 +131,7 @@ function resetProgressBar() {
     setTimeout(() => {
         progressBar.style.transition = "width 8s linear";
         progressBar.style.width = "100%";
-    }, 10); // Small delay to allow the DOM to update
+    }, 5); // Small delay to allow the DOM to update
 }
 
 function createOpenQuestion(question) {

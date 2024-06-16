@@ -1,6 +1,8 @@
 package be.kdg.team9.integration4.controller.api;
 
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
+import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDtoIn;
+import be.kdg.team9.integration4.controller.api.dto.questions.UpdateQuestionDto;
 import be.kdg.team9.integration4.controller.api.dto.survey.SurveyDto;
 import be.kdg.team9.integration4.controller.api.dto.survey.SurveyDtoIn;
 import be.kdg.team9.integration4.converters.QuestionDtoConverter;
@@ -62,6 +64,14 @@ public class SurveysController {
         return ResponseEntity.ok(questionDtos);
     }
 
+    @PostMapping("/{id}/questions")
+    ResponseEntity<QuestionDto> changeQuestionsInForm(@PathVariable long id, @RequestBody @Valid UpdateQuestionDto questionDtoIn){
+        var survey = surveyService.getSurvey(id);
+        Question question = questionDtoConverter.convertFromDtoIn(questionDtoIn, survey);
+        Question savedQuestions = questionService.saveQuestion(question);
+        return ResponseEntity.ok(questionDtoConverter.convert(savedQuestions));
+    }
+
     @PostMapping
     public ResponseEntity<SurveyDtoIn> addSurvey(@RequestBody SurveyDtoIn surveyDto) {
         logger.info(surveyDto.toString());
@@ -76,16 +86,12 @@ public class SurveysController {
     }
 
     @PatchMapping("{id}")
-    ResponseEntity<Void> changeSurvey(@PathVariable("id") long surveyId,
-                                      @RequestBody @Valid SurveyDtoIn updatedSurveyDto) {
-        Survey survey = modelMapper.map(surveyId, Survey.class);
-        List<Question> questions = updatedSurveyDto.getQuestions().stream()
-                .map(questionDtoIn -> questionDtoConverter.convertFromDtoIn(questionDtoIn, survey)).toList();
+    ResponseEntity<SurveyDto> changeSurvey(@PathVariable("id") long surveyId,
+                                      @RequestBody @Valid SurveyDto updatedSurveyDto) {
+        Survey survey = surveyDtoConverter.convertFromDto(updatedSurveyDto);
 
-        questionService.updateQuestions(surveyId, questions, updatedSurveyDto.getSurveyName());
-        surveyService.changeSurveyInfo(surveyId, updatedSurveyDto.getSurveyName(), updatedSurveyDto.getSurveyType());
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        Survey updatedSurvey = surveyService.changeSurveyInfo(surveyId, survey);
+        return ResponseEntity.ok(surveyDtoConverter.convertToDto(updatedSurvey));
     }
 
     @GetMapping("/{id}/details")

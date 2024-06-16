@@ -25,13 +25,11 @@ public class AnswerDto {
                      long userId,
                      Question questionId,
                      String answer,
-            /*List<Option> options_answer,*/
                      int range_answer,
                      LocalDateTime answerTime
     ) {
 
         this.answer = answer;
-        /* this.options_answer = options_answer;*/
         this.range_answer = range_answer;
         this.answerTime = answerTime;
     }
