@@ -111,6 +111,7 @@ async function getSurveys() {
             surveyItem.appendChild(innerDiv);
             surveyItem.appendChild(viewDetailsButton);
             surveyItem.appendChild(exportDataCsvDataButton);
+            surveyItem.appendChild(statisticsButton);
             surveysList.appendChild(surveyItem);
 
         });
