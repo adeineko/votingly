@@ -1,8 +1,6 @@
 package be.kdg.team9.integration4.controller.api;
 
 import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDto;
-import be.kdg.team9.integration4.controller.api.dto.questions.QuestionDtoIn;
-import be.kdg.team9.integration4.controller.api.dto.questions.UpdateQuestionDto;
 import be.kdg.team9.integration4.controller.api.dto.survey.SurveyDto;
 import be.kdg.team9.integration4.controller.api.dto.survey.SurveyDtoIn;
 import be.kdg.team9.integration4.controller.api.dto.survey.UpdateSurveyDto;
@@ -10,12 +8,9 @@ import be.kdg.team9.integration4.converters.QuestionDtoConverter;
 import be.kdg.team9.integration4.converters.SurveyDtoConverter;
 import be.kdg.team9.integration4.model.Survey;
 import be.kdg.team9.integration4.model.question.Question;
-import be.kdg.team9.integration4.model.user.PlatformAdmin;
-import be.kdg.team9.integration4.model.user.User;
 import be.kdg.team9.integration4.security.CustomUserDetails;
 import be.kdg.team9.integration4.service.QuestionService;
 import be.kdg.team9.integration4.service.SurveyService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -25,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,4 +1,4 @@
-import { header, token } from "./util/csrf.js";
+import {header, token} from "./util/csrf.js";
 
 const questionsContainer = document.getElementById("questionsContainer");
 const nameContainer = document.getElementById("nameContainer");
@@ -241,11 +241,9 @@ async function saveAnswer() {
             const selectedOptions = document.querySelectorAll(
                 "input[name='options_" + currentQuestion.id + "']:checked"
             );
-            // console.log("Selected options:", selectedOptions);
             options = Array.from(selectedOptions).map((input) =>
                 parseInt(input.getAttribute("data-option-id"))
             );
-            // console.log("Selected options:", options);
             break;
         case "RANGE":
             range = document.getElementById("rangeInput").value;

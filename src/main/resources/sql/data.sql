@@ -69,40 +69,40 @@ INSERT INTO user_table(first_name, last_name, email, password, user_type)
 VALUES ('admin', 'admin', 'admin@gmail.com', '$2a$12$1OnZfrFbk3HYlrpgbHYdyOG2kFKO97.n3f3CcToY.1cA2orKmRJl2', 'P_ADMIN');
 
 -- Insert dummy answers for Survey 2
-INSERT INTO Answer (answer_id, survey_id, user_id, question_id, answer, answer_type, answer_time)
-VALUES (6, 2, 1, 1, 'Option A', 'OPEN', '2024-06-10 10:15:00'),
-       (7, 2, 1, 1, 'Option B', 'OPEN', '2024-06-10 10:45:00'),
-       (8, 2, 1, 3, 'Option C', 'OPEN', '2024-06-10 11:15:00'),
-       (9, 2, 1, 4, 'Option D', 'OPEN', '2024-06-11 11:45:00'),
-       (10, 2, 1, 2, 'Option E', 'OPEN', '2024-06-11 12:15:00'),
-       (11, 2, 1, 1, 'Option B', 'OPEN', '2024-06-11 10:45:00'),
-       (12, 2, 1, 3, 'Option C', 'OPEN', '2024-06-11 11:15:00'),
-       (13, 2, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
-       (14, 2, 1, 1, 'Option B', 'OPEN', '2024-06-12 10:45:00'),
-       (15, 2, 1, 3, 'Option C', 'OPEN', '2024-06-12 11:15:00'),
-       (16, 2, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
-       (17, 2, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
-       (18, 2, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
-       (19, 2, 1, 4, 'Option D', 'OPEN', '2024-06-13 11:45:00'),
-       (20, 2, 1, 4, 'Option D', 'OPEN', '2024-06-13 12:45:00');
+INSERT INTO Answer (survey_id, user_id, question_id, answer, answer_type, answer_time)
+VALUES (2, 1, 1, 'Option A', 'OPEN', '2024-06-10 10:15:00'),
+       (2, 1, 1, 'Option B', 'OPEN', '2024-06-10 10:45:00'),
+       (2, 1, 3, 'Option C', 'OPEN', '2024-06-10 11:15:00'),
+       (2, 1, 4, 'Option D', 'OPEN', '2024-06-11 11:45:00'),
+       (2, 1, 2, 'Option E', 'OPEN', '2024-06-11 12:15:00'),
+       (2, 1, 1, 'Option B', 'OPEN', '2024-06-11 10:45:00'),
+       (2, 1, 3, 'Option C', 'OPEN', '2024-06-11 11:15:00'),
+       (2, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
+       (2, 1, 1, 'Option B', 'OPEN', '2024-06-12 10:45:00'),
+       (2, 1, 3, 'Option C', 'OPEN', '2024-06-12 11:15:00'),
+       (2, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
+       (2, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
+       (2, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
+       (2, 1, 4, 'Option D', 'OPEN', '2024-06-13 11:45:00'),
+       (2, 1, 4, 'Option D', 'OPEN', '2024-06-13 12:45:00');
 
 -- Insert dummy answers for Survey 3
-INSERT INTO Answer (answer_id, survey_id, user_id, question_id, answer, answer_type, answer_time)
-VALUES (21, 3, 1, 1, 'Option A', 'OPEN', '2024-06-10 10:15:00'),
-       (22, 3, 1, 1, 'Option B', 'OPEN', '2024-06-10 10:45:00'),
-       (23, 3, 1, 3, 'Option C', 'OPEN', '2024-06-10 11:15:00'),
-       (24, 3, 1, 4, 'Option D', 'OPEN', '2024-06-10 11:45:00'),
-       (25, 3, 1, 2, 'Option E', 'OPEN', '2024-06-10 12:15:00'),
-       (26, 3, 1, 1, 'Option B', 'OPEN', '2024-06-11 10:45:00'),
-       (27, 3, 1, 3, 'Option C', 'OPEN', '2024-06-11 11:15:00'),
-       (28, 3, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
-       (29, 3, 1, 1, 'Option B', 'OPEN', '2024-06-12 10:45:00'),
-       (30, 3, 1, 3, 'Option C', 'OPEN', '2024-06-12 11:15:00'),
-       (31, 3, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
-       (32, 3, 1, 4, 'Option D', 'OPEN', '2024-06-13 11:45:00'),
-       (33, 3, 1, 4, 'Option D', 'OPEN', '2024-06-13 11:45:00'),
-       (34, 3, 1, 4, 'Option D', 'OPEN', '2024-06-13 11:45:00'),
-       (35, 3, 1, 4, 'Option D', 'OPEN', '2024-06-14 12:45:00');
+INSERT INTO Answer (survey_id, user_id, question_id, answer, answer_type, answer_time)
+VALUES (3, 1, 1, 'Option A', 'OPEN', '2024-06-10 10:15:00'),
+       (3, 1, 1, 'Option B', 'OPEN', '2024-06-10 10:45:00'),
+       (3, 1, 3, 'Option C', 'OPEN', '2024-06-10 11:15:00'),
+       (3, 1, 4, 'Option D', 'OPEN', '2024-06-10 11:45:00'),
+       (3, 1, 2, 'Option E', 'OPEN', '2024-06-10 12:15:00'),
+       (3, 1, 1, 'Option B', 'OPEN', '2024-06-11 10:45:00'),
+       (3, 1, 3, 'Option C', 'OPEN', '2024-06-11 11:15:00'),
+       (3, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
+       (3, 1, 1, 'Option B', 'OPEN', '2024-06-12 10:45:00'),
+       (3, 1, 3, 'Option C', 'OPEN', '2024-06-12 11:15:00'),
+       (3, 1, 4, 'Option D', 'OPEN', '2024-06-12 11:45:00'),
+       (3, 1, 4, 'Option D', 'OPEN', '2024-06-13 11:45:00'),
+       (3, 1, 4, 'Option D', 'OPEN', '2024-06-13 11:45:00'),
+       (3, 1, 4, 'Option D', 'OPEN', '2024-06-13 11:45:00'),
+       (3, 1, 4, 'Option D', 'OPEN', '2024-06-14 12:45:00');
 
 
 
