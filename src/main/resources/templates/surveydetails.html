@@ -6,20 +6,9 @@
         body {
             background-color: #f8f9fa;
         }
+
         .container-fluid {
             padding: 2rem;
-        }
-        .question-block {
-            border: 1px solid #dee2e6;
-            padding: 1rem;
-            border-radius: 0.25rem;
-            background-color: #ffffff;
-        }
-        .question-block:not(:last-child) {
-            margin-bottom: 1rem;
-        }
-        .btn-info {
-            color: #fff;
         }
     </style>
 </head>
@@ -29,8 +18,7 @@
     <header th:replace="~{header :: header}"></header>
     <div class="mb-3">
         <label for="surveyName" class="form-label">Survey Name</label>
-        <input type="text" class="form-control" id="surveyName" name="surveyName" required value="Sample Survey" >
-        <!--        <button type="button" class="btn btn-primary mt-2" id="editSurveyNameBtn">Edit</button>-->
+        <input type="text" class="form-control" id="surveyName" name="surveyName" required value="Sample Survey">
         <input type="hidden" id="surveyId" th:value="${survey.id}"></div>
     <div class="mb-3">
         <label for="surveyType" class="form-label">Survey Type</label>
@@ -38,10 +26,8 @@
             <option value="LINEAR">Linear</option>
             <option value="CIRCULAR" selected>Circular</option>
         </select>
-        <!--        <button type="button" class="btn btn-primary mt-2" id="editSurveyTypeBtn">Edit</button>-->
     </div>
     <div id="questionContainer">
-        <!-- Questions will be populated dynamically -->
     </div>
     <div class="button-group">
         <button type="button" class="btn btn-outline-primary" id="addQuestionBtn">Add Question</button>
