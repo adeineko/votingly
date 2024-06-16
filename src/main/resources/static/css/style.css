@@ -46,6 +46,15 @@ body {
     margin-bottom: 10px;
     border-radius: 5px;
 }
+#color_canvas {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+}
 
 /*End Global Styles*/
 

@@ -11,7 +11,6 @@ public class CustomUserDetails extends User {
     private final String lastName;
     private final String userType;
 
-
     public CustomUserDetails(String email,
                              String password,
                              Collection<? extends GrantedAuthority> authorities,

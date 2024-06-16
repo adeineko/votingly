@@ -1,7 +1,6 @@
 package be.kdg.team9.integration4.security;
 
 import be.kdg.team9.integration4.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,8 +31,9 @@ public class CustomUserDetailsService implements UserDetailsService {
                     user.getFirstName(),
                     user.getLastName(),
                     user.getUserType());
-        }else {
+        } else {
             throw new UsernameNotFoundException("User with email " + username + " was not found.");
         }
     }
+
 }

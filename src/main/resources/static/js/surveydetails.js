@@ -96,8 +96,6 @@ function handleTypeChange(questionNumber, type) {
         if (!type) {
             addChoiceInput(questionNumber);
         }
-    } else if (typeValue === 'RANGE') {
-        addRangeInputs(questionNumber);
     }
 }
 
@@ -132,24 +130,24 @@ function addRangeInputs(questionNumber, question = {}) {
     minInput.className = "form-control mt-2";
     minInput.placeholder = "Minimum value";
     minInput.id = `minInput${questionNumber}`;
+    minInput.value = question.min;
     minInput.name = `questions[${questionNumber}][min]`;
-    minInput.value = question.min || "";
 
     const maxInput = document.createElement("input");
     maxInput.type = "number";
     maxInput.className = "form-control mt-2";
     maxInput.placeholder = "Maximum value";
     maxInput.id = `maxInput${questionNumber}`;
+    maxInput.value = question.max;
     maxInput.name = `questions[${questionNumber}][max]`;
-    maxInput.value = question.max || "";
 
     const stepInput = document.createElement("input");
     stepInput.type = "number";
     stepInput.className = "form-control mt-2";
     stepInput.placeholder = "Step value";
     stepInput.id = `stepInput${questionNumber}`;
+    stepInput.value = question.step;
     stepInput.name = `questions[${questionNumber}][step]`;
-    stepInput.value = question.step || "";
 
     choicesContainer.appendChild(minInput);
     choicesContainer.appendChild(maxInput);
@@ -215,9 +213,6 @@ async function removeSurvey() {
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("addQuestionBtn").addEventListener("click", createQuestion);
 
-    document.getElementById("surveyName").addEventListener("click", () => enableEdit("surveyName"));
-    document.getElementById("surveyType").addEventListener("click", () => enableEdit("surveyType"));
-
     document.querySelectorAll('input, select').forEach(input => {
         input.addEventListener('input', () => {
             document.getElementById("saveChangesBtn").disabled = false;
@@ -230,11 +225,36 @@ document.addEventListener('DOMContentLoaded', () => {
     getSurveyDetails();
 });
 
+
 async function changeSurvey(event) {
     event.preventDefault();
     const surveyId = surveyIdInput.value;
     const surveyName = document.getElementById("surveyName").value;
     const surveyType = document.getElementById("surveyType").value;
+
+    try {
+        const response = await fetch(`/api/surveys/${surveyId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                [header]: token
+            },
+            body: JSON.stringify({
+                surveyName,
+                surveyType
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
+        }
+
+        alert("Survey updated successfully!");
+        window.location.href = '/surveys';
+    } catch (error) {
+        console.error("Failed to update survey:", error);
+        alert("Failed to update survey. Please check the console for more details.");
+    }
 
     const questions = [];
     for (let i = 1; i <= questionCount; i++) {
@@ -255,16 +275,14 @@ async function changeSurvey(event) {
         questions.push(question);
     }
 
-    try {
-        const response = await fetch(`/api/surveys/${surveyId}`, {
-            method: 'PATCH',
+    try{
+        const response = await fetch(`/api/surveys/${surveyId}/questions`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 [header]: token
             },
             body: JSON.stringify({
-                surveyName,
-                surveyType,
                 questions
             })
         });
@@ -273,10 +291,10 @@ async function changeSurvey(event) {
             throw new Error('Network response was not ok.');
         }
 
-        alert("Survey updated successfully!");
+        alert("Questions updated successfully!");
         window.location.href = '/surveys';
     } catch (error) {
-        console.error("Failed to update survey:", error);
-        alert("Failed to update survey. Please check the console for more details.");
+        console.error("Failed to update question:", error);
+        alert("Failed to update question. Please check the console for more details.");
     }
 }

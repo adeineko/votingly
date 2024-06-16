@@ -37,7 +37,8 @@ public class SecurityConfig {
                                         antMatcher(HttpMethod.POST, "/api/signup/**"),
                                         regexMatcher(HttpMethod.GET, "^/login\\?.*"),
                                         antMatcher(HttpMethod.GET, "/thank-you-page/**"),
-                                        antMatcher(HttpMethod.GET, "/features")
+                                        antMatcher(HttpMethod.GET, "/features"),
+                                        antMatcher(HttpMethod.GET, "/unauthenticated")
                                         )
                                 .permitAll()
                                 .requestMatchers(antMatcher(HttpMethod.GET, "/"))
@@ -48,7 +49,7 @@ public class SecurityConfig {
                 )
                 // for development
                 // .csrf(csrf -> csrf.ignoringRequestMatchers(
-                //         antMatcher(HttpMethod.POST, "/api/**") 
+                //         antMatcher(HttpMethod.POST, "/api/**")
                 // ))
                 .formLogin(formLogin ->
                         formLogin
@@ -61,6 +62,10 @@ public class SecurityConfig {
                                         response.setStatus(HttpStatus.UNAUTHORIZED.value());
                                     } else if (request.getRequestURI().startsWith("/error")) {
                                         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+                                    }else if (request.getRequestURI().contains("/details")) {
+                                        request.getRequestDispatcher("/unauthenticated").forward(request, response);
+                                    } else if (request.getUserPrincipal() == null) {
+                                        request.getRequestDispatcher("/unauthenticated").forward(request, response);
                                     } else {
                                         response.sendRedirect(request.getContextPath() + "/login");
                                     }

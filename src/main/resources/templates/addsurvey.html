@@ -6,6 +6,11 @@
     <title>Survey Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="/js/addSurvey.js" type="module" defer></script>
+    <style>
+        canvas {
+            position: relative;
+        }
+    </style>
 </head>
 <body>
 <header th:replace="~{header :: header}"></header>
@@ -31,6 +36,7 @@
         </div>
     </form>
 </div>
+
 <div class="mb-3">
     <div id="alertContainer" style="display: none"></div>
     <div id="successContainer" style="display: none;"></div>

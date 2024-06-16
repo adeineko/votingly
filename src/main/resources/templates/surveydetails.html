@@ -29,13 +29,12 @@
     <header th:replace="~{header :: header}"></header>
     <div class="mb-3">
         <label for="surveyName" class="form-label">Survey Name</label>
-        <input type="text" class="form-control" id="surveyName" name="surveyName" required value="Sample Survey"
-               disabled>
+        <input type="text" class="form-control" id="surveyName" name="surveyName" required value="Sample Survey" >
         <!--        <button type="button" class="btn btn-primary mt-2" id="editSurveyNameBtn">Edit</button>-->
         <input type="hidden" id="surveyId" th:value="${survey.id}"></div>
     <div class="mb-3">
         <label for="surveyType" class="form-label">Survey Type</label>
-        <select class="form-select" id="surveyType" name="surveyType" required disabled>
+        <select class="form-select" id="surveyType" name="surveyType">
             <option value="LINEAR">Linear</option>
             <option value="CIRCULAR" selected>Circular</option>
         </select>
